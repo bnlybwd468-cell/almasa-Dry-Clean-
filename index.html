@@ -40,7 +40,7 @@
             </nav>
             <div class="flex items-center gap-2">
                 <!-- Google Maps Directions Button -->
-                <a href="https://maps.google.com/?q=29.2031,25.5195" target="_blank" title="طريق المغسلة" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
+                <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" title="طريق المغسلة" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
                     <i class="fa-solid fa-map-location-dot text-sm"></i>
                     <span class="hidden sm:inline">موقعنا</span>
                 </a>
@@ -67,7 +67,7 @@
                         <i class="fa-solid fa-paper-plane"></i>
                         اطلب خدمة الآن
                     </a>
-                    <a href="https://maps.google.com/?q=29.2031,25.5195" target="_blank" class="bg-pink-700 text-white border border-pink-400 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-pink-800 transition inline-flex items-center gap-2">
+                    <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="bg-pink-700 text-white border border-pink-400 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-pink-800 transition inline-flex items-center gap-2">
                         <i class="fa-solid fa-route"></i>
                         طريق المغسلة (خرائط)
                     </a>
@@ -109,7 +109,7 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                     <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-truck-ramp-box"></i></div>
                     <h4 class="font-bold text-xl text-slate-800 mb-2">خدمة التوصيل</h4>
-                    <p class="text-slate-600 text-sm">مندوبنا يصلك لباب المنزل لاستلام وسك الملابس بسهولة.</p>
+                    <p class="text-slate-600 text-sm">مندوبنا يصلك لباب المنزل لاستلام وسكب الملابس بسهولة.</p>
                 </div>
             </div>
         </section>
@@ -196,9 +196,9 @@
     <footer id="contact" class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm">
         <p class="mb-3">
             <i class="fa-solid fa-location-dot text-pink-500 ml-1"></i>
-            سيوة - شارع متفرع من السوق بجوار فندق النخيل
+            سيوة - بجوار فندق النخيل، شارع تورار
         </p>
-        <a href="https://maps.google.com/?q=29.2031,25.5195" target="_blank" class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs mb-4">
+        <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs mb-4">
             <i class="fa-solid fa-map-pin"></i> فتح في خرائط جوجل مباشرة
         </a>
         <p>&copy; 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
@@ -315,7 +315,6 @@
                 `;
                 snapshot.forEach(doc => {
                     const d = doc.data();
-                    const id = doc.id;
                     html += `
                         <tr class="border-b text-sm">
                             <td class="p-2 font-bold">${d.name || '-'}</td>
@@ -327,4 +326,5 @@
                                 <!-- Send Ready Notification -->
                                 <button onclick="sendReadyMsg('${d.phone}', '${d.name}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-xs font-bold">
                                     <i class="fa-solid fa-bell"></i> جاهز للإستلام
-                        
+                                </button>
+       
