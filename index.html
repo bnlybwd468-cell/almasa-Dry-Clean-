@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دراي ألماسة كلين | Diamond Dry Clean - عناية تليق بملابسك</title>
+    <title>دراي ألماسة كلين | Diamond Dry Clean</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -12,12 +12,8 @@
     <style>
         body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
     </style>
-    <!-- Firebase App & Firestore SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col pb-16 md:pb-0">
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navbar -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -37,17 +33,18 @@
                 <a href="#services" class="hover:text-pink-600 transition">خدماتنا</a>
                 <a href="#order" class="hover:text-pink-600 transition">طلب خدمة</a>
                 <a href="#trackOrder" class="hover:text-pink-600 transition">متابعة طلبك</a>
-                <a href="#adminSection" id="adminNav" class="hidden text-pink-600 font-bold hover:underline">لوحة التحكم (المالك)</a>
             </nav>
             <div class="flex items-center gap-2">
-                <!-- Google Maps Directions Button -->
                 <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" title="طريق المغسلة" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
                     <i class="fa-solid fa-map-location-dot text-sm"></i>
                     <span class="hidden sm:inline">موقعنا</span>
                 </a>
-                <button id="ownerAuthBtn" onclick="toggleAuthModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
-                    <i class="fa-solid fa-user-shield"></i>
+                <button id="ownerAuthBtn" onclick="toggleModal('authModal')" class="bg-slate-800 hover:bg-slate-900 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
+                    <i class="fa-solid fa-shield-halved"></i>
                     <span class="hidden sm:inline">دخول المالك</span>
+                </button>
+                <button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-3 py-2 rounded-xl shadow-md transition">
+                    خروج
                 </button>
             </div>
         </div>
@@ -65,12 +62,10 @@
                 <p class="text-lg text-pink-100 mb-8">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بدون حساب!</p>
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="#order" class="bg-white text-pink-600 font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-pink-50 transition inline-flex items-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        اطلب خدمة الآن
+                        <i class="fa-solid fa-paper-plane"></i> اطلب خدمة الآن
                     </a>
                     <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="bg-pink-700 text-white border border-pink-400 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-pink-800 transition inline-flex items-center gap-2">
-                        <i class="fa-solid fa-route"></i>
-                        طريق المغسلة (خرائط)
+                        <i class="fa-solid fa-route"></i> طريق المغسلة (خرائط)
                     </a>
                 </div>
             </div>
@@ -85,7 +80,10 @@
                     </h3>
                 </div>
                 <div id="publicOffersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <p class="text-amber-100 text-sm">جاري تحميل العروض الحالية...</p>
+                    <div class="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                        <p class="font-bold text-white">🎉 خصم 15% على المفروشات والبطاطين</p>
+                        <p class="text-xs text-pink-100 mt-1">احصل على خصم فوري عند طلب غسيل قطعتين مفروشات أو أكثر.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -119,23 +117,22 @@
         <section id="order" class="max-w-3xl mx-auto px-4 py-8">
             <div class="bg-white p-8 rounded-3xl shadow-lg border border-pink-100">
                 <h3 class="text-2xl font-black text-slate-800 mb-2 text-center flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-pen text-pink-600"></i>
-                    طلب خدمة سريع
+                    <i class="fa-solid fa-file-pen text-pink-600"></i> طلب خدمة سريع
                 </h3>
                 <p class="text-slate-500 text-center text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك فوراً بدون الحاجة للتسجيل</p>
                 
-                <form id="directOrderForm" onsubmit="submitOrder(event)" class="space-y-4">
+                <form id="directOrderForm" onsubmit="handleCreateOrder(event)" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل *</label>
                         <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف / الواتساب</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف / الواتساب *</label>
                         <input type="tel" id="clientPhone" required placeholder="01xxxxxxxxx" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني <span class="text-slate-400 font-normal">(اختياري)</span></label>
-                        <input type="email" id="clientEmail" placeholder="example@mail.com (اختياري)" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                        <input type="email" id="clientEmail" placeholder="example@mail.com" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">نوع الخدمة والتوصيل</label>
@@ -165,7 +162,7 @@
             </div>
         </section>
 
-        <!-- Track Order Section (Client Feature) -->
+        <!-- Track Order Section -->
         <section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8">
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center">
                 <h3 class="text-xl font-black text-slate-800 mb-2">🔍 متابعة حالة طلبك برقم الهاتف</h3>
@@ -180,15 +177,14 @@
 
         <!-- Owner Dashboard Section -->
         <section id="adminSection" class="max-w-6xl mx-auto px-4 py-8 hidden space-y-8">
-            
             <!-- Manage Offers Section -->
             <div class="bg-white p-6 rounded-2xl shadow-md border-2 border-amber-500">
                 <h3 class="text-xl font-black text-amber-600 mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-bullhorn"></i> إضافة عرض أو خصم جديد
                 </h3>
                 <form onsubmit="addNewOffer(event)" class="flex flex-col md:flex-row gap-3 mb-4">
-                    <input type="text" id="offerTitle" required placeholder="عنوان العرض (مثال: خصم 20% على البطاطين)" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
-                    <input type="text" id="offerDetails" placeholder="تفاصيل العرض أو الكود" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <input type="text" id="offerTitle" required placeholder="عنوان العرض" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <input type="text" id="offerDetails" placeholder="تفاصيل العرض" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
                     <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-xl font-bold shadow transition">نشر العرض</button>
                 </form>
             </div>
@@ -199,12 +195,22 @@
                     <h3 class="text-2xl font-black text-pink-600 flex items-center gap-2">
                         <i class="fa-solid fa-crown"></i> لوحة إدارة الطلبات والفواتير (المالك)
                     </h3>
-                    <button onclick="loadAdminOrders()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg text-sm font-bold flex items-center gap-1">
-                        <i class="fa-solid fa-arrows-rotate"></i> تحديث
-                    </button>
                 </div>
-                <div id="adminOrdersList" class="overflow-x-auto">
-                    <p class="text-slate-500 text-sm">جاري تحميل الطلبات...</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-100 text-slate-700">
+                            <tr>
+                                <th class="p-3">العميل</th>
+                                <th class="p-3">الهاتف</th>
+                                <th class="p-3">الخدمة</th>
+                                <th class="p-3">الحالة</th>
+                                <th class="p-3">إجراءات الفاتورة والواتساب</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTable" class="divide-y divide-slate-100">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد طلبات جارية.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -213,8 +219,7 @@
     <!-- Footer -->
     <footer id="contact" class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm">
         <p class="mb-3">
-            <i class="fa-solid fa-location-dot text-pink-500 ml-1"></i>
-            سيوة - بجوار فندق النخيل، شارع تورار
+            <i class="fa-solid fa-location-dot text-pink-500 ml-1"></i> سيوة - بجوار فندق النخيل، شارع تورار
         </p>
         <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs mb-4">
             <i class="fa-solid fa-map-pin"></i> فتح في خرائط جوجل مباشرة
@@ -222,29 +227,56 @@
         <p>&copy; 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
     </footer>
 
+    <!-- MODALS -->
+
     <!-- Owner Auth Modal -->
     <div id="authModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 px-4">
         <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
-            <button onclick="toggleAuthModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            <button onclick="toggleModal('authModal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
             <h3 class="text-2xl font-black text-slate-800 mb-6 text-center flex items-center justify-center gap-2">
-                <i class="fa-solid fa-lock"></i> دخول المالك
+                <i class="fa-solid fa-shield-halved text-amber-500"></i> دخول المالك
             </h3>
             <form onsubmit="handleOwnerAuth(event)" class="space-y-4">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">البريد الإلكتروني للمالك</label>
-                    <input type="email" id="ownerEmailInput" required class="w-full px-4 py-2 border rounded-xl focus:outline-none">
+                    <input type="email" id="ownerEmailInput" required value="ahmadabubakr027@gmail.com" class="w-full px-4 py-2 border rounded-xl focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">كلمة المرور</label>
-                    <input type="password" id="ownerPasswordInput" required class="w-full px-4 py-2 border rounded-xl focus:outline-none">
+                    <input type="password" id="ownerPasswordInput" required placeholder="••••••••" class="w-full px-4 py-2 border rounded-xl focus:outline-none">
                 </div>
                 <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white py-2 rounded-xl font-bold shadow-md">دخول لوحة المالك</button>
             </form>
         </div>
     </div>
 
-    <!-- Firebase Code & Business Logic -->
-    <script>
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 px-4">
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+            <button onclick="toggleModal('invoiceModal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-file-invoice-dollar text-green-600"></i> إرسال فاتورة العميل
+            </h3>
+            <form onsubmit="sendInvoiceWhatsApp(event)" class="space-y-4">
+                <input type="hidden" id="invPhone">
+                <input type="hidden" id="invName">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">المبلغ المطلوب (ج.م)</label>
+                    <input type="number" id="invAmount" required placeholder="100" class="w-full px-4 py-2 border rounded-xl focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-xl shadow-md transition flex justify-center items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> إرسال عبر الواتساب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Logic JavaScript -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",
             authDomain: "al-masa-dry-clean.firebaseapp.com",
@@ -253,66 +285,24 @@
             messagingSenderId: "624222741188",
             appId: "1:624222741188:web:abcdef123456789"
         };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
 
-        // البريد الإلكتروني المعتمد للمالك الجديد
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
         const OWNER_EMAIL = "ahmadabubakr027@gmail.com";
+        let localOrders = [];
 
-        function toggleAuthModal() {
-            document.getElementById('authModal').classList.toggle('hidden');
-        }
+        window.toggleModal = function(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.toggle('hidden');
+        };
 
-        // Submit Public Order (البريد الإكتروني اختياري)
-        function submitOrder(e) {
-            e.preventDefault();
-            const btn = document.getElementById('sendOrderBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإرسال...';
+        onAuthStateChanged(auth, (user) => {
+            const ownerBtn = document.getElementById('ownerAuthBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const adminSection = document.getElementById('adminSection');
 
-            const orderData = {
-                name: document.getElementById('clientName').value,
-                phone: document.getElementById('clientPhone').value,
-                email: document.getElementById('clientEmail').value || 'غير محدد',
-                delivery: document.getElementById('deliveryOption').value,
-                service: document.getElementById('serviceType').value,
-                details: document.getElementById('orderDetails').value,
-                status: "جديد 📥",
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            db.collection('orders').add(orderData).then(() => {
-                alert("تم إرسال طلبك بنجاح! سنتواصل معك قريباً.");
-                document.getElementById('directOrderForm').reset();
-            }).catch(err => alert("خطأ: " + err.message))
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إرسال الطلب الآن';
-            });
-        }
-
-        // Client Order Tracking Feature
-        function trackClientOrders() {
-            const phone = document.getElementById('searchPhoneInput').value.trim();
-            const resDiv = document.getElementById('clientTrackingResult');
-            if(!phone) {
-                alert("يرجى إدخال رقم الهاتف أولاً");
-                return;
-            }
-            resDiv.innerHTML = '<p class="text-xs text-slate-500">جاري البحث عن طلباتك...</p>';
-            db.collection('orders').where('phone', '==', phone).get().then(snapshot => {
-                if(snapshot.empty) {
-                    resDiv.innerHTML = '<p class="text-xs text-red-500 font-bold">لا توجد طلبات مسجلة بهذا الرقم.</p>';
-                    return;
-                }
-                let html = '<div class="space-y-2 mt-2 text-xs">';
-                snapshot.forEach(doc => {
-                    const d = doc.data();
-                    html += `
-                        <div class="bg-slate-50 p-3 rounded-xl border flex justify-between items-center">
-                            <div>
-                                <p class="font-bold text-slate-800">الخدمة: ${d.service}</p>
-                                <p class="text-slate-500">التوصيل: ${d.delivery}</p>
-                            </div>
-                            <span
+            if (user && user.email === OWNER_EMAIL) {
+                if(ownerBtn) ownerBtn.classList.add('hidden');
+                if(logoutBtn) logoutBtn.classList.remove('hi
