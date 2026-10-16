@@ -36,6 +36,7 @@
                 <a href="#offers" class="hover:text-pink-600 transition text-pink-600 font-bold"><i class="fa-solid fa-tag"></i> العروض</a>
                 <a href="#services" class="hover:text-pink-600 transition">خدماتنا</a>
                 <a href="#order" class="hover:text-pink-600 transition">طلب خدمة</a>
+                <a href="#trackOrder" class="hover:text-pink-600 transition">متابعة طلبك</a>
                 <a href="#adminSection" id="adminNav" class="hidden text-pink-600 font-bold hover:underline">لوحة التحكم (المالك)</a>
             </nav>
             <div class="flex items-center gap-2">
@@ -133,6 +134,10 @@
                         <input type="tel" id="clientPhone" required placeholder="01xxxxxxxxx" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
                     </div>
                     <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني <span class="text-slate-400 font-normal">(اختياري)</span></label>
+                        <input type="email" id="clientEmail" placeholder="example@mail.com (اختياري)" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                    </div>
+                    <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">نوع الخدمة والتوصيل</label>
                         <select id="deliveryOption" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none bg-white">
                             <option value="توصيل واستلام من المنزل">طلب توصيل واستلام من المنزل 🚚</option>
@@ -160,6 +165,19 @@
             </div>
         </section>
 
+        <!-- Track Order Section (Client Feature) -->
+        <section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center">
+                <h3 class="text-xl font-black text-slate-800 mb-2">🔍 متابعة حالة طلبك برقم الهاتف</h3>
+                <p class="text-xs text-slate-500 mb-4">ابحث برقم هاتفك لمعرفة هل طلبك جديد أو قيد التنفيذ أو جاهز للإستلام</p>
+                <div class="flex gap-2 max-w-md mx-auto">
+                    <input type="tel" id="searchPhoneInput" placeholder="أدخل رقم هاتفك..." class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <button onclick="trackClientOrders()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl font-bold text-sm">بحث</button>
+                </div>
+                <div id="clientTrackingResult" class="mt-4 text-right"></div>
+            </div>
+        </section>
+
         <!-- Owner Dashboard Section -->
         <section id="adminSection" class="max-w-6xl mx-auto px-4 py-8 hidden space-y-8">
             
@@ -179,7 +197,7 @@
             <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-pink-500">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-black text-pink-600 flex items-center gap-2">
-                        <i class="fa-solid fa-crown"></i> لوحة إدارة الطلبات والفواتير
+                        <i class="fa-solid fa-crown"></i> لوحة إدارة الطلبات والفواتير (المالك)
                     </h3>
                     <button onclick="loadAdminOrders()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg text-sm font-bold flex items-center gap-1">
                         <i class="fa-solid fa-arrows-rotate"></i> تحديث
@@ -213,14 +231,14 @@
             </h3>
             <form onsubmit="handleOwnerAuth(event)" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">البريد الإلكتروني</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">البريد الإلكتروني للمالك</label>
                     <input type="email" id="ownerEmailInput" required class="w-full px-4 py-2 border rounded-xl focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">كلمة المرور</label>
                     <input type="password" id="ownerPasswordInput" required class="w-full px-4 py-2 border rounded-xl focus:outline-none">
                 </div>
-                <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white py-2 rounded-xl font-bold shadow-md">دخول</button>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white py-2 rounded-xl font-bold shadow-md">دخول لوحة المالك</button>
             </form>
         </div>
     </div>
@@ -239,13 +257,14 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        const OWNER_EMAIL = "bnlybwd468@gmail.com";
+        // البريد الإلكتروني المعتمد للمالك الجديد
+        const OWNER_EMAIL = "ahmadabubakr027@gmail.com";
 
         function toggleAuthModal() {
             document.getElementById('authModal').classList.toggle('hidden');
         }
 
-        // Submit Public Order
+        // Submit Public Order (البريد الإكتروني اختياري)
         function submitOrder(e) {
             e.preventDefault();
             const btn = document.getElementById('sendOrderBtn');
@@ -255,10 +274,11 @@
             const orderData = {
                 name: document.getElementById('clientName').value,
                 phone: document.getElementById('clientPhone').value,
+                email: document.getElementById('clientEmail').value || 'غير محدد',
                 delivery: document.getElementById('deliveryOption').value,
                 service: document.getElementById('serviceType').value,
                 details: document.getElementById('orderDetails').value,
-                status: "جديد",
+                status: "جديد 📥",
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
@@ -272,59 +292,27 @@
             });
         }
 
-        // Owner Authentication
-        function handleOwnerAuth(e) {
-            e.preventDefault();
-            auth.signInWithEmailAndPassword(
-                document.getElementById('ownerEmailInput').value,
-                document.getElementById('ownerPasswordInput').value
-            ).then(() => {
-                alert("مرحباً بك يا مالك المغسلة!");
-                toggleAuthModal();
-            }).catch(err => alert("خطأ: " + err.message));
-        }
-
-        auth.onAuthStateChanged(user => {
-            const isOwner = user && user.email === OWNER_EMAIL;
-            document.getElementById('adminNav').classList.toggle('hidden', !isOwner);
-            document.getElementById('adminSection').classList.toggle('hidden', !isOwner);
-            if(isOwner) loadAdminOrders();
-        });
-
-        // Load Admin Orders & Create Invoices
-        function loadAdminOrders() {
-            const list = document.getElementById('adminOrdersList');
-            db.collection('orders').orderBy('createdAt', 'desc').get().then(snapshot => {
+        // Client Order Tracking Feature
+        function trackClientOrders() {
+            const phone = document.getElementById('searchPhoneInput').value.trim();
+            const resDiv = document.getElementById('clientTrackingResult');
+            if(!phone) {
+                alert("يرجى إدخال رقم الهاتف أولاً");
+                return;
+            }
+            resDiv.innerHTML = '<p class="text-xs text-slate-500">جاري البحث عن طلباتك...</p>';
+            db.collection('orders').where('phone', '==', phone).get().then(snapshot => {
                 if(snapshot.empty) {
-                    list.innerHTML = '<p class="text-slate-500 text-sm">لا توجد طلبات.</p>';
+                    resDiv.innerHTML = '<p class="text-xs text-red-500 font-bold">لا توجد طلبات مسجلة بهذا الرقم.</p>';
                     return;
                 }
-                let html = `
-                    <table class="w-full text-right border-collapse min-w-[700px]">
-                        <thead>
-                            <tr class="bg-slate-100 border-b">
-                                <th class="p-2">العميل</th>
-                                <th class="p-2">الهاتف</th>
-                                <th class="p-2">التوصيل</th>
-                                <th class="p-2">الخدمة</th>
-                                <th class="p-2">الحالة</th>
-                                <th class="p-2">إجراءات المالك</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
+                let html = '<div class="space-y-2 mt-2 text-xs">';
                 snapshot.forEach(doc => {
                     const d = doc.data();
                     html += `
-                        <tr class="border-b text-sm">
-                            <td class="p-2 font-bold">${d.name || '-'}</td>
-                            <td class="p-2 dir-ltr text-pink-600">${d.phone || '-'}</td>
-                            <td class="p-2">${d.delivery || '-'}</td>
-                            <td class="p-2">${d.service || '-'}</td>
-                            <td class="p-2"><span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs font-bold">${d.status || 'جديد'}</span></td>
-                            <td class="p-2 flex gap-1 flex-wrap">
-                                <!-- Send Ready Notification -->
-                                <button onclick="sendReadyMsg('${d.phone}', '${d.name}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-xs font-bold">
-                                    <i class="fa-solid fa-bell"></i> جاهز للإستلام
-                                </button>
-       
+                        <div class="bg-slate-50 p-3 rounded-xl border flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-slate-800">الخدمة: ${d.service}</p>
+                                <p class="text-slate-500">التوصيل: ${d.delivery}</p>
+                            </div>
+                            <span
