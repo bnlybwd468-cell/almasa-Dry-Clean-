@@ -1,166 +1,311 @@
-```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="دراي ألماسة كلين - Diamond Dry Clean: غسيل وكي وتنظيف بالبخار وغسيل بطاطين ومفروشات في سيوة، مطروح"><title>دراي ألماسة كلين | Diamond Dry Clean - سيوة</title>
-<style>
-:root{--bg:#fdf6f9;--cd:#fff;--tx:#2a1d25;--mu:#7a6a73;--pk:#e0457b;--tq:#17b8b0;--bd:#f0dde6;--ok:#168a5a;--er:#c0392b}
-@media(prefers-color-scheme:dark){:root{--bg:#1a1217;--cd:#251a21;--tx:#f6e9ef;--mu:#b9a5af;--bd:#3c2a34}}
-{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:Tahoma,system-ui,sans-serif;line-height:1.7;padding:env(safe-area-inset-top) 0 80px}
-.w{max-width:720px;margin:auto;padding:12px}.cd{background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:12px 0}.cd h2{margin:0 0 8px;font-size:17px;color:var(--pk)}
-.hero{background:linear-gradient(135deg,var(--pk),#b02a5c 60%,var(--tq));color:#fff;border-radius:20px;padding:22px 14px;text-align:center}.hero h1{margin:4px 0}
-.btn{display:inline-block;border:0;background:var(--pk);color:#fff;padding:13px 16px;border-radius:12px;font-size:16px;cursor:pointer;text-decoration:none;font-family:inherit}.btn.t{background:var(--tq)}.btn.g{background:none;color:var(--pk);border:1px solid var(--pk)}.btn.b{width:100%;margin-top:6px}.btn[disabled]{opacity:.5}
-input,select,textarea{width:100%;padding:11px;margin:4px 0 9px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-family:inherit;font-size:16px}input[type=checkbox]{width:auto;margin:0 0 0 6px}label{font-size:13px;color:var(--mu)}
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--cd);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:5}nav button{flex:1;border:0;background:none;color:var(--mu);padding:9px 2px;font-size:12px;font-family:inherit}nav button.on{color:var(--pk);font-weight:700}nav i{display:block;font-style:normal;font-size:19px}
-.li{padding:9px 0;border-bottom:1px solid var(--bd);font-size:14px}.mu{color:var(--mu);font-size:13px}.er{color:var(--er);font-size:14px}.ok{color:var(--ok)}.tag{font-size:12px;background:var(--bd);color:var(--pk);padding:2px 9px;border-radius:20px}
-.chat{height:300px;overflow-y:auto;border:1px solid var(--bd);border-radius:12px;padding:8px;background:var(--bg)}.m{max-width:80%;padding:6px 11px;border-radius:12px;margin:5px 0;font-size:14px;white-space:pre-wrap}.m small{display:block;opacity:.7;font-size:10px}.me{background:var(--pk);color:#fff;margin-inline-start:auto}.ot{background:var(--cd);border:1px solid var(--bd)}
-.fl{display:flex;gap:6px}.fl>{margin:0}.bd{background:var(--er);color:#fff;border-radius:9px;padding:0 6px;font-size:11px}
-#md{position:fixed;inset:0;background:#0008;z-index:9;overflow:auto;padding:20px 10px}#md .bx{background:var(--cd);border-radius:16px;padding:16px;max-width:520px;margin:auto}[hidden]{display:none!important}
-</style></head><body>
-<div class="w" id="v"></div>
-<nav id="nav"></nav><div id="md" hidden></div>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,sendEmailVerification,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,setDoc,getDoc,addDoc,collection,query,where,orderBy,onSnapshot,updateDoc,deleteDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const FIREBASE={apiKey:"AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",authDomain:"al-masa-dry-clean.firebaseapp.com",projectId:"al-masa-dry-clean",storageBucket:"al-masa-dry-clean.appspot.com",messagingSenderId:"624222741188",appId:"1:624222741188:web:a8f3939d14765f02c5df91"};
-const CFG={name:"دراي ألماسة كلين",addr:"شارع توار المتفرع من السوق بجوار فندق النخيل - سيوة، مطروح",map:"https://maps.app.goo.gl/QMD5GRB5x27nvD836",hours:"",
-phones:[["أ. أبو بكر أحمد","01023714530"],["أ. عبد الله أحمد","01021988683"]],
-services:[["👕","غسيل الملابس","غسيل الملابس اليومية والرسمية مع مراعاة نوع القماش.",""],["♨️","التنظيف بالبخار","عناية مناسبة بالقطع التي تتطلب معالجة بالبخار.",""],["👔","كي الملابس","كي احترافي للحفاظ على مظهر الملابس.",""],["🛏️","غسيل البطاطين والمفروشات","البطاطين والألحفة والستائر وأغطية الأسرة.",""],["✨","إزالة البقع الصعبة","فحص البقعة واختيار المعالجة المناسبة دون ضمان إزالة كل بقعة.",""],["🏨","خدمات الفنادق والمنشآت","خدمات مخصصة للفنادق والمخيمات، اطلب عرض سعر.",""]]};
-const ST=["تم إرسال الطلب","تم تأكيد الطلب","جارٍ تنسيق الاستلام","تم استلام الملابس","قيد الغسيل أو الكي","جاهز للتسليم","خرج للتوصيل","تم التسليم","تم الإلغاء"];
-const AE={"auth/email-already-in-use":"هذا البريد مسجّل بالفعل، سجّل الدخول.","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة.","auth/wrong-password":"البريد أو كلمة المرور غير صحيحة.","auth/weak-password":"كلمة المرور ضعيفة (6 أحرف على الأقل).","auth/invalid-email":"البريد الإلكتروني غير صحيح.","auth/network-request-failed":"تعذر الاتصال بالإنترنت، حاول مرة أخرى.","auth/too-many-requests":"محاولات كثيرة، انتظر قليلًا."};
-const =i=>document.getElementById(i),V=i=>(i)?$(i).value.trim():"",E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&","<":"<",">":">",'"':""","'":"'"}[c]));
-const fmt=t=>t?new Date(t).toLocaleString("ar-EG",{dateStyle:"short",timeStyle:"short"}):"";
-let app,auth,db,own=null,user=null,prof={},role=null,view="home",orders=[],chats=[],msgs=[],allOrders=[],admins=[],invs=[],pend="",busy=false,unsubs=[],mUn=null;
-try{app=initializeApp(FIREBASE);auth=getAuth(app);db=getFirestore(app)}catch(e){}
-const ready=()=>db&&FIREBASE.projectId!=="ضع_القيمة";
-function nav(){
-const navElem = ("nav");
-if (!navElem) return;
-const n=(v,i,t,b)=>`<button data-v="${v}" class="${view===v?"on":""}"><i>${i}</i>${t}${b?` <span class="bd">{b}</span>:""}</button>;
-const un=user&&own&&own.from==="a"&&own.ts>(+localStorage.seen||0)?1:0,ad=role?allOrders.filter(o=>o.status=0).length+chats.filter(c=>c.from="c"&&!c.closed).length:0;
-navElem.innerHTML=n("home","🏠","الرئيسية")+n("order","🧺","اطلب")+n("mine","📦","طلباتي")+n("chat","💬","محادثاتي",un||"")+(user?n("acct","👤","حسابي"):n("login","🔑","دخول"))+(role?n("admin","⚙️","الإدارة",ad||""):"");
-}
-function go(v,x){
-view=v;if(mUn){mUn();mUn=null}
-const container = $("v");
-if (container && V0[v]) container.innerHTML=V0v;
-if(F[v])Fv;
-nav();
-scrollTo(0,0);
-}
-const V0={
-home:()=><div class="hero"><div style="font-size:50px">💎</div><h1>${CFG.name}</h1><div>DIAMOND DRY CLEAN</div><p><b>عناية تليق بملابسك</b><br>نظافة فائقة وعناية بملابسك ومفروشاتك في قلب سيوة</p><button class="btn" style="background:#fff;color:#b02a5c" data-v="order">🧺 اطلب خدمة غسيل / كي الآن</button></div> <div class="cd"><h2>خدماتنا</h2>${CFG.services.map(s=><div class="li">{s[0]} <b>{s[1]}</b>
-<span class="mu">{s[2]}</span><br><span class="mu">{s[3]?s[3]+" ج.م":"السعر النهائي بعد مراجعة الإدارة"}</span></div>).join("")}</div> <div class="cd"><h2>📍 العنوان والتواصل</h2><p>${CFG.addr}</p>${CFG.hours?<p>🕒 ${CFG.hours}</p>:""}<a class="btn t" href="${CFG.map}" target="_blank" rel="noopener">🗺️ الخريطة</a>${CFG.phones.map(p=> <a class="btn g" href="tel:${p[1]}">📞 {p[0]}</a>`).join("")}</div>
-${ready()?"":'<div class="cd er">⚠️ لم يتم ربط قاعدة البيانات بعد.</div>'}`,
-login:(m="in")=>`<div class="cd"><h2>${m==="up"?"إنشاء حساب جديد":m==="rs"?"استعادة كلمة المرور":"تسجيل الدخول"}</h2>${m==="up"?`<label>الاسم الكامل</label><input id="a-n"><label>رقم الهاتف</label><input id="a-p" type="tel" placeholder="01xxxxxxxxx">`:""}<label>البريد الإلكتروني</label><input id="a-e" type="email" dir="ltr">${m!=="rs"?`<label>كلمة المرور</label><input id="a-w" type="password" dir="ltr">`:""}${m==="up"?`<label>تأكيد كلمة المرور</label><input id="a-w2" type="password" dir="ltr"><label><input type="checkbox" id="a-c">أوافق على سياسة الخصوصية وشروط الاستخدام</label>`:""}
-<button class="btn b" id="a-go" data-m="${m}">${m==="up"?"إنشاء الحساب":m==="rs"?"إرسال رابط الاستعادة":"دخول"}</button><div id="a-r"></div>
-<p class="mu">${m!=="in"?'<a href="#" data-l="in">لدي حساب</a> • ':""}${m!=="up"?'<a href="#" data-l="up">إنشاء حساب جديد</a> • ':""}${m==="in"?'<a href="#" data-l="rs">نسيت كلمة المرور؟</a>':""}</p></div>`,
-acct:()=>`<div class="cd"><h2>👤 حسابي</h2><p>${E(prof.name||"")}<br>${E(user?.email||"")}<br>${E(prof.phone||"")}</p>${user&&!user.emailVerified?'<p class="er">بريدك غير مُفعَّل. <a href="#" id="vf">إرسال رابط التفعيل</a></p>':""}<label>الاسم</label><input id="p-n" value="${E(prof.name||"")}"><label>الهاتف</label><input id="p-p" value="${E(prof.phone||"")}"><button class="btn b" id="p-s">حفظ</button><button class="btn g b" id="lo">تسجيل الخروج</button><div id="p-r"></div></div>`,
-order:()=>user?`<div class="cd"><h2>🧺 طلب خدمة</h2><label>الاسم</label><input id="o-n" value="${E(prof.name||"")}"><label>الهاتف</label><input id="o-p" type="tel" value="${E(prof.phone||"")}"><label>العنوان داخل سيوة</label><input id="o-a"><label>الخدمات (يمكن اختيار أكثر من واحدة)</label>${CFG.services.map((s,i)=>`<label style="display:block;color:var(--tx);font-size:15px"><input type="checkbox" class="sv" value="${s[1]}">{s[1]}</label>).join("")}<label>نوع القطع</label><input id="o-t"><label>العدد التقديري</label><input id="o-q" type="number" min="1"><div class="fl"><div style="flex:1"><label>يوم الاستلام</label><input id="o-d" type="date"></div><div style="flex:1"><label>الوقت</label><input id="o-h" type="time"></div></div><label>طريقة الاستلام</label><select id="o-m"><option>أحضر القطع بنفسي</option><option>أريد استلامًا من العنوان (إن توفر)</option></select><label>كود الخصم (تراجعه الإدارة وتطبقه عند تسعير الطلب)</label><input id="o-c" dir="ltr"><label>ملاحظات</label><textarea id="o-x" rows="2"></textarea><p class="mu">السعر النهائي يحدده فريقنا بعد مراجعة الطلب وسيظهر لك في «طلباتي».</p><button class="btn b" id="o-go">🚀 إرسال الطلب</button><div id="o-r"></div></div>:<div class="cd"><h2>سجّل الدخول لإرسال طلبك</h2><p class="mu">نحتاج حسابًا لحفظ طلبك وتمكينك من متابعته.</p><button class="btn b" data-v="login">تسجيل الدخول</button><button class="btn g b" data-l="up">إنشاء حساب</button></div>,
-done:o=><div class="cd"><h2 class="ok">✅ تم حفظ طلبك</h2><p>رقم الطلب: <b dir="ltr" id="dn">${E(o.no)}</b></p><p class="mu">${E(o.service)}<br>${E(o.addr)}<br>الاستلام المطلوب: ${E(o.day)} ${E(o.time)} (بانتظار تأكيد الموعد)<br>السعر: بانتظار تأكيد السعر من الإدارة</p><button class="btn b" onclick="navigator.clipboard&&navigator.clipboard.writeText('${o.no}')">نسخ رقم الطلب</button><button class="btn t b" data-v="mine">تتبع الطلب</button><button class="btn g b" data-v="chat">تواصل مع الإدارة</button><button class="btn g b" data-v="home">الرئيسية</button></div>,
-mine:()=>user?<div class="cd"><h2>📦 طلباتي</h2><div id="ml" class="mu">جاري التحميل…</div></div>:V0.order(),
-chat:()=><div class="cd"><h2>💬 محادثاتي مع الإدارة</h2><div class="chat" id="cc"><div class="mu">${user?"جاري التحميل…":"سجّل الدخول لبدء المحادثة."}</div></div><label>رقم الطلب (اختياري)</label><input id="c-o" dir="ltr" placeholder="DD-123456"><div class="fl"><textarea id="c-t" rows="1" placeholder="اكتب رسالتك…">${E(pend)}</textarea><button class="btn" id="c-s">إرسال</button></div><div id="c-r" class="er"></div></div>,
-admin:()=><div class="cd"><h2>📋 الطلبات</h2><input id="f-q" placeholder="بحث: اسم / هاتف / رقم"><div id="al"></div></div><div class="cd"><h2>💬 صندوق الوارد</h2><div id="il"></div></div> <div class="cd"><h2>🔑 الصلاحيات ونقل الملكية</h2><p class="mu">دورك: <b>${role}</b>. المالك فقط يدعو مديرين أو مالكًا جديدًا ويحذف صلاحيات.</p>${role==="owner"?<label>بريد المدعو (يجب أن يفعّل بريده)</label><input id="iv-e" type="email" dir="ltr"><select id="iv-r"><option value="staff">موظف</option><option value="manager">مدير</option><option value="owner">مالك (نقل الملكية)</option></select><button class="btn b" id="iv-s">إرسال الدعوة</button><div id="iv-l"></div>:""}<div id="ad-l"></div></div>
-};
-const F={
-login:()=>{},
-mine:()=>{paintMine()},
-chat:()=>{
-if(!user)return;localStorage.seen=Date.now();
-const un=onSnapshot(query(collection(db,"chats",user.uid,"msgs"),orderBy("ts")),s=>{
-msgs=s.docs.map(d=>d.data());const e=("cc");if(!e)return;
-e.innerHTML=msgs.length?msgs.map(m=>`<div class="m ${m.from==="c"?"me":"ot"}">${m.no?"<b>["+E(m.no)+"]</b> ":""}${E(m.text)}<small>${m.from==="c"?"أنت":"الإدارة"} • ${fmt(m.ts)}</small></div>`).join(""):'<div class="mu">ابدأ المحادثة…</div>';
-e.scrollTop=e.scrollHeight;localStorage.seen=Date.now();
-},()=>{const e=("cc");if(e)e.innerHTML='<div class="er">تعذر تحميل الرسائل.</div>'});mUn=un;
-},
-admin:()=>{paintAdmin()}
-};
-function paintMine(){const e=$("ml");if(!e)return;e.innerHTML=orders.length?orders.map(o=><div class="li"><b dir="ltr">${E(o.no)}</b> — ${E(o.service)} <span class="tag">${ST[o.status]}</span>${o.status===8&&o.cancelReason?
-<span class="er">سبب الإلغاء: ${E(o.cancelReason)}</span>:""}<br><span class="mu">${o.price?السعر قبل الخصم: ${o.price+(o.discount||0)} • الخصم: ${o.discount\vert{}\vert{}0} • الإجمالي: ${o.price} • المدفوع: ${o.paid\vert{}\vert{}0} • المتبقي: ${o.price-(o.paid||0)} ج.م:"السعر: بانتظار تأكيد الإدارة"}</span></div>).join(""):"لا توجد طلبات بعد."}
-function paintAdmin(){
-if(!role||view!"admin")return;
-const q=(V("f-q")||"").toLowerCase();
-if($("al")) $("al").innerHTML=allOrders.filter(o=>!q||(o.name+o.phone+o.no).toLowerCase().includes(q)).sort((a,b)=>(b.status=0)-(a.status===0)||b.ts-a.ts).map(o=><div class="li" data-o="${E(o.no)}" style="cursor:pointer">${o.status===0?"🆕 ":""}<b dir="ltr">${E(o.no)}</b> ${E(o.name)} • ${E(o.service)} <span class="tag">${ST[o.status]}</span><br><span class="mu">${E(o.phone)} • ${fmt(o.ts)}</span></div>).join("")||'<span class="mu">لا توجد طلبات</span>';
-if($("il")) ("il").innerHTML=chats.map(c=>`<div class="li" data-c="${E(c.id)}" style="cursor:pointer">${c.from==="c"&&!c.closed?"🔴 ":""}<b>${E(c.name||"عميل")}</b> ${c.closed?'<span class="tag">مغلقة</span>':""}<br><span class="mu">${E(c.last||"")} • ${fmt(c.ts)}</span></div>`).join("")||'<span class="mu">لا محادثات</span>';
-if(("ad-l")) ("ad-l").innerHTML=admins.map(a=>`<div class="li">${E(a.email||a.id)} — ${a.role} ${role==="owner"&&a.id!==user.uid?`<button class="btn g" data-da="${E(a.id)}">حذف</button>`:""}</div>`).join("");
-if(("iv-l")) $("iv-l").innerHTML=invs.map(i=><div class="li">دعوة: ${E(i.id)} (${i.role}) <button class="btn g" data-di="${E(i.id)}">إلغاء</button></div>).join("");
-}
-function stop(){unsubs.forEach(u=>u());unsubs=[]}
-function boot(){
-stop();orders=[];chats=[];allOrders=[];admins=[];invs=[];own=null;role=null;
-if(!user){nav();return}
-getDoc(doc(db,"users",user.uid)).then(x=>{if(x.exists())prof=x.data()}).catch(()=>{});
-const sub=(q,f)=>unsubs.push(onSnapshot(q,x=>{f(x);nav();paintMine();paintAdmin()},()=>{}));
-sub(query(collection(db,"orders"),where("uid","",user.uid)),x=>orders=x.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts));
-sub(doc(db,"chats",user.uid),x=>own=x.exists()?x.data():null);
-getDoc(doc(db,"admins",user.uid)).then(x=>{
-if(x.exists()){
-role=x.data().role;
-const L=(c,f)=>sub(query(collection(db,c)),y=>f(y.docs.map(d=>({id:d.id,...d.data()}))));
-L("orders",a=>allOrders=a);L("admins",a=>admins=a);L("chats",a=>chats=a.sort((p,q)=>q.ts-p.ts));
-if(role="owner")L("invites",a=>invs=a);
-nav();
-}else tryInvite();
-}).catch(()=>{});
-}
-async function tryInvite(){
-try{
-const s=await getDoc(doc(db,"invites",user.email));
-if(s.exists()&&user.emailVerified){
-await setDoc(doc(db,"admins",user.uid),{role:s.data().role,email:user.email});
-await deleteDoc(doc(db,"invites",user.email)).catch(()=>{});
-location.reload();
-}
-}catch(e){}
-}
-const say=(id,m,c="er")=>{if((id))(id).innerHTML=<p class="${c}">${m}</p>};
-go("home");
-onAuthStateChanged(auth, u => {
-user = u;
-boot();
-nav();
-});
-document.addEventListener("click",async e=>{
-const t=e.target;
-const g=t.closest("[data-v]");if(g){go(g.dataset.v);return}
-const l=t.closest("[data-l]");if(l){e.preventDefault();go("login",l.dataset.l);return}
-if(t.closest("[data-x]")){("md").hidden=true;return}
-if(t.id==="vf"){e.preventDefault();try{await sendEmailVerification(user);alert("أُرسل رابط التفعيل إلى بريدك")}catch(x){alert("تعذر الإرسال الآن")}}
-if(t.id==="lo"){await signOut(auth);go("home")}
-if(t.id==="p-s"){try{await setDoc(doc(db,"users",user.uid),{name:V("p-n"),phone:V("p-p")});prof={name:V("p-n"),phone:V("p-p")};say("p-r","تم الحفظ","ok")}catch(x){say("p-r","تعذر الحفظ، حاول مرة أخرى.")}}
-if(t.id==="a-go"){
-const m=t.dataset.m,r="a-r";if(!ready())return say(r,"الموقع غير مربوط بقاعدة البيانات بعد.");
-const em=V("a-e");if(!em)return say(r,"أدخل البريد الإلكتروني.");t.disabled=true;
-try{
-if(m==="rs"){await sendPasswordResetEmail(auth,em);say(r,"أُرسل رابط الاستعادة إلى بريدك.","ok")}
-else if(m==="up"){
-const n=V("a-n"),p=V("a-p"),w=("a-w").value;
-if(n.length<3||!/^01\d{9}/.test(p))throw"أدخل الاسم ورقم هاتف مصري صحيح.";
-if(w!==("a-w2").value)throw"كلمتا المرور غير متطابقتين.";
-if(!("a-c").checked)throw"يلزم الموافقة على سياسة الخصوصية.";
-const c=await createUserWithEmailAndPassword(auth,em,w);
-await setDoc(doc(db,"users",c.user.uid),{name:n,phone:p});
-prof={name:n,phone:p};sendEmailVerification(c.user).catch(()=>{});user=c.user;boot();go(pend?"chat":"home");
-}else{await signInWithEmailAndPassword(auth,em,("a-w").value)}
-}catch(x){say(r,typeof x==="string"?x:AE[x.code]||"حدث خطأ، حاول مرة أخرى.")}
-t.disabled=false;
-}
-if(t.id==="o-go"){
-const r="o-r";if(busy)return;const n=V("o-n"),p=V("o-p"),a=V("o-a"),sv=[...document.querySelectorAll(".sv:checked")].map(x=>x.value).join(" + "),d=V("o-d"),h=V("o-h");
-if(n.length<3||!/^01\d{9}/.test(p)||a.length<4)return say(r,"تأكد من الاسم ورقم هاتف مصري صحيح (11 رقمًا) والعنوان.");
-if(!sv)return say(r,"اختر خدمة واحدة على الأقل.");if(!d||!h)return say(r,"حدد يوم ووقت الاستلام.");
-const q=V("o-q");busy=true;t.disabled=true;t.textContent="جاري الإرسال…";
-const no="DD-"+Math.floor(100000+Math.random()*900000),o={uid:user.uid,no,name:n,phone:p,addr:a,service:sv,items:V("o-t"),qty:q,day:d,time:h,method:V("o-m"),code:V("o-c").toUpperCase(),notes:V("o-x"),status:0,price:0,paid:0,discount:0,log:[{t:Date.now(),x:"تم استلام الطلب"}],ts:Date.now()};
-try{await setDoc(doc(db,"orders",no),o);go("done",o)}catch(x){say(r,"تعذر حفظ الطلب.");t.disabled=false;t.textContent="🔁 إعادة المحاولة"}busy=false;
-}
-if(t.id==="c-s"){
-const x=V("c-t");if(!x)return;if(!user){pend=x;return go("login","in")}t.disabled=true;
-try{
-await addDoc(collection(db,"chats",user.uid,"msgs"),{from:"c",text:x,no:V("c-o").toUpperCase(),ts:Date.now()});
-await setDoc(doc(db,"chats",user.uid),{name:prof.name||user.email,last:x,from:"c",ts:Date.now(),closed:false},{merge:true});
-if(("c-t"))$("c-t").value="";pend="";
-}catch(y){say("c-r","تعذر إرسال الرسالة.")}t.disabled=false;
-}
-});
-</script></body></html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دراي ألماسة كلين | Diamond Dry Clean</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
+                    <i class="fa-solid fa-gem"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-xl text-slate-800 tracking-wide">دراي ألماسة كلين</h1>
+                    <p class="text-xs text-slate-500">Diamond Dry Clean</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6 space-x-reverse font-semibold text-slate-600">
+                <a href="#home" class="hover:text-pink-600 transition">الرئيسية</a>
+                <a href="#offers" class="hover:text-pink-600 transition text-pink-600 font-bold"><i class="fa-solid fa-tag"></i> العروض</a>
+                <a href="#services" class="hover:text-pink-600 transition">خدماتنا</a>
+                <a href="#order" class="hover:text-pink-600 transition">طلب خدمة</a>
+                <a href="#trackOrder" class="hover:text-pink-600 transition">متابعة طلبك</a>
+            </nav>
+            <div class="flex items-center gap-2">
+                <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" title="طريق المغسلة" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1">
+                    <i class="fa-solid fa-map-location-dot text-sm"></i>
+                    <span class="hidden sm:inline">موقعنا</span>
+                </a>
+                <button id="ownerAuthBtn" type="button" onclick="openOwnerModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-3 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span class="hidden sm:inline">دخول المالك</span>
+                </button>
+                <button id="logoutBtn" type="button" onclick="logoutOwner()" class="hidden bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-3 py-2 rounded-xl shadow-md transition cursor-pointer">
+                    خروج المالك
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-semibold mb-4 inline-block">
+                    <i class="fa-solid fa-sparkles ml-1"></i> عناية تليق بملابسك
+                </span>
+                <h2 class="text-4xl md:text-5xl font-black mb-4 leading-tight">نظافة فائقة وعناية بمفروشاتك في قلب سيوة</h2>
+                <p class="text-lg text-pink-100 mb-8">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بدون حساب!</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#order" class="bg-white text-pink-600 font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-pink-50 transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> اطلب خدمة الآن
+                    </a>
+                    <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="bg-pink-700 text-white border border-pink-400 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-pink-800 transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-route"></i> طريق المغسلة (خرائط)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Offers Section (Public - Controlled Exclusively by Owner) -->
+        <section id="offers" class="max-w-7xl mx-auto px-4 py-8">
+            <div class="bg-gradient-to-r from-amber-500 to-pink-600 text-white rounded-3xl p-6 shadow-lg">
+                <h3 class="text-2xl font-black flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-fire"></i> أحدث العروض والخصومات
+                </h3>
+                <div id="publicOffersList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p class="text-amber-100 text-sm">لا توجد عروض حالياً. المالك هو الوحيد الذي يضيف العروض من لوحة التحكم.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="max-w-7xl mx-auto px-4 py-12">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-black text-slate-800 mb-2">خدماتنا</h3>
+                <div class="w-20 h-1 bg-pink-600 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-shirt"></i></div>
+                    <h4 class="font-bold text-xl text-slate-800 mb-2">غسيل الملابس</h4>
+                    <p class="text-slate-600 text-sm">غسيل وتنظيف يومي بأعلى جودة مع المراعاة الكاملة للأنسجة.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h4 class="font-bold text-xl text-slate-800 mb-2">التنظيف بالبخار</h4>
+                    <p class="text-slate-600 text-sm">تعقيم وتنظيف احترافي للأقمشة والبدل والفساتين.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                    <h4 class="font-bold text-xl text-slate-800 mb-2">خدمة التوصيل</h4>
+                    <p class="text-slate-600 text-sm">مندوبنا يصلك لباب المنزل لاستلام وتسليم الملابس بسهولة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Direct Order Form Section -->
+        <section id="order" class="max-w-3xl mx-auto px-4 py-8">
+            <div class="bg-white p-8 rounded-3xl shadow-lg border border-pink-100">
+                <h3 class="text-2xl font-black text-slate-800 mb-2 text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-pen text-pink-600"></i> طلب خدمة سريع
+                </h3>
+                <p class="text-slate-500 text-center text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك فوراً بدون الحاجة للتسجيل</p>
+                
+                <form id="directOrderForm" onsubmit="handleCreateOrder(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل *</label>
+                        <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف / الواتساب *</label>
+                        <input type="tel" id="clientPhone" required placeholder="01xxxxxxxxx" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني <span class="text-slate-400 font-normal">(اختياري)</span></label>
+                        <input type="email" id="clientEmail" placeholder="example@mail.com (اختياري)" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">نوع الخدمة والتوصيل</label>
+                        <select id="deliveryOption" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none bg-white">
+                            <option value="توصيل واستلام من المنزل">طلب توصيل واستلام من المنزل 🚚</option>
+                            <option value="تسليم واستلام بالمحل">تسليم واستلام من المحل 🏪</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">اختر الخدمة المطلوبة</label>
+                        <select id="serviceType" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none bg-white">
+                            <option value="غسيل ملابس">غسيل ملابس</option>
+                            <option value="تنظيف بالبخار">تنظيف بالبخار</option>
+                            <option value="كي ملابس">كي ملابس</option>
+                            <option value="غسيل مفروشات وبطاطين">غسيل مفروشات وبطاطين</option>
+                            <option value="إزالة بقع">إزالة بقع</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">العنوان بالتفصيل أو ملاحظات الطلب</label>
+                        <textarea id="orderDetails" rows="3" placeholder="اكتب العنوان بالتفصيل وعدد القطع..." class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" id="sendOrderBtn" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-black text-lg shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-paper-plane"></i> إرسال الطلب الآن
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Track Order Section -->
+        <section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center">
+                <h3 class="text-xl font-black text-slate-800 mb-2">🔍 متابعة حالة طلبك برقم الهاتف</h3>
+                <p class="text-xs text-slate-500 mb-4">ابحث برقم هاتفك لمعرفة هل طلبك جديد أو قيد التنفيذ أو جاهز للإستلام</p>
+                <div class="flex gap-2 max-w-md mx-auto">
+                    <input type="tel" id="searchPhoneInput" placeholder="أدخل رقم هاتفك..." class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <button type="button" onclick="trackClientOrders()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl font-bold text-sm cursor-pointer">بحث</button>
+                </div>
+                <div id="clientTrackingResult" class="mt-4 text-right"></div>
+            </div>
+        </section>
+
+        <!-- Owner Dashboard Section (Hidden by Default) -->
+        <section id="adminSection" class="max-w-6xl mx-auto px-4 py-8 hidden space-y-8">
+            <!-- Manage Offers Section -->
+            <div class="bg-white p-6 rounded-2xl shadow-md border-2 border-amber-500">
+                <h3 class="text-xl font-black text-amber-600 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-bullhorn"></i> إضافة عرض أو خصم جديد (خاص بالمالك)
+                </h3>
+                <form onsubmit="addNewOffer(event)" class="flex flex-col md:flex-row gap-3 mb-4">
+                    <input type="text" id="offerTitle" required placeholder="عنوان العرض (مثال: خصم 20%)" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <input type="text" id="offerDetails" required placeholder="تفاصيل العرض" class="flex-grow px-4 py-2 border rounded-xl focus:outline-none">
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-xl font-bold shadow transition cursor-pointer">نشر العرض</button>
+                </form>
+            </div>
+
+            <!-- Manage Orders & Invoices -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-pink-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-black text-pink-600 flex items-center gap-2">
+                        <i class="fa-solid fa-crown"></i> لوحة إدارة الطلبات والفواتير (المالك)
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-100 text-slate-700">
+                            <tr>
+                                <th class="p-3">العميل</th>
+                                <th class="p-3">الهاتف</th>
+                                <th class="p-3">الخدمة</th>
+                                <th class="p-3">الحالة</th>
+                                <th class="p-3">إجراءات الفاتورة والواتساب</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTable" class="divide-y divide-slate-100">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد طلبات جارية.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm">
+        <p class="mb-3">
+            <i class="fa-solid fa-location-dot text-pink-500 ml-1"></i> سيوة - بجوار فندق النخيل، شارع تورار
+        </p>
+        <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs mb-4">
+            <i class="fa-solid fa-map-pin"></i> فتح في خرائط جوجل مباشرة
+        </a>
+        <p>&copy; 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Owner Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 px-4">
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+            <button type="button" onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600 font-bold cursor-pointer">✕</button>
+            <h3 class="text-2xl font-black text-slate-800 mb-6 text-center flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shield-halved text-amber-500"></i> دخول المالك
+            </h3>
+            <form onsubmit="handleOwnerAuth(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">البريد الإلكتروني للمالك</label>
+                    <input type="text" id="ownerEmailInput" class="w-full px-4 py-2 border rounded-xl focus:outline-none" placeholder="أدخل بريد المالك">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white py-2.5 rounded-xl font-bold shadow-md cursor-pointer transition">دخول لوحة المالك</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 px-4">
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+            <button type="button" onclick="closeInvoiceModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600 font-bold cursor-pointer">✕</button>
+            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-file-invoice-dollar text-green-600"></i> إرسال فاتورة العميل
+            </h3>
+            <form onsubmit="sendInvoiceWhatsApp(event)" class="space-y-4">
+                <input type="hidden" id="invPhone">
+                <input type="hidden" id="invName">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">المبلغ المطلوب (ج.م)</label>
+                    <input type="number" id="invAmount" required placeholder="100" class="w-full px-4 py-2 border rounded-xl focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-xl shadow-md transition flex justify-center items-center gap-2 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> إرسال عبر الواتساب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pure JS Modal Control Script -->
+    <script>
+        function openOwnerModal() {
+            var el = document.getElementById('authModal');
+            if(el) el.classList.remove('hidden');
+        }
+        function closeOwnerModal() {
+            var el = document.getElementById('authModal');
+            if(el) el.classList.add('hidden');
+        }
+        function closeInvoiceModal() {
+            var el = document.getElementById('invoiceModal');
+            if(el) el.classList.add('hidden');
+        }
+    </script>
+
+    <!-- Firebase Logic JavaScript -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",
+            authDomain: "al-masa-dry-clean.firebaseapp.com",
+            projectId: "al-masa-dry-clean",
+            storageBucket: "al-masa-dry-clean.appspot.com",
+            messagingSenderId: "624222741188",
+            appId: "1:624222741188:web:abcdef123456789"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // قائمة ببريد المالك المعتمد
+        const ALLOWED_OWNERS = [
+            "ahmadabubakr027@gmail.com"
+        ];
+        let localOrders = [];
+
+        // Check login status on page load (Session Persistence)
+        window.addEventListener('DOMContentLoaded', () => {
+            const isOwnerLoggedIn = localStorage.getItem('isOwnerLoggedIn');
+            if (isOwnerLoggedIn === 'true') {
+                document.getElementById('ownerAuthBtn').classList.add('hidden');
+                document.getElementById('logoutBtn').classList.remove('hidden');
+                document.getElementById('adminSection').classList.remove('hidden');
+                listenToA
