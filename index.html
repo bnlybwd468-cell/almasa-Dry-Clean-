@@ -295,20 +295,17 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // قائمة ببريد المالك المعتمد (يمكنك إضافة أي بريد إلكتروني آخر هنا لاحقاً بكل سهولة)
+        // قائمة ببريد المالك المعتمد
         const ALLOWED_OWNERS = [
             "ahmadabubakr027@gmail.com"
         ];
         let localOrders = [];
 
-        // Owner Auth Verification
-        window.handleOwnerAuth = function(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('ownerEmailInput');
-            if (!inputField) return;
-            
-            const email = inputField.value.trim().toLowerCase();
-
-            if (ALLOWED_OWNERS.includes(email)) {
-                closeOwnerModal();
-                document.getElementById('ownerAuthBtn').classList.add('hi
+        // Check login status on page load (Session Persistence)
+        window.addEventListener('DOMContentLoaded', () => {
+            const isOwnerLoggedIn = localStorage.getItem('isOwnerLoggedIn');
+            if (isOwnerLoggedIn === 'true') {
+                const authBtn = document.getElementById('ownerAuthBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const adminSec = document.getElementById('adminSection');
+                if(authBtn) authBtn.classList.add('h
