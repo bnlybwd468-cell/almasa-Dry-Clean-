@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="دراي ألماسة كلين - Diamond Dry Clean: غسيل وكي وتنظيف بالبخار وغسيل بطاطين ومفروشات في سيوة، مطروح"><title>دراي ألماسة كلين | Diamond Dry Clean - سيوة</title>
+<meta name="description" content="دراي ألماسة كلين - Diamond Dry Clean: غسيل وكي وتنظيف بالبخار وغسيل بطاطين ومفروشات في سيوة، مطروح">
+<title>دراي ألماسة كلين | Diamond Dry Clean - سيوة</title>
 <style>
 :root{--bg:#fdf6f9;--cd:#fff;--tx:#2a1d25;--mu:#7a6a73;--pk:#e0457b;--tq:#17b8b0;--bd:#f0dde6;--ok:#168a5a;--er:#c0392b}
 @media(prefers-color-scheme:dark){:root{--bg:#1a1217;--cd:#251a21;--tx:#f6e9ef;--mu:#b9a5af;--bd:#3c2a34}}
@@ -15,80 +18,232 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--cd);border-top:1px s
 .chat{height:300px;overflow-y:auto;border:1px solid var(--bd);border-radius:12px;padding:8px;background:var(--bg)}.m{max-width:80%;padding:6px 11px;border-radius:12px;margin:5px 0;font-size:14px;white-space:pre-wrap}.m small{display:block;opacity:.7;font-size:10px}.me{background:var(--pk);color:#fff;margin-inline-start:auto}.ot{background:var(--cd);border:1px solid var(--bd)}
 .fl{display:flex;gap:6px}.fl>*{margin:0}.bd{background:var(--er);color:#fff;border-radius:9px;padding:0 6px;font-size:11px}
 #md{position:fixed;inset:0;background:#0008;z-index:9;overflow:auto;padding:20px 10px}#md .bx{background:var(--cd);border-radius:16px;padding:16px;max-width:520px;margin:auto}[hidden]{display:none!important}
-</style></head><body>
-<div class="w" id="v"><p class="mu">جاري التحميل…</p></div>
-<nav id="nav"></nav><div id="md" hidden></div>
-<script type="module">
-const U="https://www.gstatic.com/firebasejs/10.12.2/";let initializeApp,getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,sendEmailVerification,signOut,getFirestore,doc,setDoc,getDoc,addDoc,collection,query,where,orderBy,onSnapshot,updateDoc,deleteDoc,loadErr=false;
-try{const[a,b,c]=await Promise.all([import(U+"firebase-app.js"),import(U+"firebase-auth.js"),import(U+"firebase-firestore.js")]);({initializeApp}=a);({getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,sendEmailVerification,signOut}=b);({getFirestore,doc,setDoc,getDoc,addDoc,collection,query,where,orderBy,onSnapshot,updateDoc,deleteDoc}=c)}catch(e){loadErr=true}
-/* ===== الإعدادات: عدّل هذا القسم ===== */
-const FIREBASE={apiKey:"AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",authDomain:"al-masa-dry-clean.firebaseapp.com",projectId:"al-masa-dry-clean",storageBucket:"al-masa-dry-clean.firebasestorage.app",messagingSenderId:"624222741188",appId:"1:624222741188:web:a8f3939d14765f02c5df91"};
-const CFG={name:"دراي ألماسة كلين",addr:"شارع توار المتفرع من السوق بجوار فندق النخيل - سيوة، مطروح",map:"https://maps.app.goo.gl/QMD5GRB5x27nvD836",hours:"",
- phones:[["أ. أبو بكر أحمد","01023714530"],["أ. عبد الله أحمد","01021988683"]],
- services:[["👕","غسيل الملابس","غسيل الملابس اليومية والرسمية مع مراعاة نوع القماش.",""],["♨️","التنظيف بالبخار","عناية مناسبة بالقطع التي تتطلب معالجة بالبخار.",""],["👔","كي الملابس","كي احترافي للحفاظ على مظهر الملابس.",""],["🛏️","غسيل البطاطين والمفروشات","البطاطين والألحفة والستائر وأغطية الأسرة.",""],["✨","إزالة البقع الصعبة","فحص البقعة واختيار المعالجة المناسبة دون ضمان إزالة كل بقعة.",""],["🏨","خدمات الفنادق والمنشآت","خدمات مخصصة للفنادق والمخيمات، اطلب عرض سعر.",""]]};
-const ST=["تم إرسال الطلب","تم تأكيد الطلب","جارٍ تنسيق الاستلام","تم استلام الملابس","قيد الغسيل أو الكي","جاهز للتسليم","خرج للتوصيل","تم التسليم","تم الإلغاء"];
-const AE={"auth/email-already-in-use":"هذا البريد مسجّل بالفعل، سجّل الدخول.","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة.","auth/wrong-password":"البريد أو كلمة المرور غير صحيحة.","auth/weak-password":"كلمة المرور ضعيفة (6 أحرف على الأقل).","auth/invalid-email":"البريد الإلكتروني غير صحيح.","auth/network-request-failed":"تعذر الاتصال بالإنترنت، حاول مرة أخرى.","auth/too-many-requests":"محاولات كثيرة، انتظر قليلًا.","auth/unauthorized-domain":"هذا النطاق غير مسموح في إعدادات Firebase (Authorized domains).","auth/operation-not-allowed":"تسجيل الدخول بالبريد غير مفعّل في Firebase.","auth/configuration-not-found":"إعدادات Firebase Authentication غير مكتملة."};
-const $=i=>document.getElementById(i),V=i=>$(i).value.trim(),E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fmt=t=>t?new Date(t).toLocaleString("ar-EG",{dateStyle:"short",timeStyle:"short"}):"";
-let app,auth,db,own=null,user=null,prof={},role=null,view="home",orders=[],chats=[],msgs=[],allOrders=[],admins=[],invs=[],D={},pend="",busy=false,unsubs=[],mUn=null,sel=null;
-try{app=initializeApp(FIREBASE);auth=getAuth(app);db=getFirestore(app)}catch(e){}
-const ready=()=>db&&FIREBASE.projectId!=="ضع_القيمة";
-function nav(){const n=(v,i,t,b)=>`<button data-v="${v}" class="${view===v?"on":""}"><i>${i}</i>${t}${b?` <span class="bd">${b}</span>`:""}</button>`;
- const un=user&&own&&own.from==="a"&&own.ts>(+localStorage.seen||0)?1:0,ad=role?allOrders.filter(o=>o.status===0).length+chats.filter(c=>c.from==="c"&&!c.closed).length:0;
- $("nav").innerHTML=n("home","🏠","الرئيسية")+n("order","🧺","اطلب")+n("mine","📦","طلباتي")+n("chat","💬","محادثاتي",un||"")+(user?n("acct","👤","حسابي"):n("login","🔑","دخول"))+(role?n("admin","⚙️","الإدارة",ad||""):"")}
-function go(v,x){view=v;if(mUn){mUn();mUn=null}$("v").innerHTML=V0[v](x);if(F[v])F[v](x);nav();scrollTo(0,0)}
-const wa=p=>"https://wa.me/20"+p.replace(/^0/,"");
-const V0={
-home:()=>`<div class="hero"><div style="font-size:50px">💎</div><h1>${CFG.name}</h1><div>DIAMOND DRY CLEAN</div><p><b>عناية تليق بملابسك</b><br>نظافة فائقة وعناية بملابسك ومفروشاتك في قلب سيوة</p><button class="btn" style="background:#fff;color:#b02a5c" data-v="order">🧺 اطلب خدمة غسيل / كي الآن</button></div>
-<div class="cd"><h2>خدماتنا</h2>${CFG.services.map(s=>`<div class="li">${s[0]} <b>${s[1]}</b><br><span class="mu">${s[2]}</span><br><span class="mu">${s[3]?s[3]+" ج.م":"السعر النهائي بعد مراجعة الإدارة"}</span></div>`).join("")}</div>
-<div class="cd"><h2>📍 العنوان والتواصل</h2><p>${CFG.addr}</p>${CFG.hours?`<p>🕒 ${CFG.hours}</p>`:""}<a class="btn t" href="${CFG.map}" target="_blank" rel="noopener">🗺️ الخريطة</a>${CFG.phones.map(p=>` <a class="btn g" href="tel:${p[1]}">📞 ${p[0]}</a>`).join("")}</div>
-${ready()?"":`<div class="cd er">⚠️ ${loadErr?"تعذر تحميل خدمات Firebase، تأكد من الاتصال بالإنترنت وأعد تحميل الصفحة.":"لم يتم ربط قاعدة البيانات بعد."}</div>`}`,
-login:(m="in")=>`<div class="cd"><h2>${m==="up"?"إنشاء حساب جديد":m==="rs"?"استعادة كلمة المرور":"تسجيل الدخول"}</h2>${m==="up"?`<label>الاسم الكامل</label><input id="a-n"><label>رقم الهاتف</label><input id="a-p" type="tel" placeholder="01xxxxxxxxx">`:""}<label>البريد الإلكتروني</label><input id="a-e" type="email" dir="ltr">${m!=="rs"?`<label>كلمة المرور</label><input id="a-w" type="password" dir="ltr">`:""}${m==="up"?`<label>تأكيد كلمة المرور</label><input id="a-w2" type="password" dir="ltr"><label><input type="checkbox" id="a-c">أوافق على سياسة الخصوصية وشروط الاستخدام</label>`:""}
-<button class="btn b" id="a-go" data-m="${m}">${m==="up"?"إنشاء الحساب":m==="rs"?"إرسال رابط الاستعادة":"دخول"}</button><div id="a-r"></div>
-<p class="mu">${m!=="in"?'<a href="#" data-l="in">لدي حساب</a> • ':""}${m!=="up"?'<a href="#" data-l="up">إنشاء حساب جديد</a> • ':""}${m==="in"?'<a href="#" data-l="rs">نسيت كلمة المرور؟</a>':""}</p></div>`,
-acct:()=>`<div class="cd"><h2>👤 حسابي</h2><p>${E(prof.name||"")}<br>${E(user?.email||"")}<br>${E(prof.phone||"")}</p>${user&&!user.emailVerified?'<p class="er">بريدك غير مُفعَّل. <a href="#" id="vf">إرسال رابط التفعيل</a></p>':""}<label>الاسم</label><input id="p-n" value="${E(prof.name||"")}"><label>الهاتف</label><input id="p-p" value="${E(prof.phone||"")}"><button class="btn b" id="p-s">حفظ</button><button class="btn g b" id="lo">تسجيل الخروج</button><div id="p-r"></div></div>`,
-order:()=>user?`<div class="cd"><h2>🧺 طلب خدمة</h2><label>الاسم</label><input id="o-n" value="${E(prof.name||"")}"><label>الهاتف</label><input id="o-p" type="tel" value="${E(prof.phone||"")}"><label>العنوان داخل سيوة</label><input id="o-a"><label>الخدمات (يمكن اختيار أكثر من واحدة)</label>${CFG.services.map((s,i)=>`<label style="display:block;color:var(--tx);font-size:15px"><input type="checkbox" class="sv" value="${s[1]}">${s[1]}</label>`).join("")}<label>نوع القطع</label><input id="o-t"><label>العدد التقديري</label><input id="o-q" type="number" min="1"><div class="fl"><div style="flex:1"><label>يوم الاستلام</label><input id="o-d" type="date"></div><div style="flex:1"><label>الوقت</label><input id="o-h" type="time"></div></div><label>طريقة الاستلام</label><select id="o-m"><option>أحضر القطع بنفسي</option><option>أريد استلامًا من العنوان (إن توفر)</option></select><label>كود الخصم (تراجعه الإدارة وتطبقه عند تسعير الطلب)</label><input id="o-c" dir="ltr"><label>ملاحظات</label><textarea id="o-x" rows="2"></textarea><p class="mu">السعر النهائي يحدده فريقنا بعد مراجعة الطلب وسيظهر لك في «طلباتي».</p><button class="btn b" id="o-go">🚀 إرسال الطلب</button><div id="o-r"></div></div>`:`<div class="cd"><h2>سجّل الدخول لإرسال طلبك</h2><p class="mu">نحتاج حسابًا لحفظ طلبك وتمكينك من متابعته.</p><button class="btn b" data-v="login">تسجيل الدخول</button><button class="btn g b" data-l="up">إنشاء حساب</button></div>`,
-done:o=>`<div class="cd"><h2 class="ok">✅ تم حفظ طلبك</h2><p>رقم الطلب: <b dir="ltr" id="dn">${E(o.no)}</b></p><p class="mu">${E(o.service)}<br>${E(o.addr)}<br>الاستلام المطلوب: ${E(o.day)} ${E(o.time)} (بانتظار تأكيد الموعد)<br>السعر: بانتظار تأكيد السعر من الإدارة</p><button class="btn b" onclick="navigator.clipboard&&navigator.clipboard.writeText('${o.no}')">نسخ رقم الطلب</button><button class="btn t b" data-v="mine">تتبع الطلب</button><button class="btn g b" data-v="chat">تواصل مع الإدارة</button><button class="btn g b" data-v="home">الرئيسية</button></div>`,
-mine:()=>user?`<div class="cd"><h2>📦 طلباتي</h2><div id="ml" class="mu">جاري التحميل…</div></div>`:V0.order(),
-chat:()=>`<div class="cd"><h2>💬 محادثاتي مع الإدارة</h2><div class="chat" id="cc"><div class="mu">${user?"جاري التحميل…":"سجّل الدخول لبدء المحادثة."}</div></div><label>رقم الطلب (اختياري)</label><input id="c-o" dir="ltr" placeholder="DD-123456"><div class="fl"><textarea id="c-t" rows="1" placeholder="اكتب رسالتك…">${E(pend)}</textarea><button class="btn" id="c-s">إرسال</button></div><div id="c-r" class="er"></div><p class="mu">إرسال الصور غير مفعّل في هذه النسخة (يحتاج تخزينًا مدفوعًا).</p></div>`,
-admin:()=>`<div class="cd"><h2>📋 الطلبات</h2><input id="f-q" placeholder="بحث: اسم / هاتف / رقم"><div id="al"></div></div><div class="cd"><h2>💬 صندوق الوارد</h2><div id="il"></div><div id="it" hidden><div class="chat" id="ic"></div><div class="fl" style="margin-top:6px"><input id="ir" placeholder="الرد…"><button class="btn" id="is">رد</button></div><button class="btn g b" id="ix"></button></div></div>
-<div class="cd"><h2>🔑 الصلاحيات ونقل الملكية</h2><p class="mu">دورك: <b>${role}</b>. المالك فقط يدعو مديرين أو مالكًا جديدًا ويحذف صلاحيات.</p>${role==="owner"?`<label>بريد المدعو (يجب أن يفعّل بريده)</label><input id="iv-e" type="email" dir="ltr"><select id="iv-r"><option value="staff">موظف</option><option value="manager">مدير</option><option value="owner">مالك (نقل الملكية)</option></select><button class="btn b" id="iv-s">إرسال الدعوة</button><div id="iv-l"></div>`:""}<div id="ad-l"></div></div>`};
-const F={
-login:()=>{},
-mine:()=>{paintMine()},
-chat:()=>{if(!user)return;localStorage.seen=Date.now();const un=onSnapshot(query(collection(db,"chats",user.uid,"msgs"),orderBy("ts")),s=>{msgs=s.docs.map(d=>d.data());const e=$("cc");if(!e)return;e.innerHTML=msgs.length?msgs.map(m=>`<div class="m ${m.from==="c"?"me":"ot"}">${m.no?"<b>["+E(m.no)+"]</b> ":""}${E(m.text)}<small>${m.from==="c"?"أنت":"الإدارة"} • ${fmt(m.ts)}</small></div>`).join(""):'<div class="mu">ابدأ المحادثة…</div>';e.scrollTop=e.scrollHeight;localStorage.seen=Date.now()},()=>{const e=$("cc");if(e)e.innerHTML='<div class="er">تعذر تحميل الرسائل.</div>'});mUn=un},
-admin:()=>{paintAdmin()}};
-function paintMine(){const e=$("ml");if(!e)return;e.innerHTML=orders.length?orders.map(o=>`<div class="li"><b dir="ltr">${E(o.no)}</b> — ${E(o.service)} <span class="tag">${ST[o.status]}</span>${o.status===8&&o.cancelReason?`<br><span class="er">سبب الإلغاء: ${E(o.cancelReason)}</span>`:""}<br><span class="mu">${o.price?`السعر قبل الخصم: ${o.price+(o.discount||0)} • الخصم: ${o.discount||0} • الإجمالي: ${o.price} • المدفوع: ${o.paid||0} • المتبقي: ${o.price-(o.paid||0)} ج.م`:"السعر: بانتظار تأكيد الإدارة"}</span>${(o.log||[]).map(l=>`<div class="mu">• ${fmt(l.t)} — ${E(l.x)}</div>`).join("")}</div>`).join(""):"لا توجد طلبات بعد."}
-function paintAdmin(){if(!role||view!=="admin")return;if(sel&&$("ix")){const c0=chats.find(z=>z.id===sel);if(c0)$("ix").textContent=c0.closed?"إعادة فتح المحادثة":"إغلاق المحادثة"}const q=($("f-q")?.value||"").toLowerCase();$("al").innerHTML=allOrders.filter(o=>!q||(o.name+o.phone+o.no).toLowerCase().includes(q)).sort((a,b)=>(b.status===0)-(a.status===0)||b.ts-a.ts).map(o=>`<div class="li" data-o="${E(o.no)}" style="cursor:pointer">${o.status===0?"🆕 ":""}<b dir="ltr">${E(o.no)}</b> ${E(o.name)} • ${E(o.service)} <span class="tag">${ST[o.status]}</span><br><span class="mu">${E(o.phone)} • ${fmt(o.ts)}</span></div>`).join("")||'<span class="mu">لا توجد طلبات</span>';
- $("il").innerHTML=chats.map(c=>`<div class="li" data-c="${E(c.id)}" style="cursor:pointer">${c.from==="c"&&!c.closed?"🔴 ":""}<b>${E(c.name||"عميل")}</b> ${c.closed?'<span class="tag">مغلقة</span>':""}<br><span class="mu">${E(c.last||"")} • ${fmt(c.ts)}</span></div>`).join("")||'<span class="mu">لا محادثات</span>';
- $("ad-l").innerHTML=admins.map(a=>`<div class="li">${E(a.email||a.id)} — ${a.role} ${role==="owner"&&a.id!==user.uid?`<button class="btn g" data-da="${E(a.id)}">حذف</button>`:""}</div>`).join("");if($("iv-l"))$("iv-l").innerHTML=invs.map(i=>`<div class="li">دعوة: ${E(i.id)} (${i.role}) <button class="btn g" data-di="${E(i.id)}">إلغاء</button></div>`).join("")}
-function modal(h){$("md").innerHTML='<div class="bx">'+h+'<button class="btn g b" data-x>إغلاق</button></div>';$("md").hidden=false}
-function stop(){unsubs.forEach(u=>u());unsubs=[]}
-function boot(){stop();orders=[];chats=[];allOrders=[];admins=[];invs=[];own=null;role=null;
- if(!user){nav();return}
- getDoc(doc(db,"users",user.uid)).then(x=>{if(x.exists())prof=x.data()}).catch(()=>{});
- const sub=(q,f)=>unsubs.push(onSnapshot(q,x=>{f(x);nav();paintMine();paintAdmin()},()=>{}));
- sub(query(collection(db,"orders"),where("uid","==",user.uid)),x=>orders=x.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts));
- sub(doc(db,"chats",user.uid),x=>own=x.exists()?x.data():null);
- getDoc(doc(db,"admins",user.uid)).then(x=>{if(x.exists()){role=x.data().role;const L=(c,f)=>sub(query(collection(db,c)),y=>f(y.docs.map(d=>({id:d.id,...d.data()}))));L("orders",a=>allOrders=a);L("admins",a=>admins=a);L("chats",a=>chats=a.sort((p,q)=>q.ts-p.ts));if(role==="owner")L("invites",a=>invs=a);nav()}else tryInvite()}).catch(()=>{})}
-async function tryInvite(){try{const s=await getDoc(doc(db,"invites",user.email));if(s.exists()&&user.emailVerified){await setDoc(doc(db,"admins",user.uid),{role:s.data().role,email:user.email});await deleteDoc(doc(db,"invites",user.email)).catch(()=>{});location.reload()}}catch(e){}}
-const say=(id,m,c="er")=>{$(id).innerHTML=`<p class="${c}">${m}</p>`};
-document.addEventListener("click",async e=>{const t=e.target;
- const g=t.closest("[data-v]");if(g){go(g.dataset.v);return}const l=t.closest("[data-l]");if(l){e.preventDefault();go("login",l.dataset.l);return}
- if(t.closest("[data-x]")){$("md").hidden=true;return}
- if(t.id==="vf"){e.preventDefault();try{await sendEmailVerification(user);alert("أُرسل رابط التفعيل إلى بريدك")}catch(x){alert("تعذر الإرسال الآن")}}
- if(t.id==="lo"){await signOut(auth);go("home")}
- if(t.id==="p-s"){try{await setDoc(doc(db,"users",user.uid),{name:V("p-n"),phone:V("p-p")});prof={name:V("p-n"),phone:V("p-p")};say("p-r","تم الحفظ","ok")}catch(x){say("p-r","تعذر الحفظ، حاول مرة أخرى.")}}
- if(t.id==="a-go"){const m=t.dataset.m,r="a-r";if(!ready())return say(r,"الموقع غير مربوط بقاعدة البيانات بعد.");const em=V("a-e");if(!em)return say(r,"أدخل البريد الإلكتروني.");t.disabled=true;
-  try{if(m==="rs"){await sendPasswordResetEmail(auth,em);say(r,"أُرسل رابط الاستعادة إلى بريدك.","ok")}
-  else if(m==="up"){const n=V("a-n"),p=V("a-p"),w=$("a-w").value;if(n.length<3||!/^01\d{9}$/.test(p))throw"أدخل الاسم ورقم هاتف مصري صحيح.";if(w!==$("a-w2").value)throw"كلمتا المرور غير متطابقتين.";if(!$("a-c").checked)throw"يلزم الموافقة على سياسة الخصوصية.";
-   const c=await createUserWithEmailAndPassword(auth,em,w);await setDoc(doc(db,"users",c.user.uid),{name:n,phone:p});prof={name:n,phone:p};sendEmailVerification(c.user).catch(()=>{});user=c.user;boot();go(pend?"chat":"home")}
-  else{await signInWithEmailAndPassword(auth,em,$("a-w").value)}}
-  catch(x){say(r,typeof x==="string"?x:AE[x.code]||"حدث خطأ، حاول مرة أخرى. ("+(x.code||x.message||"")+")")}t.disabled=false}
- if(t.id==="o-go"){const r="o-r";if(busy)return;const n=V("o-n"),p=V("o-p"),a=V("o-a"),sv=[...document.querySelectorAll(".sv:checked")].map(x=>x.value).join(" + "),d=V("o-d"),h=V("o-h");
-  if(n.length<3||!/^01\d{9}$/.test(p)||a.length<4)return say(r,"تأكد من الاسم ورقم هاتف مصري صحيح (11 رقمًا) والعنوان.");if(!sv)return say(r,"اختر خدمة واحدة على الأقل.");
-  if(!d||!h)return say(r,"حدد يوم ووقت الاستلام.");if(new Date(d+"T"+h)<new Date())return say(r,"موعد الاستلام يجب أن يكون في المستقبل.");const q=V("o-q");if(q&&+q<1)return say(r,"العدد غير صحيح.");
-  busy=true;t.disabled=true;t.textContent="جاري الإرسال…";
-  const no="DD-"+Math.floor(100000+Math.random()*900000),o={uid:user.uid,no,name:n,phone:p,addr:a,service:sv,items:V("o-t"),qty:q,day:d,time:h,method:V("o-m"),code:V("o-c").toUpperCase(),notes:V("o-x"),status:0,price:0,paid:0,discount:0,log:[{t:Date.now(),x:"تم استلام الطلب"}],ts:Date.now()};
-  try{await setDoc(doc(db,"orders",no),o);go("done",o)}catch(x){say(r,"تعذر حفظ الطلب ولم يُرسل. بياناتك محفوظة هنا، اضغط للمحاولة مرة أخرى."+(x&&x.code==="permission-denied"?" (يبدو أن قواعد Firestore لم تُنشر بعد)":""));t.disabled=false;t.textContent="🔁 إعادة المحاولة"}busy=false}
- if(t.id==="c-s"){const x=V("c-t");i
+</style>
+<!-- مكتبات Firebase المباشرة المستقرة -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<div class="w" id="v"></div>
+<nav id="nav"></nav>
+<div id="md" hidden></div>
+
+<script>
+const FIREBASE = {
+  apiKey: "AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",
+  authDomain: "al-masa-dry-clean.firebaseapp.com",
+  projectId: "al-masa-dry-clean",
+  storageBucket: "al-masa-dry-clean.appspot.com",
+  messagingSenderId: "624222741188",
+  appId: "1:624222741188:web:a8f3939d14765f02c5df91"
+};
+
+const OWNER_EMAIL = "ahmadabubakr027@gmail.com";
+const CFG = {
+  name: "دراي ألماسة كلين",
+  addr: "شارع توار المتفرع من السوق بجوار فندق النخيل - سيوة، مطروح",
+  map: "https://maps.app.goo.gl/QMD5GRB5x27nvD836",
+  hours: "",
+  phones: [["أ. أبو بكر أحمد", "01023714530"], ["أ. عبد الله أحمد", "01021988683"]],
+  services: [
+    ["👕", "غسيل الملابس", "غسيل الملابس اليومية والرسمية مع مراعاة نوع القماش.", ""],
+    ["♨️", "التنظيف بالبخار", "عناية مناسبة بالقطع التي تتطلب معالجة بالبخار.", ""],
+    ["👔", "كي الملابس", "كي احترافي للحفاظ على مظهر الملابس.", ""],
+    ["🛏️", "غسيل البطاطين والمفروشات", "البطاطين والألحفة والستائر وأغطية الأسرة.", ""],
+    ["✨", "إزالة البقع الصعبة", "فحص البقعة واختيار المعالجة المناسبة دون ضمان إزالة كل بقعة.", ""],
+    ["🏨", "خدمات الفنادق والمنشآت", "خدمات مخصصة للفنادق والمخيمات، اطلب عرض سعر.", ""]
+  ]
+};
+
+const ST = ["تم إرسال الطلب", "تم تأكيد الطلب", "جارٍ تنسيق الاستلام", "تم استلام الملابس", "قيد الغسيل أو الكي", "جاهز للتسليم", "خرج للتوصيل", "تم التسليم", "تم الإلغاء"];
+const AE = {
+  "auth/email-already-in-use": "هذا البريد مسجّل بالفعل، سجّل الدخول.",
+  "auth/invalid-credential": "البريد أو كلمة المرور غير صحيحة.",
+  "auth/wrong-password": "البريد أو كلمة المرور غير صحيحة.",
+  "auth/weak-password": "كلمة المرور ضعيفة (6 أحرف على الأقل).",
+  "auth/invalid-email": "البريد الإلكتروني غير صحيح.",
+  "auth/network-request-failed": "تعذر الاتصال بالإنترنت، حاول مرة أخرى.",
+  "auth/too-many-requests": "محاولات كثيرة، انتظر قليلًا."
+};
+
+const $ = i => document.getElementById(i);
+const V = i => $(i) ?$(i).value.trim() : "";
+const E = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = t => t ? new Date(t).toLocaleString("ar-EG", { dateStyle: "short", timeStyle: "short" }) : "";
+
+let app, auth, db, own = null, user = null, prof = {}, role = null, view = "home", orders = [], chats = [], msgs = [], allOrders = [], admins = [], invs = [], pend = "", busy = false, unsubs = [], mUn = null;
+
+try {
+  app = firebase.initializeApp(FIREBASE);
+  auth = firebase.auth();
+  db = firebase.firestore();
+} catch (e) {
+  console.error(e);
+}
+
+const ready = () => db && FIREBASE.projectId !== "ضع_القيمة";
+
+function nav() {
+  const navElem = $("nav");
+  if (!navElem) return;
+  const isOwner = (user && user.email && user.email.toLowerCase() === OWNER_EMAIL) || localStorage.getItem("ownerLoggedIn") === "true";
+  const effectiveRole = role || (isOwner ? "owner" : null);
+  const n = (v, i, t, b) => `<button data-v="${v}" class="${view === v ? "on" : ""}"><i>${i}</i>${t}${b ? ` <span class="bd">${b}</span>` : ""}</button>`;
+  const un = user && own && own.from === "a" && own.ts > (+localStorage.seen || 0) ? 1 : 0;
+  const ad = effectiveRole ? allOrders.filter(o => o.status === 0).length + chats.filter(c => c.from === "c" && !c.closed).length : 0;
+  navElem.innerHTML = n("home", "🏠", "الرئيسية") + n("order", "🧺", "اطلب") + n("mine", "📦", "طلباتي") + n("chat", "💬", "محادثاتي", un || "") + (user ? n("acct", "👤", "حسابي") : n("login", "🔑", "دخول")) + (effectiveRole ? n("admin", "⚙️", "الإدارة", ad || "") : "");
+}
+
+function go(v, x) {
+  view = v;
+  if (mUn) { mUn(); mUn = null; }
+  const container = $("v");
+  if (container && V0[v]) container.innerHTML = V0[v](x);
+  if (F[v]) F[v](x);
+  nav();
+  scrollTo(0, 0);
+}
+
+const V0 = {
+  home: () => `<div class="hero"><div style="font-size:50px">💎</div><h1>${CFG.name}</h1><div>DIAMOND DRY CLEAN</div><p><b>عناية تليق بملابسك</b><br>نظافة فائقة وعناية بملابسك ومفروشاتك في قلب سيوة</p><button class="btn" style="background:#fff;color:#b02a5c" data-v="order">🧺 اطلب خدمة غسيل / كي الآن</button></div>
+  <div class="cd"><h2>خدماتنا</h2>${CFG.services.map(s => `<div class="li">${s[0]} <b>${s[1]}</b><br><span class="mu">${s[2]}</span><br><span class="mu">${s[3] ? s[3] + " ج.م" : "السعر النهائي بعد مراجعة الإدارة"}</span></div>`).join("")}</div>
+  <div class="cd"><h2>📍 العنوان والتواصل</h2><p>${CFG.addr}</p>${CFG.hours ? `<p>🕒 ${CFG.hours}</p>` : ""}<a class="btn t" href="${CFG.map}" target="_blank" rel="noopener">🗺️ الخريطة</a>${CFG.phones.map(p => ` <a class="btn g" href="tel:${p[1]}">📞 ${p[0]}</a>`).join("")}</div>
+  ${ready() ? "" : '<div class="cd er">⚠️ لم يتم ربط قاعدة البيانات بعد.</div>'}`,
+  login: (m = "in") => `<div class="cd"><h2>${m === "up" ? "إنشاء حساب جديد" : m === "rs" ? "استعادة كلمة المرور" : "تسجيل الدخول"}</h2>${m === "up" ? `<label>الاسم الكامل</label><input id="a-n"><label>رقم الهاتف</label><input id="a-p" type="tel" placeholder="01xxxxxxxxx">` : ""}<label>البريد الإلكتروني</label><input id="a-e" type="email" dir="ltr">${m !== "rs" ? `<label>كلمة المرور</label><input id="a-w" type="password" dir="ltr">` : ""}${m === "up" ? `<label>تأكيد كلمة المرور</label><input id="a-w2" type="password" dir="ltr"><label><input type="checkbox" id="a-c">أوافق على سياسة الخصوصية وشروط الاستخدام</label>` : ""}
+  <button class="btn b" id="a-go" data-m="${m}">${m === "up" ? "إنشاء الحساب" : m === "rs" ? "إرسال رابط الاستعادة" : "دخول"}</button><div id="a-r"></div>
+  <p class="mu">${m !== "in" ? '<a href="#" data-l="in">لدي حساب</a> • ' : ""}${m !== "up" ? '<a href="#" data-l="up">إنشاء حساب جديد</a> • ' : ""}${m === "in" ? '<a href="#" data-l="rs">نسيت كلمة المرور؟</a>' : ""}</p></div>`,
+  acct: () => `<div class="cd"><h2>👤 حسابي</h2><p>${E(prof.name || "")}<br>${E(user?.email || "")}<br>${E(prof.phone || "")}</p>${user && !user.emailVerified ? '<p class="er">بريدك غير مُفعَّل. <a href="#" id="vf">إرسال رابط التفعيل</a></p>' : ""}<label>الاسم</label><input id="p-n" value="${E(prof.name || "")}"><label>الهاتف</label><input id="p-p" value="${E(prof.phone || "")}"><button class="btn b" id="p-s">حفظ</button><button class="btn g b" id="lo">تسجيل الخروج</button><div id="p-r"></div></div>`,
+  order: () => user ? `<div class="cd"><h2>🧺 طلب خدمة</h2><label>الاسم</label><input id="o-n" value="${E(prof.name || "")}"><label>الهاتف</label><input id="o-p" type="tel" value="${E(prof.phone || "")}"><label>العنوان داخل سيوة</label><input id="o-a"><label>الخدمات (يمكن اختيار أكثر من واحدة)</label>${CFG.services.map((s, i) => `<label style="display:block;color:var(--tx);font-size:15px"><input type="checkbox" class="sv" value="${s[1]}">${s[1]}</label>`).join("")}<label>نوع القطع</label><input id="o-t"><label>العدد التقديري</label><input id="o-q" type="number" min="1"><div class="fl"><div style="flex:1"><label>يوم الاستلام</label><input id="o-d" type="date"></div><div style="flex:1"><label>الوقت</label><input id="o-h" type="time"></div></div><label>طريقة الاستلام</label><select id="o-m"><option>أحضر القطع بنفسي</option><option>أريد استلامًا من العنوان (إن توفر)</option></select><label>كود الخصم (تراجعه الإدارة وتطبقه عند تسعير الطلب)</label><input id="o-c" dir="ltr"><label>ملاحظات</label><textarea id="o-x" rows="2"></textarea><p class="mu">السعر النهائي يحدده فريقنا بعد مراجعة الطلب وسيظهر لك في «طلباتي».</p><button class="btn b" id="o-go">🚀 إرسال الطلب</button><div id="o-r"></div></div>` : `<div class="cd"><h2>سجّل الدخول لإرسال طلبك</h2><p class="mu">نحتاج حسابًا لحفظ طلبك وتمكينك من متابعته.</p><button class="btn b" data-v="login">تسجيل الدخول</button><button class="btn g b" data-l="up">إنشاء حساب</button></div>`,
+  done: o => `<div class="cd"><h2 class="ok">✅ تم حفظ طلبك</h2><p>رقم الطلب: <b dir="ltr" id="dn">${E(o.no)}</b></p><p class="mu">${E(o.service)}<br>${E(o.addr)}<br>الاستلام المطلوب: ${E(o.day)} ${E(o.time)} (بانتظار تأكيد الموعد)<br>السعر: بانتظار تأكيد السعر من الإدارة</p><button class="btn b" onclick="navigator.clipboard&&navigator.clipboard.writeText('${o.no}')">نسخ رقم الطلب</button><button class="btn t b" data-v="mine">تتبع الطلب</button><button class="btn g b" data-v="chat">تواصل مع الإدارة</button><button class="btn g b" data-v="home">الرئيسية</button></div>`,
+  mine: () => user ? `<div class="cd"><h2>📦 طلباتي</h2><div id="ml" class="mu">جاري التحميل…</div></div>` : V0.order(),
+  chat: () => `<div class="cd"><h2>💬 محادثاتي مع الإدارة</h2><div class="chat" id="cc"><div class="mu">${user ? "جاري التحميل…" : "سجّل الدخول لبدء المحادثة."}</div></div><label>رقم الطلب (اختياري)</label><input id="c-o" dir="ltr" placeholder="DD-123456"><div class="fl"><textarea id="c-t" rows="1" placeholder="اكتب رسالتك…">${E(pend)}</textarea><button class="btn" id="c-s">إرسال</button></div><div id="c-r" class="er"></div></div>`,
+  admin: () => `<div class="cd"><h2>📋 الطلبات</h2><input id="f-q" placeholder="بحث: اسم / هاتف / رقم"><div id="al"></div></div><div class="cd"><h2>💬 صندوق الوارد</h2><div id="il"></div></div>
+  <div class="cd"><h2>🔑 الصلاحيات ونقل الملكية</h2><p class="mu">دورك: <b>${role || "owner"}</b>. المالك فقط يدعو مديرين أو مالكًا جديدًا ويحذف صلاحيات.</p>${(role === "owner" || user?.email?.toLowerCase() === OWNER_EMAIL) ? `<label>بريد المدعو (يجب أن يفعّل بريده)</label><input id="iv-e" type="email" dir="ltr"><select id="iv-r"><option value="staff">موظف</option><option value="manager">مدير</option><option value="owner">مالك (نقل الملكية)</option></select><button class="btn b" id="iv-s">إرسال الدعوة</button><div id="iv-l"></div>` : ""}<div id="ad-l"></div></div>`
+};
+
+const F = {
+  login: () => {},
+  mine: () => { paintMine(); },
+  chat: () => {
+    if (!user) return;
+    localStorage.seen = Date.now();
+    const un = db.collection("chats").doc(user.uid).collection("msgs").orderBy("ts").onSnapshot(s => {
+      msgs = s.docs.map(d => d.data());
+      const e = $("cc"); if (!e) return;
+      e.innerHTML = msgs.length ? msgs.map(m => `<div class="m ${m.from === "c" ? "me" : "ot"}">${m.no ? "<b>[" + E(m.no) + "]</b> " : ""}${E(m.text)}<small>${m.from === "c" ? "أنت" : "الإدارة"} • ${fmt(m.ts)}</small></div>`).join("") : '<div class="mu">ابدأ المحادثة…</div>';
+      e.scrollTop = e.scrollHeight;
+      localStorage.seen = Date.now();
+    }, () => { const e = $("cc"); if (e) e.innerHTML = '<div class="er">تعذر تحميل الرسائل.</div>'; });
+    mUn = un;
+  },
+  admin: () => { paintAdmin(); }
+};
+
+function paintMine() {
+  const e = $("ml"); if (!e) return;
+  e.innerHTML = orders.length ? orders.map(o => `<div class="li"><b dir="ltr">${E(o.no)}</b> — ${E(o.service)} <span class="tag">${ST[o.status]}</span>${o.status === 8 && o.cancelReason ? `<br><span class="er">سبب الإلغاء: ${E(o.cancelReason)}</span>` : ""}<br><span class="mu">${o.price ? `السعر قبل الخصم: ${o.price + (o.discount || 0)} • الخصم: ${o.discount \vert{}\vert{} 0} • الإجمالي: ${o.price} • المدفوع: ${o.paid \vert{}\vert{} 0} • المتبقي: ${o.price - (o.paid || 0)} ج.م` : "السعر: بانتظار تأكيد الإدارة"}</span></div>`).join("") : "لا توجد طلبات بعد.";
+}
+
+function paintAdmin() {
+  const isOwner = (user && user.email && user.email.toLowerCase() === OWNER_EMAIL) || localStorage.getItem("ownerLoggedIn") === "true";
+  if ((!role && !isOwner) || view !== "admin") return;
+  const q = (V("f-q") || "").toLowerCase();
+  if ($("al")) $("al").innerHTML = allOrders.filter(o => !q || (o.name + o.phone + o.no).toLowerCase().includes(q)).sort((a, b) => (b.status === 0) - (a.status === 0) || b.ts - a.ts).map(o => `<div class="li" data-o="${E(o.no)}" style="cursor:pointer">${o.status === 0 ? "🆕 " : ""}<b dir="ltr">${E(o.no)}</b> ${E(o.name)} • ${E(o.service)} <span class="tag">${ST[o.status]}</span><br><span class="mu">${E(o.phone)} • ${fmt(o.ts)}</span></div>`).join("") || '<span class="mu">لا توجد طلبات</span>';
+  if ($("il")) $("il").innerHTML = chats.map(c => `<div class="li" data-c="${E(c.id)}" style="cursor:pointer">${c.from === "c" && !c.closed ? "🔴 " : ""}<b>${E(c.name || "عميل")}</b> ${c.closed ? '<span class="tag">مغلقة</span>' : ""}<br><span class="mu">${E(c.last || "")} • ${fmt(c.ts)}</span></div>`).join("") || '<span class="mu">لا محادثات</span>';
+  if ($("ad-l")) $("ad-l").innerHTML = admins.map(a => `<div class="li">${E(a.email || a.id)} — ${a.role} ${isOwner && a.id !== user?.uid ? `<button class="btn g" data-da="${E(a.id)}">حذف</button>` : ""}</div>`).join("");
+  if ($("iv-l")) $("iv-l").innerHTML = invs.map(i => `<div class="li">دعوة: ${E(i.id)} (${i.role}) <button class="btn g" data-di="${E(i.id)}">إلغاء</button></div>`).join("");
+}
+
+function stop() { unsubs.forEach(u => u()); unsubs = []; }
+
+function boot() {
+  stop(); orders = []; chats = []; allOrders = []; admins = []; invs = []; own = null; role = null;
+  if (!user) { nav(); return; }
+  db.collection("users").doc(user.uid).get().then(x => { if (x.exists) prof = x.data(); }).catch(() => {});
+  const sub = (q, f) => unsubs.push(q.onSnapshot(x => { f(x); nav(); paintMine(); paintAdmin(); }, () => {}));
+  sub(db.collection("orders").where("uid", "==", user.uid), x => orders = x.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => b.ts - a.ts));
+  sub(db.collection("chats").doc(user.uid), x => own = x.exists ? x.data() : null);
+
+  if (user.email && user.email.toLowerCase() === OWNER_EMAIL) {
+    role = "owner";
+    localStorage.setItem("ownerLoggedIn", "true");
+    localStorage.setItem("ownerEmail", user.email);
+  }
+
+  db.collection("admins").doc(user.uid).get().then(x => {
+    if (x.exists) { role = x.data().role; }
+    if (role || user.email?.toLowerCase() === OWNER_EMAIL) {
+      const L = (c, f) => sub(db.collection(c), y => f(y.docs.map(d => ({ id: d.id, ...d.data() }))));
+      L("orders", a => allOrders = a);
+      L("admins", a => admins = a);
+      L("chats", a => chats = a.sort((p, q) => q.ts - p.ts));
+      if (role === "owner" || user.email?.toLowerCase() === OWNER_EMAIL) L("invites", a => invs = a);
+      nav();
+    } else tryInvite();
+  }).catch(() => {});
+}
+
+async function tryInvite() {
+  try {
+    const s = await db.collection("invites").doc(user.email).get();
+    if (s.exists && user.emailVerified) {
+      await db.collection("admins").doc(user.uid).set({ role: s.data().role, email: user.email });
+      await db.collection("invites").doc(user.email).delete().catch(() => {});
+      location.reload();
+    }
+  } catch (e) {}
+}
+
+const say = (id, m, c = "er") => { if ($(id))$(id).innerHTML = `<p class="${c}">${m}</p>`; };
+
+go("home");
+
+auth.onAuthStateChanged(u => {
+  user = u;
+  boot();
+  nav();
+});
+
+document.addEventListener("click", async e => {
+  const t = e.target;
+  const g = t.closest("[data-v]"); if (g) { go(g.dataset.v); return; }
+  const l = t.closest("[data-l]"); if (l) { e.preventDefault(); go("login", l.dataset.l); return; }
+  if (t.closest("[data-x]")) { $("md").hidden = true; return; }
+  if (t.id === "vf") { e.preventDefault(); try { await user.sendEmailVerification(); alert("أُرسل رابط التفعيل إلى بريدك"); } catch (x) { alert("تعذر الإرسال الآن"); } }
+  if (t.id === "lo") {
+    localStorage.removeItem("ownerLoggedIn");
+    localStorage.removeItem("ownerEmail");
+    await auth.signOut();
+    go("home");
+  }
+  if (t.id === "p-s") {
+    try {
+      await db.collection("users").doc(user.uid).set({ name: V("p-n"), phone: V("p-p") });
+      prof = { name: V("p-n"), phone: V("p-p") };
+      say("p-r", "تم الحفظ", "ok");
+    } catch (x) { say("p-r", "تعذر الحفظ، حاول مرة أخرى."); }
+  }
+  if (t.id === "a-go") {
+    const m = t.dataset.m, r = "a-r";
+    if (!ready()) return say(r, "الموقع غير مربوط بقاعدة البيانات بعد.");
+    const em = V("a-e"); if (!em) return say(r, "أدخل البريد الإلكتروني.");
+    t.disabled = true;
+    try {
+      if (m === "rs") {
+        await auth.sendPasswordResetEmail(em);
+        say(r, "أُرسل رابط الاستعادة إلى بريدك.", "ok");
+      } else if (m === "up") {
+        const n = V("a-n"), p = V("a-p"), w = $("a-w").value;
+        if (n.length < 3 || !/^01\d{9}$/.test(p)) throw "أدخل الاسم ورقم هاتف مصري صحيح.";
+        if (w !== $("a-w2").value) throw "كلمتا المرور غير متطابقتين.";
+        if (!$("a-c").checked) throw "يلزم الموافقة على سياسة الخصوصية.";
+        const c = await auth.createUserWithEmailAndPassword(em, w);
+        await db.collection("users").doc(c.user.uid).set({ name: n, phone: p });
+        prof = { name: n, phone: p };
+        c.user.sendEmailVerification().catch(() => {});
+        user = c.user; boot(); go(pend ? "chat" : "home");
+      } else {
+        await auth.signInWithEmailAndPassword(em, $("a-w").value);
+      }
+    } catch (x) { say(r, typeof x === "string" ? x : AE[x.code] || "حدث خطأ، حاول مرة أخرى.");
