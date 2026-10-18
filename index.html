@@ -44,7 +44,7 @@
                     <span class="hidden sm:inline">دخول المالك</span>
                 </button>
                 <button id="logoutBtn" type="button" onclick="logoutOwner()" class="hidden bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-3 py-2 rounded-xl shadow-md transition cursor-pointer">
-                    خروج
+                    خروج المالك
                 </button>
             </div>
         </div>
@@ -295,7 +295,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const OWNER_EMAIL = "ahmadabubakr027@gmail.com";
+        // قائمة ببريد المالك المعتمد (يمكنك إضافة أي بريد إلكتروني آخر هنا لاحقاً بكل سهولة)
+        const ALLOWED_OWNERS = [
+            "ahmadabubakr027@gmail.com"
+        ];
         let localOrders = [];
 
         // Owner Auth Verification
@@ -306,8 +309,6 @@
             
             const email = inputField.value.trim().toLowerCase();
 
-            if (email === OWNER_EMAIL.toLowerCase()) {
+            if (ALLOWED_OWNERS.includes(email)) {
                 closeOwnerModal();
-                document.getElementById('ownerAuthBtn').classList.add('hidden');
-                document.getElementById('logoutBtn').classList.remove('hidden');
-                document.getElemen
+                document.getElementById('ownerAuthBtn').classList.add('hi
