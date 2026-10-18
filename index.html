@@ -7,31 +7,58 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b}</style>
+<style>
+  body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b}
+  .tab-btn{padding:.6rem 1rem;border-radius:.75rem;font-weight:700;font-size:.85rem;color:#475569;white-space:nowrap;transition:.2s}
+  .tab-btn.active{background:#db2777;color:#fff}
+  .tab-btn:not(.active):hover{background:#fce7f3;color:#be185d}
+  .stat-card{background:#fff;border-radius:1rem;padding:1rem;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #f1f5f9}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:60;padding:1rem;overflow-y:auto}
+  .modal.show{display:flex}
+  .modal-content{background:#fff;width:100%;max-width:36rem;border-radius:1rem;padding:1.5rem;position:relative;max-height:90vh;overflow-y:auto}
+  input,select,textarea{border:1px solid #e2e8f0;border-radius:.75rem;padding:.55rem .75rem;width:100%;font-family:inherit}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#db2777;box-shadow:0 0 0 3px rgba(219,39,119,.1)}
+  .badge{display:inline-block;padding:.15rem .6rem;border-radius:9999px;font-size:.7rem;font-weight:700}
+  .badge-new{background:#dbeafe;color:#1e40af}
+  .badge-rec{background:#e0e7ff;color:#3730a3}
+  .badge-prog{background:#fef3c7;color:#92400e}
+  .badge-ready{background:#d1fae5;color:#065f46}
+  .badge-out{background:#fce7f3;color:#9d174d}
+  .badge-done{background:#dcfce7;color:#166534}
+  .badge-cancel{background:#fee2e2;color:#991b1b}
+  .badge-unpaid{background:#fee2e2;color:#991b1b}
+  .badge-partial{background:#fef3c7;color:#92400e}
+  .badge-paid{background:#dcfce7;color:#166534}
+  .loading{text-align:center;padding:1rem;color:#94a3b8}
+  @media print{
+    body *{visibility:hidden}
+    #receiptPrintArea,#receiptPrintArea *{visibility:visible}
+    #receiptPrintArea{position:absolute;right:0;top:0;width:100%;padding:1rem}
+  }
+</style>
 </head>
 <body class="min-h-screen flex flex-col">
+
 <header class="bg-white shadow-sm sticky top-0 z-40">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3 flex-wrap">
     <div class="flex items-center gap-3">
       <div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-gem"></i></div>
       <div><h1 class="font-black text-lg">دراي ألماسة كلين</h1><p class="text-xs text-slate-500">Diamond Dry Clean</p></div>
     </div>
-    <nav class="hidden md:flex gap-5 font-semibold text-slate-600">
-      <a href="#home">الرئيسية</a>
-      <a href="#offers">العروض</a>
-      <a href="#services">خدماتنا</a>
-      <a href="#order">طلب خدمة</a>
-      <a href="#trackOrder">متابعة طلبك</a>
+    <nav class="hidden md:flex gap-5 font-semibold text-slate-600 text-sm">
+      <a href="#home">الرئيسية</a><a href="#offers">العروض</a><a href="#services">خدماتنا</a><a href="#order">طلب خدمة</a>
     </nav>
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-2 items-center flex-wrap">
       <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-map-location-dot"></i> موقعنا</a>
-      <button id="ownerAuthBtn" type="button" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold cursor-pointer">دخول المالك</button>
-      <button id="logoutBtn" type="button" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold cursor-pointer">خروج المالك</button>
+      <button id="ownerAuthBtn" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">دخول المالك</button>
+      <button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold">خروج المالك</button>
     </div>
   </div>
 </header>
 
 <main class="flex-grow">
+
+<!-- ===================== CUSTOMER SECTIONS ===================== -->
 <section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center">
   <div class="max-w-3xl mx-auto">
     <span class="bg-white/20 px-3 py-1 rounded-full text-xs">عناية تليق بملابسك</span>
@@ -49,11 +76,9 @@
 </section>
 
 <section id="services" class="max-w-7xl mx-auto px-4 py-10 w-full">
-  <h3 class="text-3xl font-black text-center mb-8">خدماتنا والأسعار</h3>
+  <h3 class="text-3xl font-black text-center mb-8">خدماتنا</h3>
   <div id="publicServicesList" class="grid md:grid-cols-3 gap-5">
-    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-shirt text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">غسيل ملابس</h4><p class="text-sm text-slate-600">غسيل وتنظيف يومي مع العناية بالأنسجة.</p></div>
-    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">التنظيف بالبخار</h4><p class="text-sm text-slate-600">تنظيف احترافي للأقمشة والبدل والفساتين.</p></div>
-    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-truck text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">خدمة التوصيل</h4><p class="text-sm text-slate-600">استلام وتسليم الملابس من باب المنزل.</p></div>
+    <p class="col-span-3 loading">جارٍ تحميل الخدمات...</p>
   </div>
 </section>
 
@@ -62,105 +87,236 @@
     <h3 class="text-2xl font-black text-center mb-2">طلب خدمة سريع</h3>
     <p class="text-center text-slate-500 text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك.</p>
     <form id="directOrderForm" class="space-y-4">
-      <label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="اسمك الكريم"></label>
-      <label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="01xxxxxxxxx"></label>
-      <label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="example@mail.com"></label>
-      <label class="block text-sm font-bold">طريقة التسليم<select id="deliveryOption" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>توصيل واستلام من المنزل</option><option>تسليم واستلام بالمحل</option></select></label>
-      <label class="block text-sm font-bold">الخدمة المطلوبة<select id="serviceType" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>غسيل ملابس</option><option>تنظيف بالبخار</option><option>كي ملابس</option><option>غسيل مفروشات وبطاطين</option><option>إزالة بقع</option></select></label>
-      <label class="block text-sm font-bold">العنوان أو ملاحظات الطلب<textarea id="orderDetails" rows="3" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea></label>
-      <button id="sendOrderBtn" type="submit" class="w-full bg-pink-600 text-white py-3 rounded-xl font-black cursor-pointer">إرسال الطلب الآن</button>
+      <label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1" placeholder="اسمك الكريم"></label>
+      <label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1" placeholder="01xxxxxxxxx"></label>
+      <label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1" placeholder="example@mail.com"></label>
+      <label class="block text-sm font-bold">طريقة التسليم
+        <select id="deliveryOption" class="mt-1">
+          <option>توصيل واستلام من المنزل</option>
+          <option>تسليم واستلام بالمحل</option>
+        </select>
+      </label>
+      <label class="block text-sm font-bold">الخدمة المطلوبة
+        <select id="serviceType" class="mt-1"><option value="">جارٍ تحميل الخدمات...</option></select>
+      </label>
+      <label class="block text-sm font-bold">العنوان أو ملاحظات الطلب
+        <textarea id="orderDetails" rows="3" class="mt-1" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea>
+      </label>
+      <button id="sendOrderBtn" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-black">إرسال الطلب الآن</button>
       <p id="orderMessage" class="text-sm mt-2" role="status"></p>
     </form>
   </div>
 </section>
 
-<section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8 w-full">
-  <div class="bg-white p-6 rounded-3xl shadow-sm text-center">
-    <h3 class="text-xl font-black mb-2">🔍 متابعة حالة طلبك</h3>
-    <p class="text-xs text-slate-500 mb-4">لخصوصية العملاء، متابعة الطلب متاحة عبر التواصل مع المغسلة في هذه النسخة.</p>
-    <a class="inline-block bg-slate-800 text-white px-5 py-2 rounded-xl" href="https://wa.me/?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%B7%D9%84%D8%A8%D9%8A" target="_blank" rel="noopener">اطلب تحديث حالة طلبك عبر واتساب</a>
-  </div>
-</section>
+<!-- ===================== ADMIN PANEL ===================== -->
+<section id="adminSection" class="hidden max-w-7xl mx-auto px-4 py-6 w-full">
 
-<!-- لوحة تحكم المالك المتكاملة -->
-<section id="adminSection" class="hidden max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
-  
-  <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-      <h3 class="text-2xl font-black text-slate-800"><i class="fa-solid fa-chart-pie text-pink-600"></i> لوحة الإحصائيات والتقارير المالية</h3>
-      <div class="flex gap-2 items-center">
-        <label class="text-xs font-bold text-slate-600">الفترة:</label>
-        <select id="statsPeriod" class="border rounded-xl px-3 py-2 text-xs font-bold bg-slate-50">
-          <option value="all">كل الفترات</option>
+  <!-- Quick actions -->
+  <div class="bg-gradient-to-l from-pink-600 to-rose-500 text-white rounded-2xl p-4 mb-5 flex flex-wrap gap-2 items-center">
+    <span class="font-black text-lg ml-2"><i class="fa-solid fa-shield-halved"></i> لوحة المالك</span>
+    <button onclick="openManualOrder()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-plus"></i> طلب يدوي</button>
+    <button onclick="switchTab('services')" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-tags"></i> خدمة/سعر</button>
+    <button onclick="openExpenseModal()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-money-bill-wave"></i> مصروف</button>
+    <button onclick="switchTab('inventory')" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-boxes-stacked"></i> مخزون</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white rounded-2xl p-2 shadow-sm mb-5 flex gap-1 overflow-x-auto">
+    <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')"><i class="fa-solid fa-gauge-high"></i> لوحة التحكم</button>
+    <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')"><i class="fa-solid fa-list-check"></i> الطلبات</button>
+    <button class="tab-btn" data-tab="customers" onclick="switchTab('customers')"><i class="fa-solid fa-users"></i> العملاء</button>
+    <button class="tab-btn" data-tab="services" onclick="switchTab('services')"><i class="fa-solid fa-tags"></i> الخدمات</button>
+    <button class="tab-btn" data-tab="finance" onclick="switchTab('finance')"><i class="fa-solid fa-coins"></i> المالية</button>
+    <button class="tab-btn" data-tab="inventory" onclick="switchTab('inventory')"><i class="fa-solid fa-boxes-stacked"></i> المخزون</button>
+    <button class="tab-btn" data-tab="reports" onclick="switchTab('reports')"><i class="fa-solid fa-chart-line"></i> التقارير</button>
+  </div>
+
+  <!-- ===== DASHBOARD TAB ===== -->
+  <div id="tab-dashboard" class="admin-tab-content space-y-5">
+    <div class="flex flex-wrap gap-2 items-center justify-between">
+      <h2 class="text-xl font-black">ملخص الأداء</h2>
+      <div class="flex gap-2 items-center text-xs">
+        <label class="font-bold">الفترة:</label>
+        <select id="dashRange" onchange="loadDashboard()" class="text-xs">
           <option value="today">اليوم</option>
-          <option value="month">هذا الشهر</option>
+          <option value="week">الأسبوع</option>
+          <option value="month" selected>الشهر</option>
+          <option value="year">السنة</option>
+          <option value="all">الكل</option>
         </select>
-        <button type="button" onclick="refreshAdminData()" class="bg-pink-600 text-white px-3 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> تحديث</button>
       </div>
     </div>
-    
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-center"><span class="text-xs text-blue-600 font-bold">الطلبات الجديدة</span><h4 id="statNewOrders" class="text-2xl font-black text-blue-800 mt-1">0</h4></div>
-      <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 text-center"><span class="text-xs text-amber-600 font-bold">قيد التنفيذ</span><h4 id="statInProcess" class="text-2xl font-black text-amber-800 mt-1">0</h4></div>
-      <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 text-center"><span class="text-xs text-emerald-600 font-bold">جاهزة للاستلام</span><h4 id="statReady" class="text-2xl font-black text-emerald-800 mt-1">0</h4></div>
-      <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100 text-center"><span class="text-xs text-purple-600 font-bold">تم التسليم</span><h4 id="statDelivered" class="text-2xl font-black text-purple-800 mt-1">0</h4></div>
+    <div id="dashStats" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+    <div id="dashMoney" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black text-lg mb-3"><i class="fa-solid fa-clock-rotate-left text-pink-600"></i> أحدث الطلبات</h3>
+      <div id="dashRecentOrders" class="overflow-x-auto"><p class="loading">جارٍ التحميل...</p></div>
     </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center"><span class="text-xs text-slate-600 font-bold">إجمالي الإيرادات</span><h4 id="statTotalRevenue" class="text-xl font-black text-slate-800 mt-1">0 ج.م</h4></div>
-      <div class="bg-rose-50 p-4 rounded-2xl border border-rose-100 text-center"><span class="text-xs text-rose-600 font-bold">إجمالي المصروفات</span><h4 id="statTotalExpenses" class="text-xl font-black text-rose-800 mt-1">0 ج.م</h4></div>
-      <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-center"><span class="text-xs text-green-600 font-bold">صافي الربح</span><h4 id="statNetProfit" class="text-xl font-black text-green-800 mt-1">0 ج.م</h4></div>
-      <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100 text-center"><span class="text-xs text-orange-600 font-bold">المبالغ المتبقية</span><h4 id="statRemainingDebt" class="text-xl font-black text-orange-800 mt-1">0 ج.م</h4></div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black text-lg mb-3"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> تنبيهات</h3>
+      <div id="dashAlerts" class="text-sm space-y-2"><p class="text-slate-400">لا تنبيهات.</p></div>
     </div>
   </div>
 
-  <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow border border-slate-200 items-center justify-between">
-    <span class="font-black text-slate-700 text-sm"><i class="fa-solid fa-bolt text-amber-500"></i> اختصارات الإدارة:</span>
-    <div class="flex flex-wrap gap-2">
-      <button type="button" onclick="openManualOrderModal()" class="bg-pink-600 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-plus"></i> طلب يدوي</button>
-      <button type="button" onclick="openExpenseModal()" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-money-bill-wave"></i> مصروف</button>
-      <button type="button" onclick="openOfferModal()" class="bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-bullhorn"></i> عرض</button>
-      <button type="button" onclick="openServicesModal()" class="bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-list-check"></i> الخدمات</button>
-      <button type="button" onclick="openInventoryModal()" class="bg-teal-600 text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"><i class="fa-solid fa-boxes-stacked"></i> المخزون</button>
-    </div>
-  </div>
-
-  <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
-      <h3 class="text-2xl font-black text-slate-800"><i class="fa-solid fa-clipboard-list text-pink-600"></i> إدارة الطلبات الشاملة</h3>
-      <div class="flex flex-wrap gap-2 items-center w-full md:w-auto">
-        <input id="searchOrderInput" type="text" oninput="filterAdminOrders()" placeholder="بحث برقم الطلب أو اسم العميل..." class="border rounded-xl px-3 py-2 text-xs w-full md:w-64">
-        <select id="filterStatus" onchange="filterAdminOrders()" class="border rounded-xl px-3 py-2 text-xs font-bold">
+  <!-- ===== ORDERS TAB ===== -->
+  <div id="tab-orders" class="admin-tab-content hidden">
+    <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
+      <div class="grid md:grid-cols-5 gap-2">
+        <input id="ordFilterSearch" placeholder="بحث: اسم/هاتف/رقم طلب" oninput="loadOrdersAdmin()">
+        <select id="ordFilterStatus" onchange="loadOrdersAdmin()">
           <option value="">كل الحالات</option>
-          <option value="جديد">جديد</option>
-          <option value="تم الاستلام">تم الاستلام</option>
-          <option value="قيد التنفيذ">قيد التنفيذ</option>
-          <option value="جاهز للاستلام">جاهز للاستلام</option>
-          <option value="خرج للتوصيل">خرج للتوصيل</option>
-          <option value="تم التسليم">تم التسليم</option>
-          <option value="ملغي">ملغي</option>
+          <option>جديد</option><option>تم الاستلام</option><option>قيد التنفيذ</option>
+          <option>جاهز للاستلام</option><option>خرج للتوصيل</option><option>تم التسليم</option><option>ملغي</option>
         </select>
+        <input id="ordFilterFrom" type="date" onchange="loadOrdersAdmin()">
+        <input id="ordFilterTo" type="date" onchange="loadOrdersAdmin()">
+        <button onclick="openManualOrder()" class="bg-pink-600 text-white rounded-xl font-bold text-sm"><i class="fa-solid fa-plus"></i> طلب يدوي</button>
       </div>
     </div>
-    <div class="overflow-x-auto">
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-xs">
+            <tr>
+              <th class="p-2">#</th><th class="p-2">العميل</th><th class="p-2">الهاتف</th>
+              <th class="p-2">الخدمة</th><th class="p-2">الإجمالي</th><th class="p-2">المدفوع</th>
+              <th class="p-2">المتبقي</th><th class="p-2">الحالة</th><th class="p-2">الفاتورة</th><th class="p-2">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="adminOrdersTable"><tr><td colspan="10" class="p-4 text-center loading">جارٍ التحميل...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CUSTOMERS TAB ===== -->
+  <div id="tab-customers" class="admin-tab-content hidden">
+    <div class="bg-white rounded-2xl p-4 shadow-sm mb-4 flex gap-2 flex-wrap">
+      <input id="custSearch" placeholder="بحث بالاسم أو الهاتف" oninput="loadCustomers()" class="flex-1 min-w-[200px]">
+    </div>
+    <div id="customersList" class="grid md:grid-cols-2 gap-3">
+      <p class="loading col-span-2">جارٍ التحميل...</p>
+    </div>
+  </div>
+
+  <!-- ===== SERVICES TAB ===== -->
+  <div id="tab-services" class="admin-tab-content hidden">
+    <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
+      <h3 class="font-black mb-3"><i class="fa-solid fa-plus-circle text-pink-600"></i> إضافة / تعديل خدمة</h3>
+      <form id="serviceForm" class="grid md:grid-cols-6 gap-2">
+        <input type="hidden" id="svcId">
+        <input id="svcName" required placeholder="اسم الخدمة" class="md:col-span-2">
+        <input id="svcPrice" type="number" min="0" step="0.01" required placeholder="السعر (ج.م)">
+        <select id="svcUnit"><option>قطعة</option><option>كيلو</option><option>طلب</option></select>
+        <input id="svcDuration" type="number" min="0" placeholder="مدة التنفيذ (ساعات)">
+        <select id="svcActive"><option value="true">متاحة</option><option value="false">موقوفة</option></select>
+        <input id="svcDesc" placeholder="وصف الخدمة (اختياري)" class="md:col-span-4">
+        <button class="bg-pink-600 text-white rounded-xl font-bold"><span id="svcSubmitLabel">حفظ</span></button>
+      </form>
+      <p id="svcMsg" class="text-sm mt-2"></p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
       <table class="w-full text-right text-sm">
-        <thead class="bg-slate-100 text-slate-700">
-          <tr>
-            <th class="p-3">رقم/العميل</th>
-            <th class="p-3">الهاتف</th>
-            <th class="p-3">الخدمة والقطع</th>
-            <th class="p-3">المبالغ</th>
-            <th class="p-3">الدفع</th>
-            <th class="p-3">الحالة</th>
-            <th class="p-3">الإجراءات</th>
-          </tr>
-        </thead>
-        <tbody id="adminOrdersTable">
-          <tr><td colspan="7" class="p-4 text-center text-slate-400">جارٍ التحميل...</td></tr>
-        </tbody>
+        <thead class="bg-slate-100 text-xs"><tr>
+          <th class="p-2">الاسم</th><th class="p-2">السعر</th><th class="p-2">الوحدة</th>
+          <th class="p-2">المدة</th><th class="p-2">الحالة</th><th class="p-2">إجراءات</th>
+        </tr></thead>
+        <tbody id="servicesTable"><tr><td colspan="6" class="p-4 loading">جارٍ التحميل...</td></tr></tbody>
       </table>
     </div>
   </div>
+
+  <!-- ===== FINANCE TAB ===== -->
+  <div id="tab-finance" class="admin-tab-content hidden space-y-5">
+    <div class="flex flex-wrap gap-2 items-center justify-between">
+      <h2 class="text-xl font-black">الإيرادات والمصروفات</h2>
+      <button onclick="openExpenseModal()" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-sm font-bold"><i class="fa-solid fa-plus"></i> تسجيل مصروف</button>
+    </div>
+    <div id="financeSummary" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3"><i class="fa-solid fa-receipt text-pink-600"></i> آخر المصروفات</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-xs"><tr>
+            <th class="p-2">التاريخ</th><th class="p-2">النوع</th><th class="p-2">الوصف</th>
+            <th class="p-2">المبلغ</th><th class="p-2">إجراءات</th>
+          </tr></thead>
+          <tbody id="expensesTable"><tr><td colspan="5" class="p-4 loading">جارٍ التحميل...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3"><i class="fa-solid fa-hand-holding-dollar text-green-600"></i> آخر الدفعات المحصّلة</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-xs"><tr>
+            <th class="p-2">التاريخ</th><th class="p-2">العميل</th><th class="p-2">الطلب</th>
+            <th class="p-2">الطريقة</th><th class="p-2">المبلغ</th>
+          </tr></thead>
+          <tbody id="paymentsTable"><tr><td colspan="5" class="p-4 loading">جارٍ التحميل...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INVENTORY TAB ===== -->
+  <div id="tab-inventory" class="admin-tab-content hidden space-y-4">
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3"><i class="fa-solid fa-plus-circle text-pink-600"></i> إضافة مستلزم</h3>
+      <form id="invItemForm" class="grid md:grid-cols-5 gap-2">
+        <input id="invName" required placeholder="اسم المستلزم">
+        <input id="invQty" type="number" min="0" step="0.01" value="0" placeholder="الكمية الحالية">
+        <input id="invUnit" placeholder="الوحدة (لتر، كجم...)">
+        <input id="invMin" type="number" min="0" step="0.01" value="0" placeholder="الحد الأدنى">
+        <button class="bg-pink-600 text-white rounded-xl font-bold">حفظ</button>
+      </form>
+      <p id="invItemMsg" class="text-sm mt-2"></p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <table class="w-full text-right text-sm">
+        <thead class="bg-slate-100 text-xs"><tr>
+          <th class="p-2">المستلزم</th><th class="p-2">الكمية</th><th class="p-2">الوحدة</th>
+          <th class="p-2">الحد الأدنى</th><th class="p-2">الحالة</th><th class="p-2">إجراءات</th>
+        </tr></thead>
+        <tbody id="inventoryTable"><tr><td colspan="6" class="p-4 loading">جارٍ التحميل...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3"><i class="fa-solid fa-arrow-right-arrow-left text-pink-600"></i> سجل حركة المخزون (آخر 50)</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-xs"><tr>
+            <th class="p-2">التاريخ</th><th class="p-2">المستلزم</th><th class="p-2">النوع</th>
+            <th class="p-2">الكمية</th><th class="p-2">ملاحظة</th>
+          </tr></thead>
+          <tbody id="invMovesTable"><tr><td colspan="5" class="p-4 loading">جارٍ التحميل...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REPORTS TAB ===== -->
+  <div id="tab-reports" class="admin-tab-content hidden space-y-4">
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <div class="flex flex-wrap gap-2 items-center mb-3">
+        <h3 class="font-black text-lg"><i class="fa-solid fa-chart-pie text-pink-600"></i> تقرير الفترة</h3>
+        <input type="date" id="repFrom" onchange="loadReports()">
+        <input type="date" id="repTo" onchange="loadReports()">
+        <button onclick="exportOrdersCSV()" class="bg-slate-800 text-white px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-file-csv"></i> تصدير الطلبات CSV</button>
+        <button onclick="exportExpensesCSV()" class="bg-slate-800 text-white px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-file-csv"></i> تصدير المصروفات CSV</button>
+      </div>
+      <div id="reportsSummary" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3">الطلبات حسب الخدمة</h3>
+      <div id="reportsByService" class="text-sm space-y-2"></div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <h3 class="font-black mb-3">المصروفات حسب النوع</h3>
+      <div id="reportsByExpenseType" class="text-sm space-y-2"></div>
+    </div>
+  </div>
+
 </section>
 </main>
 
@@ -170,93 +326,13 @@
   <p>© 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
 </footer>
 
-<!-- نافذة تسجيل دخول المالك -->
-<div id="authModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
-    <button type="button" onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500 font-bold text-lg cursor-pointer">✕</button>
+<!-- ============ MODALS ============ -->
+
+<!-- Login -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <button onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
     <h3 class="text-2xl font-black mb-6 text-center">دخول المالك</h3>
     <form id="ownerLoginForm" class="space-y-4">
-      <label class="block text-sm font-bold">البريد الإلكتروني<input type="email" id="ownerEmailInput" required autocomplete="username" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="بريد المالك"></label>
-      <label class="block text-sm font-bold">كلمة المرور<input type="password" id="ownerPasswordInput" required autocomplete="current-password" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="كلمة المرور"></label>
-      <button id="loginBtn" type="submit" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold cursor-pointer">تسجيل الدخول</button>
-      <p id="loginMessage" class="text-sm" role="status"></p>
-    </form>
-  </div>
-</div>
-
-<!-- نافذة طلب يدوي -->
-<div id="manualOrderModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="closeManualOrderModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-pink-600">إضافة طلب يدوي</h3>
-    <form id="manualOrderForm" class="space-y-3">
-      <input id="manClientName" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="اسم العميل *">
-      <input id="manClientPhone" type="tel" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="رقم الهاتف *">
-      <select id="manDeliveryOption" class="w-full px-3 py-2 border rounded-xl text-sm"><option>تسليم واستلام بالمحل</option><option>توصيل واستلام من المنزل</option></select>
-      <textarea id="manOrderDetails" rows="2" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="تفاصيل القطع..."></textarea>
-      <div class="grid grid-cols-2 gap-2">
-        <input id="manTotalAmount" type="number" step="0.01" required class="px-3 py-2 border rounded-xl text-sm" placeholder="الإجمالي (ج.م) *">
-        <input id="manPaidAmount" type="number" step="0.01" value="0" class="px-3 py-2 border rounded-xl text-sm" placeholder="المدفوع مقدماً">
-      </div>
-      <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded-xl font-bold text-sm cursor-pointer">حفظ الطلب</button>
-    </form>
-  </div>
-</div>
-
-<!-- نافذة تفاصيل الطلب -->
-<div id="orderDetailsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="closeOrderDetailsModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-slate-800"><i class="fa-solid fa-file-invoice text-pink-600"></i> تفاصيل الحساب</h3>
-    <div id="orderDetailsContent" class="space-y-4 text-sm"></div>
-  </div>
-</div>
-
-<!-- نافذة مصروف -->
-<div id="expenseModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
-    <button type="button" onclick="closeExpenseModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-rose-600">تسجيل مصروف جديد</h3>
-    <form id="expenseForm" class="space-y-3">
-      <input id="expTitle" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="وصف المصروف *">
-      <select id="expCategory" class="w-full px-3 py-2 border rounded-xl text-sm"><option>منظفات ومستلزمات</option><option>كهرباء ومياه</option><option>إيجار ومصاريف ثابتة</option><option>صيانة أجهزة</option><option>أجور عمالة</option><option>أخرى</option></select>
-      <input id="expAmount" type="number" step="0.01" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="المبلغ (ج.م) *">
-      <button type="submit" class="w-full bg-rose-600 text-white py-3 rounded-xl font-bold text-sm cursor-pointer">حفظ</button>
-    </form>
-  </div>
-</div>
-
-<!-- نافذة عرض -->
-<div id="offerModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
-    <button type="button" onclick="closeOfferModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-amber-600">إضافة عرض</h3>
-    <form id="offerForm" class="space-y-3">
-      <input id="offerTitle" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="عنوان العرض *">
-      <textarea id="offerDetails" required rows="3" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="التفاصيل..."></textarea>
-      <button type="submit" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold text-sm cursor-pointer">نشر</button>
-    </form>
-  </div>
-</div>
-
-<!-- نافذة الخدمات -->
-<div id="servicesModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="closeServicesModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-slate-800">إدارة الخدمات والأسعار</h3>
-    <form id="serviceAddForm" class="space-y-2 mb-6 p-3 bg-slate-50 rounded-xl">
-      <input id="srvName" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="اسم الخدمة">
-      <input id="srvPrice" type="number" step="0.01" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="السعر (ج.م)">
-      <button type="submit" class="w-full bg-slate-800 text-white py-2 rounded-xl text-xs font-bold cursor-pointer">إضافة</button>
-    </form>
-    <div id="adminServicesList" class="space-y-2 text-xs"></div>
-  </div>
-</div>
-
-<!-- نافذة المخزون -->
-<div id="inventoryModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="closeInventoryModal()" class="absolute top-4 left-4 text-slate-500 font-bold cursor-pointer">✕</button>
-    <h3 class="text-xl font-black mb-4 text-teal-700">إدارة المخزون</h3>
-    <form id="inventoryAddForm" class="space-y-2 mb-6 p-3 bg-teal-50 rounded-xl">
-      <input id="invItemName" required class="w-full px-3 py-2 border rounded-xl text-sm" 
+      <label class="block text-sm font-bold">البريد الإلكتروني
+        <input type="email" id="ownerEmailInput" required autocompl
