@@ -16,7 +16,7 @@
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:60;padding:1rem;overflow-y:auto}
   .modal.show{display:flex}
   .modal-content{background:#fff;width:100%;max-width:36rem;border-radius:1rem;padding:1.5rem;position:relative;max-height:90vh;overflow-y:auto}
-  input,select,textarea{border:1px solid #e2e8f0;border-radius:.75rem;padding:.55rem .75rem;width:100%;font-family:inherit}
+  input,select,textarea{border:1px solid #e2e8f0;border-radius:.75rem;padding:.55rem .75rem;width:100%;font-family:inherit;background:#fff}
   input:focus,select:focus,textarea:focus{outline:none;border-color:#db2777;box-shadow:0 0 0 3px rgba(219,39,119,.1)}
   .badge{display:inline-block;padding:.15rem .6rem;border-radius:9999px;font-size:.7rem;font-weight:700}
   .badge-new{background:#dbeafe;color:#1e40af}
@@ -58,7 +58,7 @@
 
 <main class="flex-grow">
 
-<!-- ===================== CUSTOMER SECTIONS ===================== -->
+<!-- CUSTOMER SECTIONS -->
 <section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center">
   <div class="max-w-3xl mx-auto">
     <span class="bg-white/20 px-3 py-1 rounded-full text-xs">عناية تليق بملابسك</span>
@@ -108,10 +108,8 @@
   </div>
 </section>
 
-<!-- ===================== ADMIN PANEL ===================== -->
+<!-- ADMIN SECTION -->
 <section id="adminSection" class="hidden max-w-7xl mx-auto px-4 py-6 w-full">
-
-  <!-- Quick actions -->
   <div class="bg-gradient-to-l from-pink-600 to-rose-500 text-white rounded-2xl p-4 mb-5 flex flex-wrap gap-2 items-center">
     <span class="font-black text-lg ml-2"><i class="fa-solid fa-shield-halved"></i> لوحة المالك</span>
     <button onclick="openManualOrder()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-plus"></i> طلب يدوي</button>
@@ -120,7 +118,6 @@
     <button onclick="switchTab('inventory')" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-bold"><i class="fa-solid fa-boxes-stacked"></i> مخزون</button>
   </div>
 
-  <!-- Tabs -->
   <div class="bg-white rounded-2xl p-2 shadow-sm mb-5 flex gap-1 overflow-x-auto">
     <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')"><i class="fa-solid fa-gauge-high"></i> لوحة التحكم</button>
     <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')"><i class="fa-solid fa-list-check"></i> الطلبات</button>
@@ -131,7 +128,7 @@
     <button class="tab-btn" data-tab="reports" onclick="switchTab('reports')"><i class="fa-solid fa-chart-line"></i> التقارير</button>
   </div>
 
-  <!-- ===== DASHBOARD TAB ===== -->
+  <!-- DASHBOARD -->
   <div id="tab-dashboard" class="admin-tab-content space-y-5">
     <div class="flex flex-wrap gap-2 items-center justify-between">
       <h2 class="text-xl font-black">ملخص الأداء</h2>
@@ -158,7 +155,7 @@
     </div>
   </div>
 
-  <!-- ===== ORDERS TAB ===== -->
+  <!-- ORDERS -->
   <div id="tab-orders" class="admin-tab-content hidden">
     <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
       <div class="grid md:grid-cols-5 gap-2">
@@ -189,7 +186,7 @@
     </div>
   </div>
 
-  <!-- ===== CUSTOMERS TAB ===== -->
+  <!-- CUSTOMERS -->
   <div id="tab-customers" class="admin-tab-content hidden">
     <div class="bg-white rounded-2xl p-4 shadow-sm mb-4 flex gap-2 flex-wrap">
       <input id="custSearch" placeholder="بحث بالاسم أو الهاتف" oninput="loadCustomers()" class="flex-1 min-w-[200px]">
@@ -199,7 +196,7 @@
     </div>
   </div>
 
-  <!-- ===== SERVICES TAB ===== -->
+  <!-- SERVICES -->
   <div id="tab-services" class="admin-tab-content hidden">
     <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
       <h3 class="font-black mb-3"><i class="fa-solid fa-plus-circle text-pink-600"></i> إضافة / تعديل خدمة</h3>
@@ -226,7 +223,7 @@
     </div>
   </div>
 
-  <!-- ===== FINANCE TAB ===== -->
+  <!-- FINANCE -->
   <div id="tab-finance" class="admin-tab-content hidden space-y-5">
     <div class="flex flex-wrap gap-2 items-center justify-between">
       <h2 class="text-xl font-black">الإيرادات والمصروفات</h2>
@@ -259,7 +256,7 @@
     </div>
   </div>
 
-  <!-- ===== INVENTORY TAB ===== -->
+  <!-- INVENTORY -->
   <div id="tab-inventory" class="admin-tab-content hidden space-y-4">
     <div class="bg-white rounded-2xl p-4 shadow-sm">
       <h3 class="font-black mb-3"><i class="fa-solid fa-plus-circle text-pink-600"></i> إضافة مستلزم</h3>
@@ -295,7 +292,7 @@
     </div>
   </div>
 
-  <!-- ===== REPORTS TAB ===== -->
+  <!-- REPORTS -->
   <div id="tab-reports" class="admin-tab-content hidden space-y-4">
     <div class="bg-white rounded-2xl p-4 shadow-sm">
       <div class="flex flex-wrap gap-2 items-center mb-3">
@@ -316,7 +313,6 @@
       <div id="reportsByExpenseType" class="text-sm space-y-2"></div>
     </div>
   </div>
-
 </section>
 </main>
 
@@ -326,13 +322,14 @@
   <p>© 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
 </footer>
 
-<!-- ============ MODALS ============ -->
-
-<!-- Login -->
+<!-- MODALS -->
 <div id="authModal" class="modal">
   <div class="modal-content">
-    <button onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <button onclick="closeModal('authModal')" class="absolute top-4 left-4 text-slate-500">✕</button>
     <h3 class="text-2xl font-black mb-6 text-center">دخول المالك</h3>
     <form id="ownerLoginForm" class="space-y-4">
       <label class="block text-sm font-bold">البريد الإلكتروني
-        <input type="email" id="ownerEmailInput" required autocompl
+        <input type="email" id="ownerEmailInput" required autocomplete="username" placeholder="بريد المالك" class="mt-1">
+      </label>
+      <label class="block text-sm font-bold">كلمة المرور
+        <input type="password" id="ownerPasswordInput" required autocomplete="current-password" placeholder="كلمة المرور" class="mt-1"
