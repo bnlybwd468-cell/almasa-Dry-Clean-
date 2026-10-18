@@ -26,23 +26,32 @@ import {getFirestore,doc,setDoc,getDoc,addDoc,collection,query,where,orderBy,onS
 const FIREBASE={apiKey:"AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",authDomain:"al-masa-dry-clean.firebaseapp.com",projectId:"al-masa-dry-clean",storageBucket:"al-masa-dry-clean.appspot.com",messagingSenderId:"624222741188",appId:"1:624222741188:web:a8f3939d14765f02c5df91"};
 const CFG={name:"دراي ألماسة كلين",addr:"شارع توار المتفرع من السوق بجوار فندق النخيل - سيوة، مطروح",map:"https://maps.app.goo.gl/QMD5GRB5x27nvD836",hours:"",
  phones:[["أ. أبو بكر أحمد","01023714530"],["أ. عبد الله أحمد","01021988683"]],
- services:[["👕","غسيل الملابس","غسيل الملابس اليومية والرسمية مع مراعاة نوع القماش.",""],["♨️","التنظيف بالبخار","عناية مناسبة بالقطع التي تتطلب معالجة بالبخار.",""],["👔","كي الملابس","كي احترافي للحفاظ على مظهر الملابس.",""],["🛏️","غسيل البطاطين والمفروشات","البطاطين والألحفة والستائر وأغطية الأسرة.",""],["✨","إزالة البقع الصعبة","فحص البقعة واختيار المعالجة المناسبة دون ضمان إزالة كل بقعة.",""],["🏨","خدمات الفنادق والمنشآت","خدمات مخصصة للفنادق والمخيمات، اطلب عرض سعر.",""]]};
+ services:[["👕","غسيل الملابس","غسيل الملابس اليومية والرسمية مع مراعاة نوع القماش.",""],["♨️","التنظيف بالبخار","عناية مناسبة بالقطع التي تتطلب معالجة بالبخار.",""],["👔","كي الملابس","كي احترافي للحفاظ على مظهر الملابس.",""],["🛏️","غسيل البطاطين والمفروشات","البطاطين والألحفة والستائر وأغطية الأسرة.",""],["✨","إزالة البقع الصعبة","فحص البقعة وااختيار المعالجة المناسبة دون ضمان إزالة كل بقعة.",""],["🏨","خدمات الفنادق والمنشآت","خدمات مخصصة للفنادق والمخيمات، اطلب عرض سعر.",""]]};
 const ST=["تم إرسال الطلب","تم تأكيد الطلب","جارٍ تنسيق الاستلام","تم استلام الملابس","قيد الغسيل أو الكي","جاهز للتسليم","خرج للتوصيل","تم التسليم","تم الإلغاء"];
 const AE={"auth/email-already-in-use":"هذا البريد مسجّل بالفعل، سجّل الدخول.","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة.","auth/wrong-password":"البريد أو كلمة المرور غير صحيحة.","auth/weak-password":"كلمة المرور ضعيفة (6 أحرف على الأقل).","auth/invalid-email":"البريد الإلكتروني غير صحيح.","auth/network-request-failed":"تعذر الاتصال بالإنترنت، حاول مرة أخرى.","auth/too-many-requests":"محاولات كثيرة، انتظر قليلًا."};
 const $=i=>document.getElementById(i),V=i=>$(i)?$(i).value.trim():"",E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=t=>t?new Date(t).toLocaleString("ar-EG",{dateStyle:"short",timeStyle:"short"}):"";
-let app,auth,db,own=null,user=null,prof={},role=null,view="home",orders=[],chats=[],msgs=[],allOrders=[],admins=[],invs=[],D={},pend="",busy=false,unsubs=[],mUn=null,sel=null;
+let app,auth,db,own=null,user=null,prof={},role=null,view="home",orders=[],chats=[],msgs=[],allOrders=[],admins=[],invs=[],pend="",busy=false,unsubs=[],mUn=null;
 
 try{app=initializeApp(FIREBASE);auth=getAuth(app);db=getFirestore(app)}catch(e){}
 const ready=()=>db&&FIREBASE.projectId!=="ضع_القيمة";
 
 function nav(){
+ const navElem = $("nav");
+ if (!navElem) return;
  const n=(v,i,t,b)=>`<button data-v="${v}" class="${view===v?"on":""}"><i>${i}</i>${t}${b?` <span class="bd">${b}</span>`:""}</button>`;
  const un=user&&own&&own.from==="a"&&own.ts>(+localStorage.seen||0)?1:0,ad=role?allOrders.filter(o=>o.status===0).length+chats.filter(c=>c.from==="c"&&!c.closed).length:0;
- $("nav").innerHTML=n("home","🏠","الرئيسية")+n("order","🧺","اطلب")+n("mine","📦","طلباتي")+n("chat","💬","محادثاتي",un||"")+(user?n("acct","👤","حسابي"):n("login","🔑","دخول"))+(role?n("admin","⚙️","الإدارة",ad||""):"");
+ navElem.innerHTML=n("home","🏠","الرئيسية")+n("order","🧺","اطلب")+n("mine","📦","طلباتي")+n("chat","💬","محادثاتي",un||"")+(user?n("acct","👤","حسابي"):n("login","🔑","دخول"))+(role?n("admin","⚙️","الإدارة",ad||""):"");
 }
 
-function go(v,x){view=v;if(mUn){mUn();mUn=null}$("v").innerHTML=V0[v](x);if(F[v])F[v](x);nav();scrollTo(0,0)}
+function go(v,x){
+ view=v;if(mUn){mUn();mUn=null}
+ const container = $("v");
+ if (container && V0[v]) container.innerHTML=V0[v](x);
+ if(F[v])F[v](x);
+ nav();
+ scrollTo(0,0);
+}
 
 const V0={
 home:()=>`<div class="hero"><div style="font-size:50px">💎</div><h1>${CFG.name}</h1><div>DIAMOND DRY CLEAN</div><p><b>عناية تليق بملابسك</b><br>نظافة فائقة وعناية بملابسك ومفروشاتك في قلب سيوة</p><button class="btn" style="background:#fff;color:#b02a5c" data-v="order">🧺 اطلب خدمة غسيل / كي الآن</button></div>
@@ -57,14 +66,21 @@ order:()=>user?`<div class="cd"><h2>🧺 طلب خدمة</h2><label>الاسم</
 done:o=>`<div class="cd"><h2 class="ok">✅ تم حفظ طلبك</h2><p>رقم الطلب: <b dir="ltr" id="dn">${E(o.no)}</b></p><p class="mu">${E(o.service)}<br>${E(o.addr)}<br>الاستلام المطلوب: ${E(o.day)} ${E(o.time)} (بانتظار تأكيد الموعد)<br>السعر: بانتظار تأكيد السعر من الإدارة</p><button class="btn b" onclick="navigator.clipboard&&navigator.clipboard.writeText('${o.no}')">نسخ رقم الطلب</button><button class="btn t b" data-v="mine">تتبع الطلب</button><button class="btn g b" data-v="chat">تواصل مع الإدارة</button><button class="btn g b" data-v="home">الرئيسية</button></div>`,
 mine:()=>user?`<div class="cd"><h2>📦 طلباتي</h2><div id="ml" class="mu">جاري التحميل…</div></div>`:V0.order(),
 chat:()=>`<div class="cd"><h2>💬 محادثاتي مع الإدارة</h2><div class="chat" id="cc"><div class="mu">${user?"جاري التحميل…":"سجّل الدخول لبدء المحادثة."}</div></div><label>رقم الطلب (اختياري)</label><input id="c-o" dir="ltr" placeholder="DD-123456"><div class="fl"><textarea id="c-t" rows="1" placeholder="اكتب رسالتك…">${E(pend)}</textarea><button class="btn" id="c-s">إرسال</button></div><div id="c-r" class="er"></div></div>`,
-admin:()=>`<div class="cd"><h2>📋 الطلبات</h2><input id="f-q" placeholder="بحث: اسم / هاتف / رقم"><div id="al"></div></div><div class="cd"><h2>💬 صندوق الوارد</h2><div id="il"></div><div id="it" hidden><div class="chat" id="ic"></div><div class="fl" style="margin-top:6px"><input id="ir" placeholder="الرد…"><button class="btn" id="is">رد</button></div><button class="btn g b" id="ix">إغلاق المحادثة</button></div></div>
+admin:()=>`<div class="cd"><h2>📋 الطلبات</h2><input id="f-q" placeholder="بحث: اسم / هاتف / رقم"><div id="al"></div></div><div class="cd"><h2>💬 صندوق الوارد</h2><div id="il"></div></div>
 <div class="cd"><h2>🔑 الصلاحيات ونقل الملكية</h2><p class="mu">دورك: <b>${role}</b>. المالك فقط يدعو مديرين أو مالكًا جديدًا ويحذف صلاحيات.</p>${role==="owner"?`<label>بريد المدعو (يجب أن يفعّل بريده)</label><input id="iv-e" type="email" dir="ltr"><select id="iv-r"><option value="staff">موظف</option><option value="manager">مدير</option><option value="owner">مالك (نقل الملكية)</option></select><button class="btn b" id="iv-s">إرسال الدعوة</button><div id="iv-l"></div>`:""}<div id="ad-l"></div></div>`
 };
 
 const F={
 login:()=>{},
 mine:()=>{paintMine()},
-chat:()=>{if(!user)return;localStorage.seen=Date.now();const un=onSnapshot(query(collection(db,"chats",user.uid,"msgs"),orderBy("ts")),s=>{msgs=s.docs.map(d=>d.data());const e=$("cc");if(!e)return;e.innerHTML=msgs.length?msgs.map(m=>`<div class="m ${m.from==="c"?"me":"ot"}">${m.no?"<b>["+E(m.no)+"]</b> ":""}${E(m.text)}<small>${m.from==="c"?"أنت":"الإدارة"} • ${fmt(m.ts)}</small></div>`).join(""):'<div class="mu">ابدأ المحادثة…</div>';e.scrollTop=e.scrollHeight;localStorage.seen=Date.now()},()=>{const e=$("cc");if(e)e.innerHTML='<div class="er">تعذر تحميل الرسائل.</div>'});mUn=un},
+chat:()=>{
+ if(!user)return;localStorage.seen=Date.now();
+ const un=onSnapshot(query(collection(db,"chats",user.uid,"msgs"),orderBy("ts")),s=>{
+  msgs=s.docs.map(d=>d.data());const e=$("cc");if(!e)return;
+  e.innerHTML=msgs.length?msgs.map(m=>`<div class="m ${m.from==="c"?"me":"ot"}">${m.no?"<b>["+E(m.no)+"]</b> ":""}${E(m.text)}<small>${m.from==="c"?"أنت":"الإدارة"} • ${fmt(m.ts)}</small></div>`).join(""):'<div class="mu">ابدأ المحادثة…</div>';
+  e.scrollTop=e.scrollHeight;localStorage.seen=Date.now();
+ },()=>{const e=$("cc");if(e)e.innerHTML='<div class="er">تعذر تحميل الرسائل.</div>'});mUn=un;
+},
 admin:()=>{paintAdmin()}
 };
 
@@ -112,7 +128,13 @@ async function tryInvite(){
 
 const say=(id,m,c="er")=>{if($(id))$(id).innerHTML=`<p class="${c}">${m}</p>`};
 
-onAuthStateChanged(auth, u => { user = u; boot(); go("home"); });
+// البدء التلقائي وتحميل الواجهة دون الشاشة البيضاء
+go("home");
+onAuthStateChanged(auth, u => { 
+ user = u; 
+ boot(); 
+ nav();
+});
 
 document.addEventListener("click",async e=>{
  const t=e.target;
@@ -154,14 +176,6 @@ document.addEventListener("click",async e=>{
    await setDoc(doc(db,"chats",user.uid),{name:prof.name||user.email,last:x,from:"c",ts:Date.now(),closed:false},{merge:true});
    if($("c-t"))$("c-t").value="";pend="";
   }catch(y){say("c-r","تعذر إرسال الرسالة.")}t.disabled=false;
- }
- if(t.id==="is"&&sel){
-  const x=V("ir");if(!x)return;
-  try{
-   await addDoc(collection(db,"chats",sel,"msgs"),{from:"a",text:x,ts:Date.now()});
-   await setDoc(doc(db,"chats",sel),{last:x,from:"a",ts:Date.now()},{merge:true});
-   if($("ir"))$("ir").value="";
-  }catch(y){}
  }
 });
 </script></body></html>
