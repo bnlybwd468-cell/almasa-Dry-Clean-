@@ -1,264 +1,288 @@
 <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دراي ألماسة كلين | Diamond Dry Clean</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b}
+  @media print {
+    body * { visibility: hidden; }
+    #printableArea, #printableArea * { visibility: visible; }
+    #printableArea { position: absolute; left: 0; top: 0; width: 100%; }
+  }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+<header class="bg-white shadow-sm sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <div class="flex items-center gap-3">
+      <div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-gem"></i></div>
+      <div><h1 class="font-black text-lg">دراي ألماسة كلين</h1><p class="text-xs text-slate-500">Diamond Dry Clean</p></div>
+    </div>
+    <nav class="hidden md:flex gap-5 font-semibold text-slate-600">
+      <a href="#home">الرئيسية</a><a href="#offers">العروض</a><a href="#services">خدماتنا</a><a href="#order">طلب خدمة</a><a href="#trackOrder">متابعة طلبك</a>
+    </nav>
+    <div class="flex gap-2 items-center">
+      <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-map-location-dot"></i> موقعنا</a>
+      <button id="ownerAuthBtn" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">دخول المالك</button>
+      <button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold">خروج المالك</button>
+    </div>
+  </div>
+</header>
 
-<html lang="ar" dir="rtl">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>دراي ألماسة كلين | Diamond Dry Clean</title>  
-<script دي الإضافات اللي عايز أضيفها تطوير لوحة تحكم المالك لموقع دراي ألماسة كلين  طوّر الموقع الحالي «دراي ألماسة كلين | Diamond Dry Clean» بإضافة نظام إدارة احترافي ومتكامل خاص بالمالك، مرتبط بقاعدة بيانات Firebase الحالية، مع الحفاظ على التصميم الحالي وجميع الوظائف الموجودة، بما فيها تسجيل دخول المالك، واستقبال طلبات العملاء، وإدارة العروض، وتحديث حالات الطلبات، وإرسال الفواتير عبر واتساب.
+<main class="flex-grow">
+<section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center">
+  <div class="max-w-3xl mx-auto">
+    <span class="bg-white/25 px-3 py-1 rounded-full text-xs font-bold">عناية تليق بملابسك في قلب سيوة</span>
+    <h2 class="text-4xl font-black my-5">نظافة فائقة وعناية بمفروشاتك وملابسك</h2>
+    <p class="mb-7">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بكل سهولة ويسر.</p>
+    <a href="#order" class="inline-block bg-white text-pink-600 font-bold px-7 py-3 rounded-xl shadow hover:bg-slate-100 transition">اطلب خدمة الآن</a>
+  </div>
+</section>
 
-مهم جدًا: لا تنشئ موقعًا جديدًا ولا تحذف أو تستبدل أي وظيفة موجودة. أضف الميزات التالية إلى المشروع الحالي، واجعل البيانات محفوظة بشكل دائم في Firebase، وليست مجرد بيانات تجريبية أو مؤقتة.
+<section id="offers" class="max-w-7xl mx-auto px-4 py-8 w-full">
+  <div class="bg-gradient-to-r from-amber-500 to-pink-600 text-white rounded-3xl p-6 shadow-md">
+    <h3 class="text-2xl font-black mb-4"><i class="fa-solid fa-fire"></i> أحدث العروض والخصومات</h3>
+    <div id="publicOffersList" class="grid md:grid-cols-2 gap-4"><p>جارٍ تحميل العروض...</p></div>
+  </div>
+</section>
 
-1. لوحة تحكم رئيسية للمالك
+<section id="services" class="max-w-7xl mx-auto px-4 py-10 w-full">
+  <h3 class="text-3xl font-black text-center mb-8">خدماتنا المتاحة</h3>
+  <div id="publicServicesGrid" class="grid md:grid-cols-3 gap-5">
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fa-solid fa-shirt text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">غسيل الملابس</h4><p class="text-sm text-slate-600">غسيل وتنظيف يومي مع العناية بالأنسجة.</p></div>
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">التنظيف بالبخار</h4><p class="text-sm text-slate-600">تنظيف احترافي للأقمشة والبدل والفساتين.</p></div>
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fa-solid fa-truck text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">خدمة التوصيل</h4><p class="text-sm text-slate-600">استلام وتسليم الملابس من باب المنزل.</p></div>
+  </div>
+</section>
 
-أنشئ لوحة تحكم تظهر بعد تسجيل دخول المالك بنجاح، وتحتوي على:
+<section id="order" class="max-w-3xl mx-auto px-4 py-8 w-full">
+  <div class="bg-white p-7 rounded-3xl shadow-lg border border-pink-100">
+    <h3 class="text-2xl font-black text-center mb-2">طلب خدمة سريع</h3>
+    <p class="text-center text-slate-500 text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك فوراً.</p>
+    <form id="directOrderForm" class="space-y-4">
+      <label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none" placeholder="اسمك الكريم"></label>
+      <label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none" placeholder="01xxxxxxxxx"></label>
+      <label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none" placeholder="example@mail.com"></label>
+      <label class="block text-sm font-bold">طريقة التسليم<select id="deliveryOption" class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none"><option>توصيل واستلام من المنزل</option><option>تسليم واستلام بالمحل</option></select></label>
+      <label class="block text-sm font-bold">الخدمة المطلوبة<select id="serviceType" class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none"><option>غسيل ملابس</option><option>تنظيف بالبخار</option><option>كي ملابس</option><option>غسيل مفروشات وبطاطين</option><option>إزالة بقع</option></select></label>
+      <label class="block text-sm font-bold">العنوان بالتفصيل أو ملاحظات الطلب<textarea id="orderDetails" rows="3" class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 outline-none" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea></label>
+      <button id="sendOrderBtn" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-black transition">إرسال الطلب الآن</button>
+      <p id="orderMessage" class="text-sm mt-2 text-center" role="status"></p>
+    </form>
+  </div>
+</section>
 
-- عدد الطلبات الجديدة.
-- عدد الطلبات قيد التنفيذ.
-- عدد الطلبات الجاهزة للاستلام.
-- عدد الطلبات التي تم تسليمها.
-- عدد الطلبات الملغاة والمتأخرة.
-- إجمالي الإيرادات اليومية والشهرية.
-- إجمالي المبالغ المدفوعة والمبالغ المتبقية لدى العملاء.
-- إجمالي المصروفات وصافي الربح التقديري.
-- أحدث الطلبات مع إمكانية فتح تفاصيل كل طلب.
-- أزرار سريعة لإضافة طلب يدوي، وإضافة عرض، وإنشاء فاتورة، وتسجيل مصروف.
+<section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8 w-full">
+  <div class="bg-white p-6 rounded-3xl shadow-sm text-center border border-slate-100">
+    <h3 class="text-xl font-black mb-2">🔍 متابعة حالة طلبك</h3>
+    <p class="text-xs text-slate-500 mb-4">لخصوصية العملاء، متابعة الطلب متاحة عبر التواصل المباشر مع إدارة المغسلة.</p>
+    <a class="inline-block bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition" href="https://wa.me/201000000000?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%B7%D9%84%D8%A8%D9%8A" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> اطلب تحديث حالة طلبك عبر واتساب</a>
+  </div>
+</section>
 
-اجعل الإحصائيات محسوبة من البيانات الفعلية في قاعدة البيانات، مع إمكانية اختيار فترة زمنية لعرض النتائج.
+<!-- لوحة تحكم المالك الاحترافية -->
+<section id="adminSection" class="hidden max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
+  <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 rounded-3xl shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
+    <div>
+      <h2 class="text-2xl font-black"><i class="fa-solid fa-shield-halved text-amber-400"></i> لوحة تحكم الإدارة الشاملة</h2>
+      <p class="text-xs text-slate-300 mt-1">إدارة الطلبات، الحسابات المالية، المصروفات، المخزون، والأسعار.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button onclick="openManualOrderModal()" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition"><i class="fa-solid fa-plus"></i> طلب يدوي</button>
+      <button onclick="openExpenseModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition"><i class="fa-solid fa-money-bill-wave"></i> تسجيل مصروف</button>
+      <button onclick="switchTab('orders')" class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl text-xs font-bold transition">الطلبات</button>
+      <button onclick="switchTab('finances')" class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl text-xs font-bold transition">الماليات</button>
+      <button onclick="switchTab('inventory')" class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl text-xs font-bold transition">المخزون</button>
+      <button onclick="switchTab('servicesManager')" class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl text-xs font-bold transition">الخدمات والأسعار</button>
+      <button onclick="switchTab('offersManager')" class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl text-xs font-bold transition">العروض</button>
+    </div>
+  </div>
 
-2. إدارة الطلبات بالتفصيل
+  <!-- قسم الإحصائيات العامة -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">الطلبات الجديدة</p><h4 id="statNewOrders" class="text-2xl font-black text-pink-600 mt-1">0</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">قيد التنفيذ</p><h4 id="statInProcess" class="text-2xl font-black text-amber-500 mt-1">0</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">جاهزة للاستلام</p><h4 id="statReady" class="text-2xl font-black text-blue-600 mt-1">0</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">تم التسليم</p><h4 id="statDelivered" class="text-2xl font-black text-green-600 mt-1">0</h4></div>
+  </div>
 
-طوّر قسم إدارة الطلبات ليتيح للمالك:
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">الإيرادات المحصلة</p><h4 id="statRevenue" class="text-2xl font-black text-emerald-600 mt-1">0 ج.م</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">إجمالي المصروفات</p><h4 id="statExpenses" class="text-2xl font-black text-rose-600 mt-1">0 ج.م</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">صافي الربح التقديري</p><h4 id="statNetProfit" class="text-2xl font-black text-indigo-600 mt-1">0 ج.م</h4></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100"><p class="text-xs text-slate-500 font-bold">مبالغ مستحقة لدى العملاء</p><h4 id="statRemaining" class="text-2xl font-black text-orange-600 mt-1">0 ج.م</h4></div>
+  </div>
 
-- مشاهدة جميع بيانات الطلب، بما فيها اسم العميل ورقم الهاتف والبريد الإلكتروني والعنوان والخدمة المطلوبة وطريقة التسليم والملاحظات.
-- فتح تفاصيل أي طلب في نافذة مستقلة.
-- تعديل بيانات الطلب وتصحيحها.
-- إضافة عدد القطع وأنواعها وأسعارها.
-- تحديد تاريخ استلام الملابس والموعد المتوقع للانتهاء وموعد التسليم.
-- البحث عن الطلبات باستخدام رقم الطلب أو اسم العميل أو رقم الهاتف.
-- تصفية الطلبات حسب الحالة والتاريخ والخدمة.
-- ترتيب الطلبات من الأحدث إلى الأقدم.
-- إضافة طلب يدوي من داخل لوحة التحكم للعميل الذي يأتي إلى المحل دون استخدام الموقع.
-- طباعة إيصال استلام للعميل يحتوي على رقم الطلب وبياناته وتفاصيل القطع والأسعار.
-- تسجيل وقت إنشاء الطلب وآخر تعديل عليه.
+  <!-- التبويبات الداخلية للإدارة -->
+  <div id="adminTabOrders" class="admin-tab space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+      <div class="flex flex-col md:flex-row justify-between gap-3 items-center">
+        <h3 class="text-xl font-black text-slate-800">إدارة الطلبات والعملاء</h3>
+        <div class="flex flex-wrap gap-2 w-full md:w-auto">
+          <input type="text" id="orderSearchInput" placeholder="بحث بالاسم أو الهاتف أو رقم الطلب..." class="px-4 py-2 border rounded-xl text-sm flex-1 md:w-64 outline-none focus:ring-2 focus:ring-pink-500">
+          <select id="orderStatusFilter" class="border rounded-xl px-3 py-2 text-sm outline-none bg-white">
+            <option value="">جميع الحالات</option>
+            <option value="جديد">جديد</option>
+            <option value="تم الاستلام">تم الاستلام</option>
+            <option value="قيد التنفيذ">قيد التنفيذ</option>
+            <option value="جاهز للاستلام">جاهز للاستلام</option>
+            <option value="خرج للتوصيل">خرج للتوصيل</option>
+            <option value="تم التسليم">تم التسليم</option>
+            <option value="ملغي">ملغي</option>
+          </select>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="p-3">رقم الطلب / التاريخ</th>
+              <th class="p-3">العميل والهاتف</th>
+              <th class="p-3">الخدمة والتسليم</th>
+              <th class="p-3">الحالة</th>
+              <th class="p-3">الحساب (إجمالي/مدفوع/متبقي)</th>
+              <th class="p-3">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="adminOrdersTable">
+            <tr><td colspan="6" class="p-4 text-center text-slate-400">جارٍ تحميل الطلبات...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-اجعل حالات الطلب واضحة، وتشمل: جديد، تم الاستلام، قيد التنفيذ، جاهز للاستلام، خرج للتوصيل، تم التسليم، وملغي.
+  <!-- تبويب الماليات والمصروفات -->
+  <div id="adminTabFinances" class="admin-tab hidden space-y-6">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+        <h3 class="text-lg font-black text-slate-800"><i class="fa-solid fa-money-bill-trend-up text-emerald-600"></i> تسجيل المصروفات اليومية</h3>
+        <form id="expenseForm" class="space-y-3">
+          <input type="text" id="expTitle" required placeholder="بيان المصروف (مثال: شراء مسحوق غسيل، فاتورة كهرباء)" class="w-full px-4 py-2 border rounded-xl text-sm">
+          <div class="grid grid-cols-2 gap-2">
+            <select id="expCategory" class="px-4 py-2 border rounded-xl text-sm bg-white">
+              <option>منظفات ومستلزمات</option>
+              <option>كهرباء ومياه</option>
+              <option>إيجار ومصاريف ثابتة</option>
+              <option>صيانة أجهزة</option>
+              <option>أجور عمالة</option>
+              <option>توصيل ونثريات</option>
+            </select>
+            <input type="number" id="expAmount" min="0" step="0.01" required placeholder="المبلغ (ج.م)" class="px-4 py-2 border rounded-xl text-sm">
+          </div>
+          <textarea id="expNotes" rows="2" placeholder="ملاحظات إضافية..." class="w-full px-4 py-2 border rounded-xl text-sm"></textarea>
+          <button class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-xl font-bold text-sm transition">حفظ المصروف</button>
+        </form>
+      </div>
 
-3. نظام أسعار وفواتير متكامل
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+        <h3 class="text-lg font-black text-slate-800"><i class="fa-solid fa-chart-pie text-indigo-600"></i> ملخص التقارير المالية</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between p-3 bg-slate-50 rounded-xl font-bold"><span>إجمالي الإيرادات المحصلة:</span><span id="reportTotalRevenue" class="text-emerald-600">0 ج.م</span></div>
+          <div class="flex justify-between p-3 bg-slate-50 rounded-xl font-bold"><span>إجمالي المصروفات المسجلة:</span><span id="reportTotalExpenses" class="text-rose-600">0 ج.م</span></div>
+          <div class="flex justify-between p-3 bg-slate-50 rounded-xl font-bold"><span>صافي الربح التقديري:</span><span id="reportNetProfit" class="text-indigo-600">0 ج.م</span></div>
+          <div class="flex justify-between p-3 bg-slate-50 rounded-xl font-bold"><span>المتبقي لدى العملاء:</span><span id="reportPendingBalance" class="text-orange-600">0 ج.م</span></div>
+        </div>
+      </div>
+    </div>
 
-أضف نظامًا لحساب تكلفة الطلب تلقائيًا، بحيث يستطيع المالك:
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+      <h3 class="text-lg font-black text-slate-800">سجل المصروفات المسجلة</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="p-3">التاريخ</th>
+              <th class="p-3">البيان</th>
+              <th class="p-3">التصنيف</th>
+              <th class="p-3">المبلغ</th>
+              <th class="p-3">ملاحظات</th>
+              <th class="p-3">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="adminExpensesTable">
+            <tr><td colspan="6" class="p-4 text-center text-slate-400">لا توجد مصروفات مسجلة.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-- تحديد نوع كل قطعة وعددها وسعر القطعة.
-- إضافة أكثر من خدمة إلى الطلب الواحد.
-- إضافة رسوم التوصيل أو أي رسوم إضافية.
-- تطبيق خصم ثابت أو نسبة مئوية.
-- حساب الإجمالي النهائي تلقائيًا.
-- تسجيل المبلغ المدفوع مقدمًا والمبلغ المتبقي.
-- تسجيل المدفوعات الجزئية المتعددة مع تاريخ كل دفعة وطريقة الدفع.
-- تحديد حالة الفاتورة: غير مدفوعة، مدفوعة جزئيًا، مدفوعة بالكامل.
-- إنشاء فاتورة قابلة للطباعة.
-- تجهيز رسالة واتساب تتضمن رقم الطلب وتفاصيل الفاتورة والإجمالي والمدفوع والمتبقي.
+  <!-- تبويب المخزون -->
+  <div id="adminTabInventory" class="admin-tab hidden space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+      <h3 class="text-xl font-black text-slate-800">إدارة المخزون والمستلزمات</h3>
+      <form id="inventoryForm" class="grid md:grid-cols-4 gap-3">
+        <input type="text" id="invItemName" required placeholder="اسم المستلزم (مثال: مسحوق أوتوماتيك)" class="px-4 py-2 border rounded-xl text-sm">
+        <input type="number" id="invItemQty" required min="0" placeholder="الكمية الحالية" class="px-4 py-2 border rounded-xl text-sm">
+        <input type="text" id="invItemUnit" required placeholder="وحدة القياس (كجم، لتر، عبوة)" class="px-4 py-2 border rounded-xl text-sm">
+        <button class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition">إضافة للمخزون</button>
+      </form>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="p-3">اسم المستلزم</th>
+              <th class="p-3">الكمية الحالية</th>
+              <th class="p-3">الوحدة</th>
+              <th class="p-3">الحالة</th>
+              <th class="p-3">تحديث الكمية</th>
+            </tr>
+          </thead>
+          <tbody id="adminInventoryTable">
+            <tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد مستلزمات مسجلة.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-لا تعتبر إنشاء رسالة واتساب دليلًا على أن العميل دفع؛ يجب تسجيل الدفعة يدويًا بعد التأكد منها.
+  <!-- تبويب الخدمات والأسعار -->
+  <div id="adminTabServicesManager" class="admin-tab hidden space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+      <h3 class="text-xl font-black text-slate-800">إدارة الخدمات والأسعار (تظهر تلقائياً بالموقع)</h3>
+      <form id="serviceManageForm" class="grid md:grid-cols-4 gap-3">
+        <input type="text" id="srvTitle" required placeholder="اسم الخدمة" class="px-4 py-2 border rounded-xl text-sm">
+        <input type="number" id="srvPrice" required min="0" step="0.01" placeholder="السعر الافتراضي (ج.م)" class="px-4 py-2 border rounded-xl text-sm">
+        <input type="text" id="srvDesc" required placeholder="وصف الخدمة المختصر" class="px-4 py-2 border rounded-xl text-sm">
+        <button class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition">إضافة الخدمة</button>
+      </form>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="p-3">اسم الخدمة</th>
+              <th class="p-3">السعر</th>
+              <th class="p-3">الوصف</th>
+              <th class="p-3">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="adminServicesTable">
+            <tr><td colspan="4" class="p-4 text-center text-slate-400">جارٍ التحميل...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-4. إدارة الإيرادات والمصروفات
+  <!-- تبويب العروض -->
+  <div id="adminTabOffersManager" class="admin-tab hidden space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow border-2 border-amber-400">
+      <h3 class="text-xl font-black text-amber-600 mb-4">إضافة ونشر العروض والخصومات</h3>
+      <form id="offerForm" class="flex flex-col md:flex-row gap-3">
+        <input id="offerTitle" required class="flex-1 px-4 py-3 border rounded-xl text-sm" placeholder="عنوان العرض">
+        <input id="offerDetails" required class="flex-1 px-4 py-3 border rounded-xl text-sm" placeholder="تفاصيل العرض">
+        <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold transition">نشر العرض</button>
+      </form>
+      <p id="offerMessage" class="text-sm mt-2"></p>
+    </div>
+  </div>
+</section>
+</main>
 
-أنشئ قسمًا ماليًا خاصًا بالمالك يشمل:
-
-- تسجيل الإيرادات الناتجة عن الطلبات والمدفوعات الفعلية.
-- تسجيل المصروفات مثل المنظفات والكهرباء والمياه والإيجار والصيانة والتوصيل والأجور.
-- تصنيف المصروفات حسب النوع.
-- تسجيل قيمة كل مصروف وتاريخه ووصفه.
-- عرض تقرير يومي وأسبوعي وشهري وسنوي.
-- عرض إجمالي الإيرادات وإجمالي المصروفات وصافي الربح التقديري.
-- عرض المبالغ المستحقة على العملاء.
-- إمكانية البحث في السجلات المالية وتصدير التقارير.
-
-احسب صافي الربح التقديري وفقًا للإيرادات المحصلة والمصروفات المسجلة، مع توضيح الفرق بين قيمة الطلبات وإجمالي المبالغ التي تم تحصيلها فعليًا. امنع احتساب الدفعة الواحدة أكثر من مرة، ولا تعتبر قيمة الفواتير غير المدفوعة إيرادًا نقديًا محصلًا.
-
-5. إدارة الخدمات والأسعار
-
-أنشئ قسمًا يسمح للمالك بإضافة الخدمات وتعديلها وإيقافها، مع تحديد:
-
-- اسم الخدمة ووصفها.
-- سعر الخدمة ووحدة التسعير، مثل القطعة أو الكيلو أو الطلب.
-- أنواع الملابس والمفروشات التي تشملها الخدمة.
-- مدة التنفيذ التقديرية.
-- حالة الخدمة: متاحة أو متوقفة.
-
-يجب أن تنعكس الخدمات والأسعار المنشورة على الموقع تلقائيًا، مع الاحتفاظ بالسعر المسجل داخل الطلب وقت إنشائه حتى لا تتغير الفواتير القديمة عند تعديل الأسعار.
-
-6. إدارة المخزون
-
-أضف قسمًا لإدارة مستلزمات المغسلة، يشمل:
-
-- تسجيل اسم المنتج أو المستلزم.
-- تحديد الكمية الحالية ووحدة القياس.
-- تسجيل عمليات الشراء والإضافة والصرف.
-- تحديد حد أدنى للكمية.
-- إصدار تنبيه عند اقتراب أي مستلزم من النفاد.
-- عرض سجل لحركة المخزون.
-
-7. إدارة العملاء
-
-أنشئ سجلًا للعملاء يحتوي على بياناتهم الأساسية وسجل طلباتهم، مع:
-
-- البحث بالاسم أو رقم الهاتف.
-- مشاهدة الطلبات السابقة لكل عميل.
-- معرفة إجمالي المبالغ المدفوعة والمستحقة.
-- إضافة ملاحظات إدارية خاصة بالعميل.
-- تسجيل الخصومات الممنوحة له.
-- إمكانية تقديم عروض للعملاء الدائمين.
-
-لا تعرض بيانات أي عميل لعميل آخر، ولا تجعل معلومات العملاء متاحة للعامة.
-
-8. تنظيم الاستلام والتوصيل
-
-أضف قسمًا لتنظيم حركة الطلبات، يسمح للمالك بـ:
-
-- تحديد موعد استلام الملابس وموعد التسليم.
-- تسجيل عنوان العميل بالتفصيل.
-- تحديد ما إذا كان الطلب يحتاج إلى توصيل.
-- تسجيل رسوم التوصيل.
-- تحديد اسم المندوب المسؤول عند توفر أكثر من مندوب.
-- مشاهدة الطلبات المطلوب استلامها أو تسليمها في كل يوم.
-- تمييز الطلبات المتأخرة وإظهار تنبيه بشأنها.
-
-9. الإشعارات ورسائل واتساب
-
-أضف نظام إشعارات داخل لوحة التحكم عند وصول طلب جديد أو تأخر طلب أو قرب موعد التسليم. أضف أزرارًا لتجهيز رسائل واتساب للعميل عند استلام الطلب أو بدء تنفيذه أو جاهزيته أو خروجه للتوصيل أو تسليمه.
-
-استخدم رقم العميل المحفوظ في الطلب، واجعل الرسالة قابلة للمراجعة قبل فتح واتساب. لا تدّعِ إرسال الرسالة تلقائيًا إذا كانت الوظيفة تفتح واتساب فقط، ولا تضف إرسالًا آليًا إلا من خلال تكامل رسمي مناسب.
-
-10. حسابات العاملين والصلاحيات
-
-اجعل النظام قابلًا لإضافة حسابات موظفين مستقبلًا، مع صلاحيات مختلفة:
-
-- المالك: تحكم كامل في النظام.
-- موظف الاستقبال: إنشاء الطلبات وتعديل البيانات المسموح بها.
-- العامل: مشاهدة الطلبات المسندة إليه وتحديث حالتها وفق الصلاحيات.
-- المحاسب: مشاهدة التقارير المالية وإدارة السجلات المالية المصرح بها.
-
-لا تسمح للموظفين بالوصول إلى وظائف المالك أو تغيير صلاحياتهم بأنفسهم.
-
-11. الأمان والنسخ الاحتياطي
-
-طبّق قواعد أمان حقيقية على Firebase Authentication وCloud Firestore، بحيث يتم التحقق من صلاحية المالك داخل قواعد قاعدة البيانات، وليس بالاعتماد على إخفاء الأقسام في JavaScript فقط.
-
-احمِ بيانات الطلبات والعملاء والحسابات المالية من القراءة أو التعديل غير المصرح به. اجعل العملاء قادرين على إنشاء الطلبات وفق قواعد تحقق واضحة، دون السماح لهم بقراءة جميع الطلبات أو تعديل طلبات الآخرين. لا تسمح بتغيير حالة الطلب أو الأسعار أو المدفوعات إلا للمستخدمين المخولين.
-
-أضف سجلًا للعمليات الإدارية المهمة يوضح نوع العملية وتاريخها والحساب الذي نفذها. أضف إمكانية تصدير البيانات والتقارير، ووثّق طريقة إعداد نسخة احتياطية قابلة للاستعادة. لا تضع مفاتيح خاصة أو أسرارًا إدارية داخل كود الواجهة.
-
-12. التصميم وتجربة الاستخدام
-
-- حافظ على هوية الموقع الحالية وألوانه الوردية والأبيض والرمادي.
-- اجعل لوحة التحكم احترافية وسهلة الاستخدام باللغة العربية وباتجاه RTL.
-- اجعلها متوافقة مع الهاتف والكمبيوتر والأجهزة اللوحية.
-- استخدم جداول واضحة وبطاقات إحصائية ورسومًا بيانية عند الحاجة.
-- أضف رسائل نجاح وخطأ مفهومة، وحالات تحميل عند جلب البيانات.
-- أضف تأكيدًا قبل حذف أي سجل، ويفضل تعطيل الحذف النهائي للسجلات المالية المهمة والاكتفاء بإلغائها مع تسجيل السبب.
-- تعامل مع أخطاء الشبكة وصلاحيات Firebase بطريقة واضحة.
-- لا تعرض بيانات تجريبية على أنها بيانات حقيقية.
-
-13. شروط التنفيذ والتسليم
-
-قبل تعديل المشروع، افحص الكود الحالي وبنية قاعدة البيانات وقواعد Firestore حتى لا تتعارض الإضافات مع الوظائف الموجودة. أعد استخدام مشروع Firebase الحالي ومجموعاته المناسبة، وأنشئ مجموعات جديدة فقط عند الحاجة، مع قواعد أمان متوافقة معها.
-
-نفّذ الميزات فعليًا، واربط الأزرار والنماذج بقاعدة البيانات، وتأكد من أن الإضافة والتعديل والحفظ والاستعلام تعمل بصورة صحيحة. لا تكتفِ بتصميم واجهات شكلية أو أزرار لا تعمل.
-
-إذا احتاجت أي ميزة إلى إعداد إضافي في Firebase أو خدمة خارجية، فوضّح الخطوات المطلوبة بدقة، ولا تدّعِ اكتمال ميزة قبل اختبارها.
-
-ابدأ بتنفيذ لوحة التحكم وإدارة الطلبات والفواتير والإيرادات والمصروفات، ثم انتقل إلى بقية الأقسام، مع الحفاظ على جميع بيانات الموقع الحالية وعدم حذفها أو استبدالها.src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">  
-<style>body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b}</style>  
-</head>  
-<body class="min-h-screen flex flex-col">  
-<header class="bg-white shadow-sm sticky top-0 z-40">  
-  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">  
-    <div class="flex items-center gap-3"><div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-gem"></i></div><div><h1 class="font-black text-lg">دراي ألماسة كلين</h1><p class="text-xs text-slate-500">Diamond Dry Clean</p></div></div>  
-    <nav class="hidden md:flex gap-5 font-semibold text-slate-600"><a href="#home">الرئيسية</a><a href="#offers">العروض</a><a href="#services">خدماتنا</a><a href="#order">طلب خدمة</a><a href="#trackOrder">متابعة طلبك</a></nav>  
-    <div class="flex gap-2 items-center"><a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-map-location-dot"></i> موقعنا</a><button id="ownerAuthBtn" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">دخول المالك</button><button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold">خروج المالك</button></div>  
-  </div>  
-</header>  
-<main class="flex-grow">  
-<section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center"><div class="max-w-3xl mx-auto"><span class="bg-white/20 px-3 py-1 rounded-full text-xs">عناية تليق بملابسك</span><h2 class="text-4xl font-black my-5">نظافة فائقة وعناية بمفروشاتك في قلب سيوة</h2><p class="mb-7">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بدون حساب.</p><a href="#order" class="inline-block bg-white text-pink-600 font-bold px-7 py-3 rounded-xl">اطلب خدمة الآن</a></div></section>  
-<section id="offers" class="max-w-7xl mx-auto px-4 py-8 w-full"><div class="bg-gradient-to-r from-amber-500 to-pink-600 text-white rounded-3xl p-6"><h3 class="text-2xl font-black mb-4"><i class="fa-solid fa-fire"></i> أحدث العروض والخصومات</h3><div id="publicOffersList" class="grid md:grid-cols-2 gap-4"><p>جارٍ تحميل العروض...</p></div></div></section>  
-<section id="services" class="max-w-7xl mx-auto px-4 py-10 w-full"><h3 class="text-3xl font-black text-center mb-8">خدماتنا</h3><div class="grid md:grid-cols-3 gap-5">  
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-shirt text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">غسيل الملابس</h4><p class="text-sm text-slate-600">غسيل وتنظيف يومي مع العناية بالأنسجة.</p></div>  
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">التنظيف بالبخار</h4><p class="text-sm text-slate-600">تنظيف احترافي للأقمشة والبدل والفساتين.</p></div>  
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-truck text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">خدمة التوصيل</h4><p class="text-sm text-slate-600">استلام وتسليم الملابس من باب المنزل.</p></div></div></section>  
-<section id="order" class="max-w-3xl mx-auto px-4 py-8 w-full"><div class="bg-white p-7 rounded-3xl shadow-lg border border-pink-100"><h3 class="text-2xl font-black text-center mb-2">طلب خدمة سريع</h3><p class="text-center text-slate-500 text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك.</p>  
-<form id="directOrderForm" class="space-y-4">  
-<label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="اسمك الكريم"></label>  
-<label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="01xxxxxxxxx"></label>  
-<label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="example@mail.com"></label>  
-<label class="block text-sm font-bold">طريقة التسليم<select id="deliveryOption" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>توصيل واستلام من المنزل</option><option>تسليم واستلام بالمحل</option></select></label>  
-<label class="block text-sm font-bold">الخدمة المطلوبة<select id="serviceType" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>غسيل ملابس</option><option>تنظيف بالبخار</option><option>كي ملابس</option><option>غسيل مفروشات وبطاطين</option><option>إزالة بقع</option></select></label>  
-<label class="block text-sm font-bold">العنوان أو ملاحظات الطلب<textarea id="orderDetails" rows="3" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea></label>  
-<button id="sendOrderBtn" class="w-full bg-pink-600 text-white py-3 rounded-xl font-black">إرسال الطلب الآن</button><p id="orderMessage" class="text-sm mt-2" role="status"></p></form></div></section>  
-<section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8 w-full"><div class="bg-white p-6 rounded-3xl shadow-sm text-center"><h3 class="text-xl font-black mb-2">🔍 متابعة حالة طلبك</h3><p class="text-xs text-slate-500 mb-4">لخصوصية العملاء، متابعة الطلب متاحة عبر التواصل مع المغسلة في هذه النسخة.</p><a class="inline-block bg-slate-800 text-white px-5 py-2 rounded-xl" href="https://wa.me/?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%B7%D9%84%D8%A8%D9%8A" target="_blank" rel="noopener">اطلب تحديث حالة طلبك عبر واتساب</a></div></section>  
-<section id="adminSection" class="hidden max-w-6xl mx-auto px-4 py-8 w-full space-y-8">  
-<div class="bg-white p-6 rounded-2xl shadow border-2 border-amber-400"><h3 class="text-xl font-black text-amber-600 mb-4">إضافة عرض جديد (خاص بالمالك)</h3><form id="offerForm" class="flex flex-col md:flex-row gap-3"><input id="offerTitle" required class="flex-1 px-4 py-3 border rounded-xl" placeholder="عنوان العرض"><input id="offerDetails" required class="flex-1 px-4 py-3 border rounded-xl" placeholder="تفاصيل العرض"><button class="bg-amber-500 text-white px-6 py-3 rounded-xl font-bold">نشر العرض</button></form><p id="offerMessage" class="text-sm mt-2"></p></div>  
-<div class="bg-white p-6 rounded-2xl shadow border-2 border-pink-500"><h3 class="text-2xl font-black text-pink-600 mb-4">إدارة الطلبات</h3><div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="bg-slate-100"><tr><th class="p-3">العميل</th><th class="p-3">الهاتف</th><th class="p-3">الخدمة</th><th class="p-3">الحالة</th><th class="p-3">تحديث</th><th class="p-3">فاتورة واتساب</th></tr></thead><tbody id="adminOrdersTable"><tr><td colspan="6" class="p-4 text-center">جارٍ تحميل الطلبات...</td></tr></tbody></table></div></div>  
-</section>  
-</main>  
-<footer class="bg-slate-900 text-slate-300 py-8 px-4 text-center text-sm"><p class="mb-3"><i class="fa-solid fa-location-dot text-pink-500"></i> سيوة - بجوار فندق النخيل، شارع تورار</p><a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="inline-block bg-green-600 text-white px-4 py-2 rounded-xl mb-4">فتح خرائط جوجل</a><p>© 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p></footer>  <div id="authModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">  
-<div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative"><button onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500">✕</button><h3 class="text-2xl font-black mb-6 text-center">دخول المالك</h3>  
-<form id="ownerLoginForm" class="space-y-4"><label class="block text-sm font-bold">البريد الإلكتروني<input type="email" id="ownerEmailInput" required autocomplete="username" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="بريد المالك"></label><label class="block text-sm font-bold">كلمة المرور<input type="password" id="ownerPasswordInput" required autocomplete="current-password" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="كلمة المرور"></label><button id="loginBtn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">تسجيل الدخول</button><p id="loginMessage" class="text-sm" role="status"></p></form></div></div>  
-<div id="invoiceModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4"><div class="bg-white w-full max-w-md p-6 rounded-2xl relative"><button onclick="closeInvoiceModal()" class="absolute top-4 left-4">✕</button><h3 class="text-xl font-bold mb-4">إرسال فاتورة واتساب</h3><form id="invoiceForm" class="space-y-4"><input type="hidden" id="invPhone"><input type="hidden" id="invName"><label class="block text-sm font-bold">المبلغ المطلوب بالجنيه المصري<input type="number" id="invAmount" min="0" step="0.01" required class="mt-1 w-full px-4 py-3 border rounded-xl"></label><button class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">فتح واتساب بالفاتورة</button></form></div></div>  <script>  
-function openOwnerModal(){const el=document.getElementById('authModal');el.classList.remove('hidden');el.classList.add('flex');}  
-function closeOwnerModal(){const el=document.getElementById('authModal');el.classList.add('hidden');el.classList.remove('flex');}  
-function closeInvoiceModal(){const el=document.getElementById('invoiceModal');el.classList.add('hidden');el.classList.remove('flex');}  
-</script>  <script type="module">  
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";  
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";  
-import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";  
-  
-const firebaseConfig = {  
-  apiKey: "AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",  
-  authDomain: "al-masa-dry-clean.firebaseapp.com",  
-  projectId: "al-masa-dry-clean",  
-  storageBucket: "al-masa-dry-clean.firebasestorage.app",  
-  messagingSenderId: "624222741188",  
-  appId: "1:624222741188:web:a8f3939d14765f02c5df91",  
-  measurementId: "G-Q3P2E1FDXW"  
-};  
-const app = initializeApp(firebaseConfig);  
-const auth = getAuth(app);  
-const db = getFirestore(app);  
-  
-/* يجب أن تتطابق هذه القائمة مع قائمة isAdmin في Firestore Rules */  
-const ALLOWED_OWNERS = ["bnlybwd468@gmail.com", "ahmadabubakr027@gmail.com"];  
-let ownerIsAuthenticated = false;  
-  
-const $ = id => document.getElementById(id);  
-function showMessage(id, message, isError=false) {  
-  const el = $(id); if (!el) return;  
-  el.textContent = message;  
-  el.className = "text-sm mt-2 " + (isError ? "text-red-600" : "text-green-700");  
-}  
-function normalizePhone(phone){return String(phone || "").replace(/[^\d]/g,"");}  
-function requireOwner(){  
-  if (!auth.currentUser || !ownerIsAuthenticated || !ALLOWED_OWNERS.includes((auth.currentUser.email||"").toLowerCase())) {  
-    throw new Error("يجب تسجيل الدخول بحساب مالك مصرح به.");  
-  }  
-}  
-  
-$("ownerLoginForm").addEventListener("submit", async e => {  
-  e.preventDefault();  
-  $("loginBtn").disabled = true;  
-  showMessage("loginMessage","جارٍ التحقق من الحساب...");  
-  const email = $("ownerEmailInput").value.trim().toLowerCase();  
-  const password = $("ownerPasswordInput").value;  
-  if (!ALLOWED_OWNERS.includes(email)) {  
-    showMessage("loginMessage","هذا البريد غير مصرح له بدخول لوحة المالك.",true);  
-    $("loginBtn").disabled = false; return;  
-  }  
-  try {  
-    await signInWithEmailAndPassword(auth,email,password);  
-    closeOwnerModal();  
-    $("ownerPasswordInput").value = "";  
-    showMessage("loginMessage","");  
-  } catc
+<footer
