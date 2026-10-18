@@ -12,210 +12,290 @@
 <body class="min-h-screen flex flex-col">
 <header class="bg-white shadow-sm sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
-    <div class="flex items-center gap-3"><div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-gem"></i></div><div><h1 class="font-black text-lg">دراي ألماسة كلين</h1><p class="text-xs text-slate-500">Diamond Dry Clean</p></div></div>
-    <nav class="hidden md:flex gap-5 font-semibold text-slate-600"><a href="#home">الرئيسية</a><a href="#offers">العروض</a><a href="#services">خدماتنا</a><a href="#order">طلب خدمة</a><a href="#trackOrder">متابعة طلبك</a></nav>
-    <div class="flex gap-2 items-center"><a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-map-location-dot"></i> موقعنا</a><button id="ownerAuthBtn" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">دخول المالك</button><button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold">خروج المالك</button></div>
+    <div class="flex items-center gap-3">
+      <div class="bg-pink-600 text-white w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-gem"></i></div>
+      <div><h1 class="font-black text-lg">دراي ألماسة كلين</h1><p class="text-xs text-slate-500">Diamond Dry Clean</p></div>
+    </div>
+    <nav class="hidden md:flex gap-5 font-semibold text-slate-600">
+      <a href="#home">الرئيسية</a>
+      <a href="#offers">العروض</a>
+      <a href="#services">خدماتنا</a>
+      <a href="#order">طلب خدمة</a>
+      <a href="#trackOrder">متابعة طلبك</a>
+    </nav>
+    <div class="flex gap-2 items-center">
+      <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-map-location-dot"></i> موقعنا</a>
+      <button id="ownerAuthBtn" onclick="openOwnerModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">دخول المالك</button>
+      <button id="logoutBtn" onclick="logoutOwner()" class="hidden bg-red-600 text-white px-3 py-2 rounded-xl text-xs font-bold">خروج المالك</button>
+    </div>
   </div>
 </header>
+
 <main class="flex-grow">
-<section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center"><div class="max-w-3xl mx-auto"><span class="bg-white/20 px-3 py-1 rounded-full text-xs">عناية تليق بملابسك</span><h2 class="text-4xl font-black my-5">نظافة فائقة وعناية بمفروشاتك في قلب سيوة</h2><p class="mb-7">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بدون حساب.</p><a href="#order" class="inline-block bg-white text-pink-600 font-bold px-7 py-3 rounded-xl">اطلب خدمة الآن</a></div></section>
-<section id="offers" class="max-w-7xl mx-auto px-4 py-8 w-full"><div class="bg-gradient-to-r from-amber-500 to-pink-600 text-white rounded-3xl p-6"><h3 class="text-2xl font-black mb-4"><i class="fa-solid fa-fire"></i> أحدث العروض والخصومات</h3><div id="publicOffersList" class="grid md:grid-cols-2 gap-4"><p>جارٍ تحميل العروض...</p></div></div></section>
-<section id="services" class="max-w-7xl mx-auto px-4 py-10 w-full"><h3 class="text-3xl font-black text-center mb-8">خدماتنا</h3><div class="grid md:grid-cols-3 gap-5">
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-shirt text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">غسيل الملابس</h4><p class="text-sm text-slate-600">غسيل وتنظيف يومي مع العناية بالأنسجة.</p></div>
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">التنظيف بالبخار</h4><p class="text-sm text-slate-600">تنظيف احترافي للأقمشة والبدل والفساتين.</p></div>
-<div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-truck text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">خدمة التوصيل</h4><p class="text-sm text-slate-600">استلام وتسليم الملابس من باب المنزل.</p></div></div></section>
-<section id="order" class="max-w-3xl mx-auto px-4 py-8 w-full"><div class="bg-white p-7 rounded-3xl shadow-lg border border-pink-100"><h3 class="text-2xl font-black text-center mb-2">طلب خدمة سريع</h3><p class="text-center text-slate-500 text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك.</p>
-<form id="directOrderForm" class="space-y-4">
-<label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="اسمك الكريم"></label>
-<label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="01xxxxxxxxx"></label>
-<label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="example@mail.com"></label>
-<label class="block text-sm font-bold">طريقة التسليم<select id="deliveryOption" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>توصيل واستلام من المنزل</option><option>تسليم واستلام بالمحل</option></select></label>
-<label class="block text-sm font-bold">الخدمة المطلوبة<select id="serviceType" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>غسيل ملابس</option><option>تنظيف بالبخار</option><option>كي ملابس</option><option>غسيل مفروشات وبطاطين</option><option>إزالة بقع</option></select></label>
-<label class="block text-sm font-bold">العنوان أو ملاحظات الطلب<textarea id="orderDetails" rows="3" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea></label>
-<button id="sendOrderBtn" class="w-full bg-pink-600 text-white py-3 rounded-xl font-black">إرسال الطلب الآن</button><p id="orderMessage" class="text-sm mt-2" role="status"></p></form></div></section>
-<section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8 w-full"><div class="bg-white p-6 rounded-3xl shadow-sm text-center"><h3 class="text-xl font-black mb-2">🔍 متابعة حالة طلبك</h3><p class="text-xs text-slate-500 mb-4">لخصوصية العملاء، متابعة الطلب متاحة عبر التواصل مع المغسلة في هذه النسخة.</p><a class="inline-block bg-slate-800 text-white px-5 py-2 rounded-xl" href="https://wa.me/?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%B7%D9%84%D8%A8%D9%8A" target="_blank" rel="noopener">اطلب تحديث حالة طلبك عبر واتساب</a></div></section>
-<section id="adminSection" class="hidden max-w-6xl mx-auto px-4 py-8 w-full space-y-8">
-<div class="bg-white p-6 rounded-2xl shadow border-2 border-amber-400"><h3 class="text-xl font-black text-amber-600 mb-4">إضافة عرض جديد (خاص بالمالك)</h3><form id="offerForm" class="flex flex-col md:flex-row gap-3"><input id="offerTitle" required class="flex-1 px-4 py-3 border rounded-xl" placeholder="عنوان العرض"><input id="offerDetails" required class="flex-1 px-4 py-3 border rounded-xl" placeholder="تفاصيل العرض"><button class="bg-amber-500 text-white px-6 py-3 rounded-xl font-bold">نشر العرض</button></form><p id="offerMessage" class="text-sm mt-2"></p></div>
-<div class="bg-white p-6 rounded-2xl shadow border-2 border-pink-500"><h3 class="text-2xl font-black text-pink-600 mb-4">إدارة الطلبات</h3><div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="bg-slate-100"><tr><th class="p-3">العميل</th><th class="p-3">الهاتف</th><th class="p-3">الخدمة</th><th class="p-3">الحالة</th><th class="p-3">تحديث</th><th class="p-3">فاتورة واتساب</th></tr></thead><tbody id="adminOrdersTable"><tr><td colspan="6" class="p-4 text-center">جارٍ تحميل الطلبات...</td></tr></tbody></table></div></div>
+<section id="home" class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-16 px-4 text-center">
+  <div class="max-w-3xl mx-auto">
+    <span class="bg-white/20 px-3 py-1 rounded-full text-xs">عناية تليق بملابسك</span>
+    <h2 class="text-4xl font-black my-5">نظافة فائقة وعناية بمفروشاتك في قلب سيوة</h2>
+    <p class="mb-7">اطلب التوصيل للمنزل أو استلام الملابس مباشرة بدون حساب.</p>
+    <a href="#order" class="inline-block bg-white text-pink-600 font-bold px-7 py-3 rounded-xl">اطلب خدمة الآن</a>
+  </div>
+</section>
+
+<section id="offers" class="max-w-7xl mx-auto px-4 py-8 w-full">
+  <div class="bg-gradient-to-r from-amber-500 to-pink-600 text-white rounded-3xl p-6">
+    <h3 class="text-2xl font-black mb-4"><i class="fa-solid fa-fire"></i> أحدث العروض والخصومات</h3>
+    <div id="publicOffersList" class="grid md:grid-cols-2 gap-4"><p>جارٍ تحميل العروض...</p></div>
+  </div>
+</section>
+
+<section id="services" class="max-w-7xl mx-auto px-4 py-10 w-full">
+  <h3 class="text-3xl font-black text-center mb-8">خدماتنا والأسعار</h3>
+  <div id="publicServicesList" class="grid md:grid-cols-3 gap-5">
+    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-shirt text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">غسيل ملابس</h4><p class="text-sm text-slate-600">غسيل وتنظيف يومي مع العناية بالأنسجة.</p></div>
+    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">التنظيف بالبخار</h4><p class="text-sm text-slate-600">تنظيف احترافي للأقمشة والبدل والفساتين.</p></div>
+    <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fa-solid fa-truck text-pink-600 text-3xl"></i><h4 class="font-bold text-xl mt-3 mb-2">خدمة التوصيل</h4><p class="text-sm text-slate-600">استلام وتسليم الملابس من باب المنزل.</p></div>
+  </div>
+</section>
+
+<section id="order" class="max-w-3xl mx-auto px-4 py-8 w-full">
+  <div class="bg-white p-7 rounded-3xl shadow-lg border border-pink-100">
+    <h3 class="text-2xl font-black text-center mb-2">طلب خدمة سريع</h3>
+    <p class="text-center text-slate-500 text-sm mb-6">اكتب بياناتك وطلبك وسنتواصل معك.</p>
+    <form id="directOrderForm" class="space-y-4">
+      <label class="block text-sm font-bold">الاسم الكامل *<input id="clientName" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="اسمك الكريم"></label>
+      <label class="block text-sm font-bold">رقم الهاتف / الواتساب *<input id="clientPhone" type="tel" required class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="01xxxxxxxxx"></label>
+      <label class="block text-sm font-bold">البريد الإلكتروني (اختياري)<input id="clientEmail" type="email" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="example@mail.com"></label>
+      <label class="block text-sm font-bold">طريقة التسليم<select id="deliveryOption" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>توصيل واستلام من المنزل</option><option>تسليم واستلام بالمحل</option></select></label>
+      <label class="block text-sm font-bold">الخدمة المطلوبة<select id="serviceType" class="mt-1 w-full px-4 py-3 border rounded-xl"><option>غسيل ملابس</option><option>تنظيف بالبخار</option><option>كي ملابس</option><option>غسيل مفروشات وبطاطين</option><option>إزالة بقع</option></select></label>
+      <label class="block text-sm font-bold">العنوان أو ملاحظات الطلب<textarea id="orderDetails" rows="3" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="العنوان بالتفصيل وعدد القطع..."></textarea></label>
+      <button id="sendOrderBtn" class="w-full bg-pink-600 text-white py-3 rounded-xl font-black">إرسال الطلب الآن</button>
+      <p id="orderMessage" class="text-sm mt-2" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section id="trackOrder" class="max-w-3xl mx-auto px-4 py-8 w-full">
+  <div class="bg-white p-6 rounded-3xl shadow-sm text-center">
+    <h3 class="text-xl font-black mb-2">🔍 متابعة حالة طلبك</h3>
+    <p class="text-xs text-slate-500 mb-4">لخصوصية العملاء، متابعة الطلب متاحة عبر التواصل مع المغسلة في هذه النسخة.</p>
+    <a class="inline-block bg-slate-800 text-white px-5 py-2 rounded-xl" href="https://wa.me/?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%B7%D9%84%D8%A8%D9%8A" target="_blank" rel="noopener">اطلب تحديث حالة طلبك عبر واتساب</a>
+  </div>
+</section>
+
+<!-- لوحة تحكم المالك المطورة والشاملة -->
+<section id="adminSection" class="hidden max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
+  
+  <!-- شريط الإحصائيات الرئيسي -->
+  <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <h3 class="text-2xl font-black text-slate-800"><i class="fa-solid fa-chart-pie text-pink-600"></i> لوحة الإحصائيات والتقارير المالية</h3>
+      <div class="flex gap-2 items-center">
+        <label class="text-xs font-bold text-slate-600">الفترة الزمنية:</label>
+        <select id="statsPeriod" class="border rounded-xl px-3 py-2 text-xs font-bold bg-slate-50">
+          <option value="all">كل الفترات</option>
+          <option value="today">اليوم</option>
+          <option value="month">هذا الشهر</option>
+        </select>
+        <button onclick="refreshAdminData()" class="bg-pink-600 text-white px-3 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-rotate"></i> تحديث</button>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-center">
+        <span class="text-xs text-blue-600 font-bold">الطلبات الجديدة</span>
+        <h4 id="statNewOrders" class="text-2xl font-black text-blue-800 mt-1">0</h4>
+      </div>
+      <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 text-center">
+        <span class="text-xs text-amber-600 font-bold">قيد التنفيذ</span>
+        <h4 id="statInProcess" class="text-2xl font-black text-amber-800 mt-1">0</h4>
+      </div>
+      <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 text-center">
+        <span class="text-xs text-emerald-600 font-bold">جاهزة للاستلام</span>
+        <h4 id="statReady" class="text-2xl font-black text-emerald-800 mt-1">0</h4>
+      </div>
+      <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100 text-center">
+        <span class="text-xs text-purple-600 font-bold">تم التسليم</span>
+        <h4 id="statDelivered" class="text-2xl font-black text-purple-800 mt-1">0</h4>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+        <span class="text-xs text-slate-600 font-bold">إجمالي الإيرادات المحصلة</span>
+        <h4 id="statTotalRevenue" class="text-xl font-black text-slate-800 mt-1">0 ج.م</h4>
+      </div>
+      <div class="bg-rose-50 p-4 rounded-2xl border border-rose-100 text-center">
+        <span class="text-xs text-rose-600 font-bold">إجمالي المصروفات</span>
+        <h4 id="statTotalExpenses" class="text-xl font-black text-rose-800 mt-1">0 ج.م</h4>
+      </div>
+      <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-center">
+        <span class="text-xs text-green-600 font-bold">صافي الربح التقديري</span>
+        <h4 id="statNetProfit" class="text-xl font-black text-green-800 mt-1">0 ج.م</h4>
+      </div>
+      <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100 text-center">
+        <span class="text-xs text-orange-600 font-bold">المبالغ المتبقية (ديون)</span>
+        <h4 id="statRemainingDebt" class="text-xl font-black text-orange-800 mt-1">0 ج.م</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- أزرار العمليات السريعة -->
+  <div class="flex flex-wrap gap-3 bg-white p-4 rounded-2xl shadow border border-slate-200 items-center justify-between">
+    <span class="font-black text-slate-700 text-sm"><i class="fa-solid fa-bolt text-amber-500"></i> اختصارات الإدارة السريعة:</span>
+    <div class="flex flex-wrap gap-2">
+      <button onclick="openManualOrderModal()" class="bg-pink-600 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus"></i> إضافة طلب يدوي</button>
+      <button onclick="openExpenseModal()" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-money-bill-wave"></i> تسجيل مصروف</button>
+      <button onclick="openOfferModal()" class="bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-bullhorn"></i> إضافة عرض</button>
+      <button onclick="openServicesModal()" class="bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-list-check"></i> إدارة الخدمات</button>
+      <button onclick="openInventoryModal()" class="bg-teal-600 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-boxes-stacked"></i> إدارة المخزون</button>
+    </div>
+  </div>
+
+  <!-- إدارة الطلبات المتقدمة -->
+  <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
+      <h3 class="text-2xl font-black text-slate-800"><i class="fa-solid fa-clipboard-list text-pink-600"></i> إدارة الطلبات الشاملة</h3>
+      <div class="flex flex-wrap gap-2 items-center w-full md:w-auto">
+        <input id="searchOrderInput" type="text" oninput="filterAdminOrders()" placeholder="بحث برقم الطلب أو اسم العميل..." class="border rounded-xl px-3 py-2 text-xs w-full md:w-64">
+        <select id="filterStatus" onchange="filterAdminOrders()" class="border rounded-xl px-3 py-2 text-xs font-bold">
+          <option value="">كل الحالات</option>
+          <option value="جديد">جديد</option>
+          <option value="تم الاستلام">تم الاستلام</option>
+          <option value="قيد التنفيذ">قيد التنفيذ</option>
+          <option value="جاهز للاستلام">جاهز للاستلام</option>
+          <option value="خرج للتوصيل">خرج للتوصيل</option>
+          <option value="تم التسليم">تم التسليم</option>
+          <option value="ملغي">ملغي</option>
+        </select>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-right text-sm">
+        <thead class="bg-slate-100 text-slate-700">
+          <tr>
+            <th class="p-3">رقم/العميل</th>
+            <th class="p-3">الهاتف</th>
+            <th class="p-3">الخدمة والقطع</th>
+            <th class="p-3">الإجمالي / المدفوع</th>
+            <th class="p-3">الحالة المالية</th>
+            <th class="p-3">حالة الطلب</th>
+            <th class="p-3">الإجراءات والتحكم</th>
+          </tr>
+        </thead>
+        <tbody id="adminOrdersTable">
+          <tr><td colspan="7" class="p-4 text-center text-slate-400">جارٍ تحميل الطلبات...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- قسم إدارة المصروفات والمخزون المختصر في اللوحة -->
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
+      <h3 class="text-lg font-black text-slate-800 mb-4"><i class="fa-solid fa-receipt text-rose-600"></i> أحدث المصروفات المسجلة</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-xs">
+          <thead class="bg-slate-100"><tr><th class="p-2">البند</th><th class="p-2">التصنيف</th><th class="p-2">المبلغ</th><th class="p-2">التاريخ</th></tr></thead>
+          <tbody id="adminExpensesTable"><tr><td colspan="4" class="p-3 text-center">لا توجد مصروفات.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-3xl shadow border border-slate-200">
+      <h3 class="text-lg font-black text-slate-800 mb-4"><i class="fa-solid fa-triangle-exclamation text-amber-500"></i> تنبيهات المخزون والمستلزمات</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-xs">
+          <thead class="bg-slate-100"><tr><th class="p-2">المستلزم</th><th class="p-2">الكمية الحالية</th><th class="p-2">الحد الأدنى</th><th class="p-2">الحالة</th></tr></thead>
+          <tbody id="adminInventoryTable"><tr><td colspan="4" class="p-3 text-center">المخزون مستقر.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </section>
 </main>
-<footer class="bg-slate-900 text-slate-300 py-8 px-4 text-center text-sm"><p class="mb-3"><i class="fa-solid fa-location-dot text-pink-500"></i> سيوة - بجوار فندق النخيل، شارع تورار</p><a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="inline-block bg-green-600 text-white px-4 py-2 rounded-xl mb-4">فتح خرائط جوجل</a><p>© 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p></footer>
 
+<footer class="bg-slate-900 text-slate-300 py-8 px-4 text-center text-sm">
+  <p class="mb-3"><i class="fa-solid fa-location-dot text-pink-500"></i> سيوة - بجوار فندق النخيل، شارع تورار</p>
+  <a href="https://maps.app.goo.gl/6D5XGaKrYWS9NrPP8?g_st=aw" target="_blank" rel="noopener" class="inline-block bg-green-600 text-white px-4 py-2 rounded-xl mb-4">فتح خرائط جوجل</a>
+  <p>© 2026 دراي ألماسة كلين - جميع الحقوق محفوظة</p>
+</footer>
+
+<!-- النوافذ المنبثقة (Modals) للتفاعل الكامل -->
+
+<!-- نافذة تسجيل دخول المالك -->
 <div id="authModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
-<div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative"><button onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500">✕</button><h3 class="text-2xl font-black mb-6 text-center">دخول المالك</h3>
-<form id="ownerLoginForm" class="space-y-4"><label class="block text-sm font-bold">البريد الإلكتروني<input type="email" id="ownerEmailInput" required autocomplete="username" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="بريد المالك"></label><label class="block text-sm font-bold">كلمة المرور<input type="password" id="ownerPasswordInput" required autocomplete="current-password" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="كلمة المرور"></label><button id="loginBtn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">تسجيل الدخول</button><p id="loginMessage" class="text-sm" role="status"></p></form></div></div>
-<div id="invoiceModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4"><div class="bg-white w-full max-w-md p-6 rounded-2xl relative"><button onclick="closeInvoiceModal()" class="absolute top-4 left-4">✕</button><h3 class="text-xl font-bold mb-4">إرسال فاتورة واتساب</h3><form id="invoiceForm" class="space-y-4"><input type="hidden" id="invPhone"><input type="hidden" id="invName"><label class="block text-sm font-bold">المبلغ المطلوب بالجنيه المصري<input type="number" id="invAmount" min="0" step="0.01" required class="mt-1 w-full px-4 py-3 border rounded-xl"></label><button class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">فتح واتساب بالفاتورة</button></form></div></div>
+  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+    <button onclick="closeOwnerModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <h3 class="text-2xl font-black mb-6 text-center">دخول المالك</h3>
+    <form id="ownerLoginForm" class="space-y-4">
+      <label class="block text-sm font-bold">البريد الإلكتروني<input type="email" id="ownerEmailInput" required autocomplete="username" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="بريد المالك"></label>
+      <label class="block text-sm font-bold">كلمة المرور<input type="password" id="ownerPasswordInput" required autocomplete="current-password" class="mt-1 w-full px-4 py-3 border rounded-xl" placeholder="كلمة المرور"></label>
+      <button id="loginBtn" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">تسجيل الدخول</button>
+      <p id="loginMessage" class="text-sm" role="status"></p>
+    </form>
+  </div>
+</div>
 
-<script>
-function openOwnerModal(){const el=document.getElementById('authModal');el.classList.remove('hidden');el.classList.add('flex');}
-function closeOwnerModal(){const el=document.getElementById('authModal');el.classList.add('hidden');el.classList.remove('flex');}
-function closeInvoiceModal(){const el=document.getElementById('invoiceModal');el.classList.add('hidden');el.classList.remove('flex');}
-</script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<!-- نافذة إضافة طلب يدوي -->
+<div id="manualOrderModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeManualOrderModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <h3 class="text-xl font-black mb-4 text-pink-600">إضافة طلب يدوي (من المحل)</h3>
+    <form id="manualOrderForm" class="space-y-3">
+      <input id="manClientName" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="اسم العميل *">
+      <input id="manClientPhone" type="tel" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="رقم الهاتف *">
+      <input id="manClientEmail" type="email" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="البريد الإلكتروني (اختياري)">
+      <select id="manDeliveryOption" class="w-full px-3 py-2 border rounded-xl text-sm"><option>تسليم واستلام بالمحل</option><option>توصيل واستلام من المنزل</option></select>
+      <textarea id="manOrderDetails" rows="2" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="تفاصيل القطع والملابس..."></textarea>
+      <div class="grid grid-cols-2 gap-2">
+        <input id="manTotalAmount" type="number" step="0.01" required class="px-3 py-2 border rounded-xl text-sm" placeholder="إجمالي المبلغ (ج.م) *">
+        <input id="manPaidAmount" type="number" step="0.01" value="0" class="px-3 py-2 border rounded-xl text-sm" placeholder="المبلغ المدفوع مقدماً">
+      </div>
+      <button class="w-full bg-pink-600 text-white py-3 rounded-xl font-bold text-sm">حفظ وإنشاء الطلب</button>
+    </form>
+  </div>
+</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBYD65_iGeWcmbIFu_wLQLnaW_v68sBsDA",
-  authDomain: "al-masa-dry-clean.firebaseapp.com",
-  projectId: "al-masa-dry-clean",
-  storageBucket: "al-masa-dry-clean.firebasestorage.app",
-  messagingSenderId: "624222741188",
-  appId: "1:624222741188:web:a8f3939d14765f02c5df91",
-  measurementId: "G-Q3P2E1FDXW"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+<!-- نافذة تفاصيل الطلب والفواتير والمدفوعات -->
+<div id="orderDetailsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-lg relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeOrderDetailsModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <h3 class="text-xl font-black mb-4 text-slate-800"><i class="fa-solid fa-file-invoice text-pink-600"></i> تفاصيل الطلب وإدارة الحساب</h3>
+    <div id="orderDetailsContent" class="space-y-4 text-sm">
+      <!-- يتم حقن التفاصيل هنا برمجياً -->
+    </div>
+  </div>
+</div>
 
-/* يجب أن تتطابق هذه القائمة مع قائمة isAdmin في Firestore Rules */
-const ALLOWED_OWNERS = ["bnlybwd468@gmail.com", "ahmadabubakr027@gmail.com"];
-let ownerIsAuthenticated = false;
+<!-- نافذة تسجيل مصروف -->
+<div id="expenseModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+    <button onclick="closeExpenseModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <h3 class="text-xl font-black mb-4 text-rose-600">تسجيل مصروف جديد</h3>
+    <form id="expenseForm" class="space-y-3">
+      <input id="expTitle" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="اسم البند أو وصف المصروف *">
+      <select id="expCategory" class="w-full px-3 py-2 border rounded-xl text-sm">
+        <option>منظفات ومستلزمات</option>
+        <option>كهرباء ومياه</option>
+        <option>إيجار ومصاريف ثابتة</option>
+        <option>صيانة أجهزة</option>
+        <option>أجور عمالة</option>
+        <option>مصاريف توصيل</option>
+        <option>أخرى</option>
+      </select>
+      <input id="expAmount" type="number" step="0.01" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="المبلغ بالجنيه المصري *">
+      <button class="w-full bg-rose-600 text-white py-3 rounded-xl font-bold text-sm">حفظ المصروف</button>
+    </form>
+  </div>
+</div>
 
-const $ = id => document.getElementById(id);
-function showMessage(id, message, isError=false) {
-  const el = $(id); if (!el) return;
-  el.textContent = message;
-  el.className = "text-sm mt-2 " + (isError ? "text-red-600" : "text-green-700");
-}
-function normalizePhone(phone){return String(phone || "").replace(/[^\d]/g,"");}
-function requireOwner(){
-  if (!auth.currentUser || !ownerIsAuthenticated || !ALLOWED_OWNERS.includes((auth.currentUser.email||"").toLowerCase())) {
-    throw new Error("يجب تسجيل الدخول بحساب مالك مصرح به.");
-  }
-}
-
-$("ownerLoginForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  $("loginBtn").disabled = true;
-  showMessage("loginMessage","جارٍ التحقق من الحساب...");
-  const email = $("ownerEmailInput").value.trim().toLowerCase();
-  const password = $("ownerPasswordInput").value;
-  if (!ALLOWED_OWNERS.includes(email)) {
-    showMessage("loginMessage","هذا البريد غير مصرح له بدخول لوحة المالك.",true);
-    $("loginBtn").disabled = false; return;
-  }
-  try {
-    await signInWithEmailAndPassword(auth,email,password);
-    closeOwnerModal();
-    $("ownerPasswordInput").value = "";
-    showMessage("loginMessage","");
-  } catch (err) {
-    console.error(err);
-    showMessage("loginMessage",`فشل تسجيل الدخول: ${err.code || "خطأ غير معروف"}. ${err.message || "راجع إعدادات Firebase."}`,true);
-  } finally { $("loginBtn").disabled = false; }
-});
-
-onAuthStateChanged(auth, async user => {
-  ownerIsAuthenticated = !!user && !!user.email && ALLOWED_OWNERS.includes(user.email.toLowerCase());
-  $("ownerAuthBtn").classList.toggle("hidden",ownerIsAuthenticated);
-  $("logoutBtn").classList.toggle("hidden",!ownerIsAuthenticated);
-  $("adminSection").classList.toggle("hidden",!ownerIsAuthenticated);
-  if (ownerIsAuthenticated) {
-    await Promise.all([loadAdminOrders(),loadOffers()]);
-  } else {
-    $("adminOrdersTable").innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">سجّل دخول المالك لعرض الطلبات.</td></tr>';
-  }
-});
-
-window.logoutOwner = async () => {
-  try { await signOut(auth); $("adminSection").classList.add("hidden"); }
-  catch(err){console.error(err); alert("تعذر تسجيل الخروج.");}
-};
-
-/* طلب العميل: يسجل دخولًا مجهولًا لكي تسمح القاعدة الحالية للمستخدم المسجل بإنشاء طلب.
-   لا يمنح تسجيل الدخول المجهول أي صلاحية مالك. */
-$("directOrderForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const btn = $("sendOrderBtn"); btn.disabled = true;
-  showMessage("orderMessage","جارٍ إرسال الطلب...");
-  try {
-    if (!auth.currentUser) await signInAnonymously(auth);
-    const order = {
-      uid: auth.currentUser.uid,
-      clientName: $("clientName").value.trim(),
-      clientPhone: normalizePhone($("clientPhone").value),
-      clientEmail: $("clientEmail").value.trim(),
-      deliveryOption: $("deliveryOption").value,
-      serviceType: $("serviceType").value,
-      orderDetails: $("orderDetails").value.trim(),
-      status: "جديد",
-      createdAt: serverTimestamp()
-    };
-    if (!order.clientName || !order.clientPhone) throw new Error("أدخل الاسم ورقم الهاتف.");
-    const ref = await addDoc(collection(db,"orders"),order);
-    $("directOrderForm").reset();
-    showMessage("orderMessage","تم إرسال طلبك بنجاح. رقم الطلب: " + ref.id);
-  } catch(err) {
-    console.error(err);
-    showMessage("orderMessage","لم يتم إرسال الطلب. تأكد من إعدادات Firebase وقواعد Firestore وفعّل Anonymous في Authentication إذا كنت تستخدم هذا الأسلوب.",true);
-  } finally { btn.disabled = false; }
-});
-
-async function loadOffers(){
-  try {
-    const snap = await getDocs(query(collection(db,"offers"),orderBy("createdAt","desc")));
-    const offers = snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("publicOffersList").innerHTML = offers.length ? offers.map(o=>`<article class="bg-white/15 rounded-xl p-4"><h4 class="font-black text-lg">${escapeHtml(o.title||"عرض")}</h4><p class="text-sm mt-1">${escapeHtml(o.details||"")}</p></article>`).join("") : '<p class="text-amber-100 text-sm">لا توجد عروض حالياً.</p>';
-  } catch(err) {
-    console.error("Offers load error:",err);
-    $("publicOffersList").innerHTML = '<p class="text-amber-100 text-sm">تعذر تحميل العروض. تحقق من قواعد مجموعة offers.</p>';
-  }
-}
-$("offerForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-  try {
-    requireOwner();
-    await addDoc(collection(db,"offers"),{title:$("offerTitle").value.trim(),details:$("offerDetails").value.trim(),createdAt:serverTimestamp(),createdBy:auth.currentUser.uid});
-    $("offerForm").reset(); showMessage("offerMessage","تم نشر العرض.");
-    await loadOffers();
-  } catch(err){console.error(err);showMessage("offerMessage","تعذر نشر العرض. تحقق من صلاحيات المالك وقواعد offers.",true);}
-});
-
-async function loadAdminOrders(){
-  if (!ownerIsAuthenticated) return;
-  try {
-    const snap = await getDocs(query(collection(db,"orders"),orderBy("createdAt","desc")));
-    const orders = snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("adminOrdersTable").innerHTML = orders.length ? orders.map(o=>`<tr class="border-b">
-      <td class="p-3">${escapeHtml(o.clientName||"—")}</td>
-      <td class="p-3" dir="ltr">${escapeHtml(o.clientPhone||"—")}</td>
-      <td class="p-3">${escapeHtml(o.serviceType||"—")}</td>
-      <td class="p-3"><select class="border rounded-lg p-2" data-status="${o.id}"><option ${o.status==="جديد"?"selected":""}>جديد</option><option ${o.status==="قيد التنفيذ"?"selected":""}>قيد التنفيذ</option><option ${o.status==="جاهز للاستلام"?"selected":""}>جاهز للاستلام</option><option ${o.status==="تم التسليم"?"selected":""}>تم التسليم</option><option ${o.status==="ملغي"?"selected":""}>ملغي</option></select></td>
-      <td class="p-3"><button class="bg-pink-600 text-white rounded-lg px-3 py-2" data-save="${o.id}">حفظ الحالة</button></td>
-      <td class="p-3"><button class="bg-green-600 text-white rounded-lg px-3 py-2" data-invoice="${o.id}" data-phone="${escapeAttr(o.clientPhone||"")}" data-name="${escapeAttr(o.clientName||"العميل")}">فاتورة</button></td>
-    </tr>`).join("") : '<tr><td colspan="6" class="p-4 text-center text-slate-400">لا توجد طلبات.</td></tr>';
-    $("adminOrdersTable").querySelectorAll("[data-save]").forEach(btn=>btn.addEventListener("click",async()=>{
-      try {requireOwner();const id=btn.dataset.save;const status=$("adminOrdersTable").querySelector(`[data-status="${CSS.escape(id)}"]`).value;await updateDoc(doc(db,"orders",id),{status});btn.textContent="تم الحفظ";setTimeout(()=>btn.textContent="حفظ الحالة",1200);}
-      catch(err){console.error(err);alert("تعذر تحديث الطلب. تحقق من صلاحيات Firestore.");}
-    }));
-    $("adminOrdersTable").querySelectorAll("[data-invoice]").forEach(btn=>btn.addEventListener("click",()=>{
-      $("invPhone").value=btn.dataset.phone;$("invName").value=btn.dataset.name;
-      $("invoiceModal").classList.remove("hidden");$("invoiceModal").classList.add("flex");
-    }));
-  } catch(err) {
-    console.error("Orders load error:",err);
-    $("adminOrdersTable").innerHTML = '<tr><td colspan="6" class="p-4 text-center text-red-600">تعذر تحميل الطلبات. راجع قواعد Firestore.</td></tr>';
-  }
-}
-$("invoiceForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  try {requireOwner();} catch(err){alert(err.message);return;}
-  const phone=normalizePhone($("invPhone").value);
-  const name=$("invName").value;
-  const amount=Number($("invAmount").value);
-  if(!phone){alert("رقم الهاتف غير متوفر لهذا الطلب.");return;}
-  if(!Number.isFinite(amount)||amount<0){alert("أدخل مبلغًا صحيحًا.");return;}
-  let waPhone=phone;
-  if(waPhone.startsWith("0")) waPhone="2"+waPhone;
-  const message=`مرحبًا ${name}، فاتورتك من دراي ألماسة كلين بمبلغ ${amount.toFixed(2)} جنيه مصري. شكرًا لثقتك بنا.`;
-  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(message)}`,"_blank","noopener");
-  closeInvoiceModal();
-});
-
-function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function escapeAttr(value){return escapeHtml(value);}
-</script>
-</body>
-</html>
+<!-- نافذة إضافة عرض -->
+<div id="offerModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg relative">
+    <button onclick="closeOfferModal()" class="absolute top-4 left-4 text-slate-500">✕</button>
+    <h3 class="text-xl font-black mb-4 text-amber-600">إضافة عرض جديد</h3>
+    <form id="offerForm" class="space-y-3">
+      <input id="offerTitle" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="عنوان العرض *">
+      <textarea id="offerDetails" required rows="3" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="تفاصيل العرض..."></textarea>
+      <button class="w-full bg-amber-500 text-white py-3 rounded
