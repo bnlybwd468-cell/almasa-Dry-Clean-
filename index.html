@@ -61,9 +61,10 @@ const firebaseConfig = {
   apiKey: "AIzaSyBYD65_iGeWcmbIFuW_bLQLnaW_v68sBsDA",
   authDomain: "al-masa-dry-clean.firebaseapp.com",
   projectId: "al-masa-dry-clean",
-  storageBucket: "al-masa-dry-clean.appspot.com",
+  storageBucket: "al-masa-dry-clean.firebasestorage.app",
   messagingSenderId: "624222741188",
-  appId: "1:624222741188:web:REPLACE_WITH_REAL_APP_ID"
+  appId: "1:624222741188:web:a8f3939d14765f02c5df91",
+  measurementId: "G-Q3P2E1FDXW"
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -103,7 +104,7 @@ $("ownerLoginForm").addEventListener("submit", async e => {
     showMessage("loginMessage","");
   } catch (err) {
     console.error(err);
-    showMessage("loginMessage","فشل تسجيل الدخول. راجع البريد وكلمة المرور وتأكد من تفعيل Email/Password.",true);
+    showMessage("loginMessage",`فشل تسجيل الدخول: ${err.code || "خطأ غير معروف"}. ${err.message || "راجع إعدادات Firebase."}`,true);
   } finally { $("loginBtn").disabled = false; }
 });
 
